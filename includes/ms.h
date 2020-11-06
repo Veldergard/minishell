@@ -6,13 +6,13 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2020/11/06 16:11:28 by itressa          ###   ########.fr       */
+/*   Updated: 2020/11/06 16:59:06 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_H
 # define MS_H
 
-# include <stdio.h>
+# include "libft.h"
 
 #endif
