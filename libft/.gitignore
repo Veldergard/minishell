@@ -1,0 +1,6 @@
+*
+!ft_*.c
+!get_next_line.[ch]
+!libft.h
+!Makefile
+!.gitignore

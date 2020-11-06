@@ -1,0 +1,12 @@
+*
+!.gitignore
+!Makefile
+!includes
+!includes/*.h
+!sources
+!sources/*.c
+!sources/*/*.c
+!libft
+!libft/Makefile
+!libft/*.c
+!libft/*.h
