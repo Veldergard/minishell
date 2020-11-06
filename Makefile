@@ -6,6 +6,7 @@ CLIBFLAGS = -L$(LFTDIR) -lft
 
 I_DIR = includes
 HEADERS = $(addprefix $(I_DIR)/,\
+	shell_color.h\
 	ms.h\
 )
 
@@ -14,12 +15,14 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
+	debug.c\
+	read_command.c\
 	main.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-_OBJ_SUBDIR =
-OBJ_SUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJ_SUBDIR))
+#_OBJ_SUBDIR =
+#OBJ_SUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJ_SUBDIR))
 
 .PHONY: all clean fclean re libft libclean libfclean
 
