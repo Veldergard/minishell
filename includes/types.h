@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms.h                                               :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2020/11/06 17:57:15 by itressa          ###   ########.fr       */
+/*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
+/*   Updated: 2020/12/27 20:25:22 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_H
-# define MS_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
-# include "libft.h"
-# include <unistd.h>
+#include "libft.h"
 
-void	debug_print_arg(int argc, char *argv[], char *environ[]);
-int		read_command();
+typedef struct s_all {
+    char **args;
+    char **envp;
+    t_redirect *redirect; // for t_redirect;
+    int pipe; // 0, 1
+}              t_all;
 
-void  add_redirect(t_all *all, char *filename, int type);
-void  execute_cmd(t_all *all);
+typedef struct s_redirect {
+    int               type; // 0 , 1 , 2
+    char              *filename;
+    struct s_redirect *next;
+}              t_redirect;
 
 #endif

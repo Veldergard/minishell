@@ -20,7 +20,7 @@ int		main(int argc, char *argv[], char *envp[])
 	c = 1;
 	while (c)
 	{
-		c = read_command();
+    c = read_command();
 	}
 	return (0);
 }
