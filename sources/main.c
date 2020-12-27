@@ -12,11 +12,11 @@
 
 #include "ms.h"
 
-int		main(int argc, char *argv[], char *environ[])
+int		main(int argc, char *argv[], char *envp[])
 {
 	int		c;
 
-	(void)argc, (void)argv, (void)environ;
+	(void)argc, (void)argv, (void)envp;
 	c = 1;
 	while (c)
 	{

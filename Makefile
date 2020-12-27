@@ -65,3 +65,5 @@ clean: libclean
 fclean: libfclean clean
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	rm -f $(NAME)
+
+re: fclean all
