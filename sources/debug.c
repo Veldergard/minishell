@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms.h"
+#include "minishell.h"
 
 void	debug_print_arg(int argc, char *argv[], char *environ[])
 {

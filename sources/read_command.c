@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms.h"
+#include "minishell.h"
 #include "get_next_line.h"
 #include "color.h"
 

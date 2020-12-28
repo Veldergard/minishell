@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "ms.h"
+#include "minishell.h"
 #include "parse.h"
 #include "get_next_line.h"
 
