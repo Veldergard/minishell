@@ -6,42 +6,14 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/28 16:56:00 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/28 18:56:23 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "types.h"
 #include "ms.h"
 #include "parse.h"
 #include "get_next_line.h"
-
-void	parse_single_quote(t_all *all, char *buf, int *pos)
-{
-	while (buf[*pos] && buf[*pos] != '\'')
-	{
-
-	}
-}
-
-void	parse_double_quote(t_all *all)
-{
-
-}
-
-void	parse_line(t_all *all, char *buf, int pos)
-{
-	while (buf[pos])
-	{
-		while (buf[pos] == ' ')
-			pos++;
-		if (buf[pos] == '\'')
-			parse_single_quote(all);
-		else if (buf[pos] == '"')
-			parse_double_quote(all);
-		pos++;
-	}
-}
 
 int		args_increase(t_all *all)
 {
@@ -65,6 +37,46 @@ int		args_increase(t_all *all)
 	return (0);
 }
 
+void	parse_single_quote(t_all *all, char *buf, int *pos)
+{
+	(void)all;
+	while (buf[*pos] && buf[*pos] != '\'')
+	{
+		(*pos)++;
+	}
+}
+
+void	parse_double_quote(t_all *all, char *buf, int *pos)
+{
+	(void)all, (void)buf, (void)pos;
+}
+
+void	parse_line(t_all *all, char *buf, int pos)
+{
+	int		len;
+
+	while (buf[pos])
+	{
+		while (buf[pos] == ' ')
+			pos++;
+		if (!buf[pos])
+			break;
+		args_increase(all);
+		len = arg_len(buf, pos);
+		if (buf[pos] == '\'')
+			parse_single_quote(all, buf, &pos);
+		else if (buf[pos] == '"')
+			parse_double_quote(all, buf, &pos);
+		pos++;
+	}
+}
+
+void	do_eot_signal(t_all *all)
+{
+	args_increase(all);
+	all->args[all->arg_len - 1] = "exit";
+}
+
 int		parse(t_all *all)
 {
 	char	*buf;
@@ -73,14 +85,9 @@ int		parse(t_all *all)
 	if (!buf)
 		return (1);
 	if (!buf[0])
-	{
-		all->args = malloc(sizeof(char*) * 2);
-		all->args[0] = "exit";
-		all->args[1] = 0;
-		execute_cmd(all);
-		return (2);
-	}
-	parse_line(all, buf, 0);
+		do_eot_signal(all);
+	else
+		parse_line(all, buf, 0);
 	free(buf);
 	return (0);
 }

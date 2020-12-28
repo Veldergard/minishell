@@ -15,6 +15,7 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
+	parse.c\
 	debug.c\
 	read_command.c\
 	main.c\
@@ -46,7 +47,7 @@ $(OBJSUBDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@
 
