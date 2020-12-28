@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:57:26 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/28 20:05:24 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/28 20:14:19 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ int		dquote_len(char *buf, int *pos, int *len)
 	while (buf[*pos] && buf[*pos] != CHAR_DQOUTE)
 	{
 		if (buf[*pos] == CHAR_SUBSTITUTION)
-			get_env_size();
-		if (buf[*pos] == CHAR_ESCAPESEQUENCE)
 		{
+			get_env_size();
+		}
+		else if (buf[*pos] == CHAR_ESCAPESEQUENCE)
+		{
+			(*pos)++;
 		}
 		(*pos)++;
 		(*len)++;
