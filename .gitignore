@@ -4,8 +4,8 @@
 !includes
 !includes/*.h
 !sources/
-!sources/parse/
 !sources/*.c
+!sources/*/
 !sources/*/*.c
 !libft
 !libft/Makefile
