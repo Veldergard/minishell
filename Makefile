@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
+#    Updated: 2020/12/29 16:38:42 by itressa          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 LFTDIR = libft
@@ -15,15 +27,21 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
-	parse.c\
-	debug.c\
-	read_command.c\
+	$(addprefix parse/,\
+		arg_len.c\
+		parse.c\
+	)\
+	$(addprefix types/,\
+		init_t_all.c\
+	)\
+	print_prompt.c\
 	main.c\
+	ft_signal.c\
+	debug.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-#_OBJ_SUBDIR =
-#OBJ_SUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJ_SUBDIR))
+OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, parse types)
 
 .PHONY: all clean fclean re libft libclean libfclean
 
