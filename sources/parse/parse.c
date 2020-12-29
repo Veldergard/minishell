@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/28 18:56:23 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/29 19:59:34 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ void	parse_line(t_all *all, char *buf, int pos)
 
 	while (buf[pos])
 	{
-		while (buf[pos] == ' ')
+		while (is_space(buf[pos]))
 			pos++;
 		if (!buf[pos])
 			break;
 		args_increase(all);
-		len = arg_len(buf, pos);
+		len = arg_len(all, buf, pos);
+		if (!(all->args[all->arg_len] = malloc(len)))
+			return (20000);
 		if (buf[pos] == '\'')
 			parse_single_quote(all, buf, &pos);
 		else if (buf[pos] == '"')
@@ -80,14 +82,15 @@ void	do_eot_signal(t_all *all)
 int		parse(t_all *all)
 {
 	char	*buf;
+	int		stat;
 
-	get_next_line(0, &buf);
-	if (!buf)
+	stat = get_next_line(0, &buf);
+	if (stat < 0)
 		return (1);
-	if (!buf[0])
+	if (!buf[0] && stat == 0)
 		do_eot_signal(all);
 	else
-		parse_line(all, buf, 0);
+		stat = parse_line(all, buf, 0);
 	free(buf);
-	return (0);
+	return (stat);
 }

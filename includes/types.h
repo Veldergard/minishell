@@ -32,7 +32,7 @@ enum e_pipe
 enum e_token
 {
 	CHAR_NULL				= '\0',
-	CHAR_QOUTE				= '\'',
+	CHAR_QUOTE				= '\'',
 	CHAR_DQUOTE				= '\"',
 	CHAR_PIPE				= '|',
 	CHAR_AMPERSAND			= '&',

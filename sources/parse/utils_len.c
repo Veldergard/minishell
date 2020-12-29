@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   utils_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/28 15:34:46 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/29 19:38:36 by olaurine         ###   ########.fr       */
+/*   Created: 2020/12/29 17:07:38 by olaurine          #+#    #+#             */
+/*   Updated: 2020/12/29 19:38:04 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-# define pass (void)0;
+#include <stdlib.h>
+#include "minishell.h"
+#include "parse.h"
+#include "get_next_line.h"
 
-int		parse(t_all *all);
-int		arg_len(t_all *all, char *buf, int pos)
-
-#endif
+int 	is_envp_symbol(char c)
+{
+	if (c >= 48 && c <= 57)
+		return (3);
+	if ((c == '*') || (c == '@') || (c == '#') ||
+		(c == '?') || (c == '-') || (c == '$') || (c == '!'))
+		return (2);
+	if ((c >= 65 && <= 90) || (c >= 97 && <= 122) || (c == '_'))
+		return (1);
+	return (0);
+}

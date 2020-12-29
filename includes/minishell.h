@@ -22,7 +22,7 @@ int		read_command();
 
 void	add_redirect(t_all *all, char *filename, int type);
 void	execute_cmd(t_all *all);
-void	write_env(t_all *all, char *nmae, char *buf);
+void	write_env(t_all *all, char *name, char *buf);
 int		get_env_len(t_all *all, char *name, int size);
 
 #endif
