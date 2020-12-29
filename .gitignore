@@ -3,7 +3,8 @@
 !Makefile
 !includes
 !includes/*.h
-!sources
+!sources/
+!sources/parse/
 !sources/*.c
 !sources/*/*.c
 !libft
