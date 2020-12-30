@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/29 16:38:42 by itressa          ###   ########.fr        #
+#    Updated: 2020/12/30 17:47:52 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,12 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
+	$(addprefix error/,\
+		print_error.c\
+	)\
+	$(addprefix exec/,\
+		ft_exec.c\
+	)\
 	$(addprefix parse/,\
 		arg_len.c\
 		parse.c\
@@ -36,12 +42,12 @@ SRC = $(addprefix $(SRCDIR)/, \
 	)\
 	print_prompt.c\
 	main.c\
-	ft_signal.c\
 	debug.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, parse types)
+_OBJSUBDIR = error exec parse types
+OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 .PHONY: all clean fclean re libft libclean libfclean
 

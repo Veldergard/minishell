@@ -21,7 +21,7 @@ void	debug_print_arg(int argc, char *argv[], char *environ[]);
 void	print_prompt();
 
 void	add_redirect(t_all *all, char *filename, int type);
-void	execute_cmd(t_all *all);
+void	ft_exec(t_all *all);
 void	write_env(t_all *all, char *nmae, char *buf);
 int		get_env_len(t_all *all, char *name, int size);
 

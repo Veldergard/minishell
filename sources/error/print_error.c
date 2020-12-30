@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/30 17:47:11 by itressa          ###   ########.fr       */
+/*   Created: 2020/12/30 17:26:11 by itressa           #+#    #+#             */
+/*   Updated: 2020/12/30 17:45:37 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parse.h"
+#include <errno.h>
+#include <string.h>
 
-int		main(int argc, char *argv[], char *envp[])
+void	print_exec_error_errno(char *cmd)
 {
-	t_all	all;
+	char	*error;
 
-	(void)argc, (void)argv;
-	init_t_all(&all, envp);
-	while (1)
-	{
-		print_prompt();
-	    if (1 == parse(&all))
-	    	break ;
-	    // do_redirects();
-	    ft_exec(&all);
-	}
-	destroy_t_all(&all);
-	return (0);
+	error = strerror(errno);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(error, 2);
 }
