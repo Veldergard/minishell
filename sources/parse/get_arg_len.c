@@ -18,11 +18,12 @@ int		get_env_len(t_all *all, char *name, int size);
 
 int 	escape_len(char *buf, int *pos, int *len)
 {
-	(*pos) += 2;
+	(*pos)++;
 	(*len)++;
 	if (buf[*pos] != '$' && buf[*pos] != '`'
 		&& buf[*pos] != '"' && buf[*pos] != '\')
 			(*len)++;
+	(*pos)++;
 }
 
 int		quote_len(char *buf, int *pos, int *len)
@@ -33,21 +34,8 @@ int		quote_len(char *buf, int *pos, int *len)
 		(*pos)++;
 		(*len)++;
 	}
-}
-
-int		dquote_len(t_all *all, char *buf, int *pos, int *len)
-{
-
-	(*pos)++;
-	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
-	{
-		if (buf[*pos] == CHAR_ESCAPESEQUENCE)
-		{
-			escape_len(buf, pos, len);
-		}
-		else if (buf[*pos] == CHAR_SUBSTITUTION)
-			sub_len(all, buf, pos, len);
-	}
+	if (buf[*pos] == CHAR_QUOTE)
+		(*pos)++;
 }
 
 void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
@@ -72,6 +60,27 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 		(*pos)++;
 		(*len)++;
 	}
+}
+
+int		dquote_len(t_all *all, char *buf, int *pos, int *len)
+{
+	(*pos)++;
+	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
+	{
+		if (buf[*pos] == CHAR_ESCAPESEQUENCE)
+		{
+			escape_len(buf, pos, len);
+		}
+		else if (buf[*pos] == CHAR_SUBSTITUTION)
+			subtitution_len(all, buf, pos, len);
+		else
+		{
+			(*pos)++;
+			(*len)++;
+		}
+	}
+	if (buf[*pos] == CHAR_DQUOTE)
+		(*pos)++;
 }
 
 int		get_arg_len(t_all *all, char *buf, int pos)

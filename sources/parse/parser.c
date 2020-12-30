@@ -37,20 +37,6 @@ int		args_increase(t_all *all)
 	return (0);
 }
 
-void	parse_single_quote(t_all *all, char *buf, int *pos)
-{
-	(void)all;
-	while (buf[*pos] && buf[*pos] != '\'')
-	{
-		(*pos)++;
-	}
-}
-
-void	parse_double_quote(t_all *all, char *buf, int *pos)
-{
-	(void)all, (void)buf, (void)pos;
-}
-
 void	parse_line(t_all *all, char *buf, int pos)
 {
 	int		len;
@@ -63,13 +49,9 @@ void	parse_line(t_all *all, char *buf, int pos)
 			break;
 		args_increase(all);
 		len = arg_len(all, buf, pos);
-		if (!(all->args[all->arg_len] = malloc(len)))
+		if (!(all->args[all->arg_len] = malloc(len + 1)))
 			return (20000);
-		if (buf[pos] == '\'')
-			parse_single_quote(all, buf, &pos);
-		else if (buf[pos] == '"')
-			parse_double_quote(all, buf, &pos);
-		pos++;
+		parse_arg(all, buf, &pos, len);
 	}
 }
 
