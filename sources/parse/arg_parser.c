@@ -14,7 +14,7 @@ void 	parse_escape(t_all *all, char *buf, int *pos, int *i)
 {
 	(*pos)++;
 	if (buf[*pos] != '$' && buf[*pos] != '`'
-		&& buf[*pos] != '"' && buf[*pos] != '\')
+		&& buf[*pos] != '"' && buf[*pos] != '\'')
 	{
 		all->args[all->arg_len][(*i)++] = buf[(*pos) - 1];
 		all->args[all->arg_len][(*i)++] = buf[*pos];
