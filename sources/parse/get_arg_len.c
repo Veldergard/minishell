@@ -6,13 +6,13 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:57:26 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/29 20:00:47 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:06:57 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
-#include "parse.h"
+#include "parser.h"
 #include "get_next_line.h"
 int		get_env_len(t_all *all, char *name, int size);
 
@@ -91,8 +91,9 @@ int		get_arg_len(t_all *all, char *buf, int pos)
 	while (buf[pos])
 	{
 		if ((len == 1 && (buf[pos] == ' ' || buf[pos] == '\t' ||
-			buf[pos] == '<' || buf[pos - 1] == '<')) || (len == 2 &&
-			buf[pos - 1] == '>' && buf[pos - 2] == '>'))
+				buf[pos] == '<' || buf[pos - 1] == '<' || (buf[pos - 1] == '>'
+				&& buf[pos] != '>'))) || (len == 2 && buf[pos - 1] == '>'
+				&& buf[pos - 2] == '>'))
 			break;
 		else if (buf[pos] == CHAR_QUOTE)
 			quote_len(buf, &pos, &len);

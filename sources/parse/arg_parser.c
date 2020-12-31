@@ -1,3 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
+/*   Updated: 2020/12/31 16:08:01 by olaurine         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+#include "minishell.h"
+#include "parser.h"
+#include "get_next_line.h"
+int		get_env_len(t_all *all, char *name, int size);
+
 void	parse_quote(t_all *all, char *buf, int *pos, int *i)
 {
     (*pos)++;
@@ -44,7 +62,7 @@ void 	parse_subtitution(t_all *all, char *buf, int *pos, int *i)
 	{
 		env_value = get_env(all, buf + (*pos), size);
 		j = 0;
-		while ()
+		while (env_value[j])
 		{
 			all->args[all->arg_len][(*i)++] = env_value[j++];
 			(*pos)++;

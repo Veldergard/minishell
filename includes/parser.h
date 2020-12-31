@@ -16,5 +16,6 @@
 
 int		parse(t_all *all);
 int		arg_len(t_all *all, char *buf, int pos)
+char	*get_env(t_all, *all, char *name, int size);
 
 #endif
