@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/28 19:58:41 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/30 17:22:30 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,14 @@ typedef struct				s_all {
 	char					**args;
 	int						arg_len;
 	char					**envp;
-	t_redirect				*redirect; // for t_redirect;
-	enum e_pipe				pipe; // 0, 1
+	t_redirect				*redirect;
+	enum e_pipe				pipe;
+	int 					stdfd[2];
+	char					**path;
+	int						last_exit_status;
 }							t_all;
+
+void						init_t_all(t_all *all, char **envp);
+void						destroy_t_all(t_all *all);
 
 #endif

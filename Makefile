@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
+#    Updated: 2020/12/31 15:53:14 by itressa          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 LFTDIR = libft
@@ -15,15 +27,37 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
-	parse.c\
-	debug.c\
-	read_command.c\
+	$(addprefix env/,\
+		get_env.c\
+		get_env_len.c\
+		write_env.c\
+	)\
+	$(addprefix error/,\
+		print_error.c\
+	)\
+	$(addprefix exec/,\
+		ft_exec.c\
+	)\
+	$(addprefix parse/,\
+		arg_len.c\
+		parse.c\
+	)\
+	$(addprefix types/,\
+		init_t_all.c\
+	)\
+	print_prompt.c\
 	main.c\
+	debug.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-#_OBJ_SUBDIR =
-#OBJ_SUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJ_SUBDIR))
+_OBJSUBDIR = env error exec parse types
+OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
+
+TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
+TESTS = $(patsubst %, $(OBJDIR)/%.o,\
+	test_get_env\
+)
 
 .PHONY: all clean fclean re libft libclean libfclean
 
@@ -35,7 +69,7 @@ libft:
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	make -C $(LFTDIR)
 
-$(NAME): $(OBJDIR) $(OBJSUBDIR) $(OBJ)
+$(NAME): $(OBJ)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(OBJ) -o $@
 
@@ -47,7 +81,7 @@ $(OBJSUBDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c  $(OBJDIR) $(OBJSUBDIR)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@
 
@@ -68,3 +102,12 @@ fclean: libfclean clean
 	rm -f $(NAME)
 
 re: fclean all
+	@echo -e "\r\033[1;32m> $@\033[0m"
+
+$(OBJDIR)/%.o: test/%.c
+	@echo -e "\r\033[1;32m> $@\033[0m"
+	$(CC) $(CFLAGS) $< -c -o $@
+
+test_get_env: libft $(TOBJ) $(TESTS)
+	@echo -e "\r\033[1;32m> $@\033[0m"
+	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@

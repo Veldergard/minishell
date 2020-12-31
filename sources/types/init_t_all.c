@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_t_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/30 17:47:11 by itressa          ###   ########.fr       */
+/*   Created: 2020/12/30 15:20:47 by itressa           #+#    #+#             */
+/*   Updated: 2020/12/30 17:21:23 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parse.h"
 
-int		main(int argc, char *argv[], char *envp[])
+void	init_t_all(t_all *all, char **envp)
 {
-	t_all	all;
+	ft_bzero(all, sizeof(t_all));
+	all->envp = envp;
+	all->stdfd[0] = dup(0);
+	all->stdfd[1] = dup(1);
+	//all->path = ft_split(get_env(all, "PATH"), ':');
+}
 
-	(void)argc, (void)argv;
-	init_t_all(&all, envp);
-	while (1)
-	{
-		print_prompt();
-	    if (1 == parse(&all))
-	    	break ;
-	    // do_redirects();
-	    ft_exec(&all);
-	}
-	destroy_t_all(&all);
-	return (0);
+void	destroy_t_all(t_all *all)
+{
+	close(all->stdfd[0]);
+	close(all->stdfd[1]);
 }

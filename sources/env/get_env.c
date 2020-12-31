@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/30 17:47:11 by itressa          ###   ########.fr       */
+/*   Created: 2020/12/31 14:46:27 by itressa           #+#    #+#             */
+/*   Updated: 2020/12/31 15:16:41 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parse.h"
 
-int		main(int argc, char *argv[], char *envp[])
+char	*get_env(t_all *all, char *name, int size)
 {
-	t_all	all;
+	int		i;
 
-	(void)argc, (void)argv;
-	init_t_all(&all, envp);
-	while (1)
+	i = 0;
+	while (all->envp[i])
 	{
-		print_prompt();
-	    if (1 == parse(&all))
-	    	break ;
-	    // do_redirects();
-	    ft_exec(&all);
+		if (all->envp[i][size] == '=' && !ft_strncmp(all->envp[i], name, size))
+			return (all->envp[i] + size + 1);
+		i++;
 	}
-	destroy_t_all(&all);
-	return (0);
+	return ("");
 }
