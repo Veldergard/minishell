@@ -50,9 +50,10 @@ int		parse_line(t_all *all, char *buf, int pos)
 		args_increase(all);
 		len = arg_len(all, buf, pos);
 		if (!(all->args[all->arg_len] = malloc(len + 1)))
-			return (20000);
+			return (1);
 		parse_arg(all, buf, &pos, len);
 	}
+	return (0);
 }
 
 void	do_eot_signal(t_all *all)
