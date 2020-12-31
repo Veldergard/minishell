@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/31 16:41:05 by itressa          ###   ########.fr        #
+#    Updated: 2020/12/31 19:46:14 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ libft:
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	make -C $(LFTDIR)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJDIR) $(OBJSUBDIR) $(OBJ)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(OBJ) -o $@
 
@@ -84,7 +84,7 @@ $(OBJSUBDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c  $(OBJDIR) $(OBJSUBDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
