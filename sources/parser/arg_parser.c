@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 18:53:28 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/31 19:19:20 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,19 @@ void    parse_arg(t_all *all, char *buf, int *pos, int len)
 	i = 0;
 	all->args[all->arg_len - 1][len] = 0;
 	while (i < len) {
-		if (buf[*pos] == '\\')
-			parse_escape(all, buf, pos, &i);
-		else if (buf[*pos] == '$')
-			parse_subtitution(all, buf, pos, &i);
-		else if (buf[*pos] == '\'')
+		if ((len >= 1 && (buf[*pos] == ' ' || buf[*pos] == '\t' ||
+			buf[*pos] == '<' || buf[(*pos) - 1] == '<' || (buf[(*pos) - 1] == '>'
+			&& buf[*pos] != '>'))) || (len == 2 && buf[(*pos) - 1] == '>'
+			&& buf[(*pos) - 2] == '>'))
+			break;
+		else if (buf[*pos] == CHAR_QUOTE)
 			parse_quote(all, buf, pos, &i);
-		else if (buf[*pos] == '\"')
+		else if (buf[*pos] == CHAR_DQUOTE)
 			parse_double_quote(all, buf, pos, &i);
+		else if (buf[*pos] == CHAR_SUBSTITUTION)
+			parse_subtitution(all, buf, pos, &i);
+		else if (buf[*pos] == CHAR_ESCAPESEQUENCE)
+			parse_escape(all, buf, pos, &i);
 		else
 			parse_common(all, buf, pos, &i);
 	}

@@ -90,7 +90,7 @@ int		get_arg_len(t_all *all, char *buf, int pos)
 	len = 0;
 	while (buf[pos])
 	{
-		if ((len == 1 && (buf[pos] == ' ' || buf[pos] == '\t' ||
+		if ((len >= 1 && (buf[pos] == ' ' || buf[pos] == '\t' ||
 				buf[pos] == '<' || buf[pos - 1] == '<' || (buf[pos - 1] == '>'
 				&& buf[pos] != '>'))) || (len == 2 && buf[pos - 1] == '>'
 				&& buf[pos - 2] == '>'))
