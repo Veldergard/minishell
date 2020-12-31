@@ -59,21 +59,21 @@ int		parse_line(t_all *all, char *buf, int pos)
 void	do_eot_signal(t_all *all)
 {
 	args_increase(all);
-	all->args[all->arg_len - 1] = "exit";
+	all->args[all->arg_len - 1] = ft_strdup("exit");
 }
 
 int		parse(t_all *all)
 {
 	char	*buf;
-	int		stat;
+	int		ret;
 
-	stat = get_next_line(0, &buf);
-	if (stat < 0)
+	ret = get_next_line(0, &buf);
+	if (ret < 0)
 		return (1);
-	if (!buf[0] && stat == 0)
+	if (!buf[0] && ret == 0)
 		do_eot_signal(all);
 	else
-		stat = parse_line(all, buf, 0);
+		ret = parse_line(all, buf, 0);
 	free(buf);
-	return (stat);
+	return (ret);
 }
