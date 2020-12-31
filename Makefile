@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+         #
+#    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/31 16:21:28 by olaurine         ###   ########.fr        #
+#    Updated: 2020/12/31 16:41:05 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ $(OBJSUBDIR):
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c  $(OBJDIR) $(OBJSUBDIR)
 	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $< -c -o $@
+	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
 libclean:
 	@echo -e "\r\033[1;32m> $@\033[0m"
@@ -104,12 +104,13 @@ fclean: libfclean clean
 	rm -f $(NAME)
 
 re: fclean all
-	@echo -e "\r\033[1;32m> $@\033[0m"
 
 $(OBJDIR)/%.o: test/%.c
 	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $< -c -o $@
+	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
 test_get_env: libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
+
+include $(OBJ .o=.d)
