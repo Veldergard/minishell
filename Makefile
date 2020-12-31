@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/30 17:47:52 by itressa          ###   ########.fr        #
+#    Updated: 2020/12/31 15:53:14 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,11 @@ OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 _OBJSUBDIR = env error exec parse types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
+TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
+TESTS = $(patsubst %, $(OBJDIR)/%.o,\
+	test_get_env\
+)
+
 .PHONY: all clean fclean re libft libclean libfclean
 
 ################################################################################
@@ -64,7 +69,7 @@ libft:
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	make -C $(LFTDIR)
 
-$(NAME): $(OBJDIR) $(OBJSUBDIR) $(OBJ)
+$(NAME): $(OBJ)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(OBJ) -o $@
 
@@ -76,7 +81,7 @@ $(OBJSUBDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c  $(OBJDIR) $(OBJSUBDIR)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@
 
@@ -97,3 +102,12 @@ fclean: libfclean clean
 	rm -f $(NAME)
 
 re: fclean all
+	@echo -e "\r\033[1;32m> $@\033[0m"
+
+$(OBJDIR)/%.o: test/%.c
+	@echo -e "\r\033[1;32m> $@\033[0m"
+	$(CC) $(CFLAGS) $< -c -o $@
+
+test_get_env: libft $(TOBJ) $(TESTS)
+	@echo -e "\r\033[1;32m> $@\033[0m"
+	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@

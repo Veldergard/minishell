@@ -7,6 +7,8 @@
 !sources/*.c
 !sources/*/
 !sources/*/*.c
+!test/
+!test/*.c
 !libft
 !libft/Makefile
 !libft/*.c
