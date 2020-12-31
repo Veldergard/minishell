@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:57:26 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 16:06:57 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:28:06 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 #include "minishell.h"
 #include "parser.h"
 #include "get_next_line.h"
-int		get_env_len(t_all *all, char *name, int size);
 
-int 	escape_len(char *buf, int *pos, int *len)
+void	escape_len(char *buf, int *pos, int *len)
 {
 	(*pos)++;
 	(*len)++;
 	if (buf[*pos] != '$' && buf[*pos] != '`'
-		&& buf[*pos] != '"' && buf[*pos] != '\')
+		&& buf[*pos] != '"' && buf[*pos] != '\'')
 			(*len)++;
 	(*pos)++;
 }
 
-int		quote_len(char *buf, int *pos, int *len)
+void	quote_len(char *buf, int *pos, int *len)
 {
 	(*pos)++;
 	while (buf[*pos] && buf[*pos] != CHAR_QUOTE)
@@ -62,7 +61,7 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 	}
 }
 
-int		dquote_len(t_all *all, char *buf, int *pos, int *len)
+void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 {
 	(*pos)++;
 	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)

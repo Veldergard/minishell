@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   parser.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,9 +13,12 @@
 #ifndef PARSE_H
 # define PARSE_H
 # define pass (void)0;
+# include "types.h"
 
 int		parse(t_all *all);
-int		arg_len(t_all *all, char *buf, int pos)
-char	*get_env(t_all, *all, char *name, int size);
+int		arg_len(t_all *all, char *buf, int pos);
+void    parse_arg(t_all *all, char *buf, int *pos, int len);
+int 	is_envp_symbol(char c);
+int		is_space(char c);
 
 #endif

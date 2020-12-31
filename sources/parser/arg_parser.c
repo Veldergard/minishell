@@ -6,25 +6,22 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 16:08:01 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:31:31 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "minishell.h"
 #include "parser.h"
-#include "get_next_line.h"
-int		get_env_len(t_all *all, char *name, int size);
 
 void	parse_quote(t_all *all, char *buf, int *pos, int *i)
 {
-    (*pos)++;
-    while (buf[*pos] && buf[*pos] != CHAR_QUOTE)
-    {
+	(*pos)++;
+	while (buf[*pos] && buf[*pos] != CHAR_QUOTE)
+	{
 		all->args[all->arg_len][(*i)++] = buf[*pos];
-        (*pos)++;
-    }
-    if (buf[*pos] == CHAR_QUOTE)
+		(*pos)++;
+	}
+	if (buf[*pos] == CHAR_QUOTE)
 		(*pos)++;
 }
 
@@ -100,16 +97,16 @@ void    parse_arg(t_all *all, char *buf, int *pos, int len)
 
 	i = 0;
 	all->args[all->arg_len][len] = 0;
-    while (i < len) {
-        if (buf[*pos] == '\\')
+	while (i < len) {
+		if (buf[*pos] == '\\')
 			parse_escape(all, buf, pos, &i);
-        else if (buf[*pos] == '$')
+		else if (buf[*pos] == '$')
 			parse_subtitution(all, buf, pos, &i);
-        else if (buf[*pos] == '\'')
-            parse_single_quote(all, buf, pos, &i);
-        else if (buf[*pos] == '\"')
-            parse_double_quote(all, buf, pos);
-        else
-            parse();
-    }
+		else if (buf[*pos] == '\'')
+			parse_quote(all, buf, pos, &i);
+		else if (buf[*pos] == '\"')
+			parse_double_quote(all, buf, pos, &i);
+		else
+			continue;
+	}
 }

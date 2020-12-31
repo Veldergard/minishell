@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parser.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include "minishell.h"
-#include "parse.h"
+#include "parser.h"
 #include "get_next_line.h"
 
 int		args_increase(t_all *all)
@@ -37,7 +37,7 @@ int		args_increase(t_all *all)
 	return (0);
 }
 
-void	parse_line(t_all *all, char *buf, int pos)
+int		parse_line(t_all *all, char *buf, int pos)
 {
 	int		len;
 

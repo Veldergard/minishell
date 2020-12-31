@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parse.h"
+#include "parser.h"
 
 int		main(int argc, char *argv[], char *envp[])
 {

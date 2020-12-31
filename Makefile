@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/31 15:53:14 by itressa          ###   ########.fr        #
+#    Updated: 2020/12/31 16:21:28 by olaurine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,11 @@ SRC = $(addprefix $(SRCDIR)/, \
 	$(addprefix exec/,\
 		ft_exec.c\
 	)\
-	$(addprefix parse/,\
-		arg_len.c\
-		parse.c\
+	$(addprefix parser/,\
+		parser_utils.c\
+		parser.c\
+		get_arg_len.c\
+		arg_parser.c\
 	)\
 	$(addprefix types/,\
 		init_t_all.c\
@@ -51,7 +53,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-_OBJSUBDIR = env error exec parse types
+_OBJSUBDIR = env error exec parser types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
