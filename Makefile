@@ -23,7 +23,7 @@ HEADERS = $(addprefix $(I_DIR)/,\
 )
 
 CC = clang
-CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
+CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \

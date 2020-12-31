@@ -49,7 +49,7 @@ int		parse_line(t_all *all, char *buf, int pos)
 			break;
 		args_increase(all);
 		len = get_arg_len(all, buf, pos);
-		if (!(all->args[all->arg_len] = malloc(len + 1)))
+		if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
 			return (1);
 		parse_arg(all, buf, &pos, len);
 	}

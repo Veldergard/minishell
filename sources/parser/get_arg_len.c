@@ -49,6 +49,7 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 			size++;
 	else if (ret & 2)
 		size = 1;
+	(*pos)++;
 	if (size)
 	{
 		(*len) += get_env_len(all, buf + (*pos), size);
