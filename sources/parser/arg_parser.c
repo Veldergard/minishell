@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 17:35:31 by olaurine         ###   ########.fr       */
+/*   Updated: 2020/12/31 18:53:28 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ void	parse_double_quote(t_all *all, char *buf, int *pos, int *i)
 		(*pos)++;
 }
 
+void	parse_common(t_all *all, char *buf, int *pos, int *i)
+{
+	all->args[all->arg_len - 1][(*i)++] = buf[(*pos)++];
+}
+
 void    parse_arg(t_all *all, char *buf, int *pos, int len)
 {
 	int i;
@@ -102,9 +107,6 @@ void    parse_arg(t_all *all, char *buf, int *pos, int len)
 		else if (buf[*pos] == '\"')
 			parse_double_quote(all, buf, pos, &i);
 		else
-		{
-			(*pos)++;
-			i++;
-		}
+			parse_common(all, buf, pos, &i);
 	}
 }

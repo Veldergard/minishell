@@ -20,5 +20,6 @@ int		get_arg_len(t_all *all, char *buf, int pos);
 void    parse_arg(t_all *all, char *buf, int *pos, int len);
 int 	is_envp_symbol(char c);
 int		is_space(char c);
+void	clear_args(t_all *all);
 
 #endif

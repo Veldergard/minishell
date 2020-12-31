@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/30 17:47:11 by itressa          ###   ########.fr       */
+/*   Updated: 2020/12/31 19:05:25 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		main(int argc, char *argv[], char *envp[])
 	    	break ;
 	    // do_redirects();
 	    ft_exec(&all);
+	    clear_args(&all);
 	}
 	destroy_t_all(&all);
 	return (0);

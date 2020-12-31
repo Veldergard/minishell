@@ -43,6 +43,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		parser.c\
 		get_arg_len.c\
 		arg_parser.c\
+		cleaner.c\
 	)\
 	$(addprefix types/,\
 		init_t_all.c\
