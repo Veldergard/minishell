@@ -27,6 +27,11 @@ CFLAGS = -Wall -Wextra -g -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
+	$(addprefix env/,\
+		get_env.c\
+		get_env_len.c\
+		write_env.c\
+	)\
 	$(addprefix error/,\
 		print_error.c\
 	)\
@@ -46,7 +51,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-_OBJSUBDIR = error exec parse types
+_OBJSUBDIR = env error exec parse types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 .PHONY: all clean fclean re libft libclean libfclean
