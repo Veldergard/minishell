@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 14:45:04 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 14:54:26 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/02 20:23:50 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_exit(int argc, char *argv[])
 {
-	uint8_t	status;
+	int		status;
 
 	status = 0;
 	if (argc > 1)
@@ -24,5 +24,6 @@ int		ft_exit(int argc, char *argv[])
 		else
 			status = -1;
 	}
+	ft_putendl_fd("exit", 2);
 	exit(status);
 }
