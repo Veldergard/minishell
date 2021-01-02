@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/02 14:44:52 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/02 15:23:59 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,9 @@ _OBJSUBDIR = builtin env error exec parser types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
-TESTS = $(patsubst %, $(OBJDIR)/%.o,\
-	test_get_env\
+TESTS = $(patsubst %.c, $(OBJDIR)/%.o,\
+	test_get_env.c\
+	test_parser.c\
 )
 
 .PHONY: all clean fclean re libft libclean libfclean
@@ -114,6 +115,10 @@ $(OBJDIR)/%.o: test/%.c
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
 test_get_env: libft $(TOBJ) $(TESTS)
+	@echo -e "\r\033[1;32m> $@\033[0m"
+	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
+
+test_parser: libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 
