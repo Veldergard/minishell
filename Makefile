@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/02 15:23:59 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/02 15:24:53 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		init_t_all.c\
 	)\
 	print_prompt.c\
+	ft_signal.c\
 	main.c\
 	debug.c\
 )

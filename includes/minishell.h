@@ -23,6 +23,8 @@ void	print_prompt();
 void	add_redirect(t_all *all, char *filename, int type);
 void	ft_exec(t_all *all);
 
+void	minishell(t_all *all);
+
 /*
 **	ENV
 */
