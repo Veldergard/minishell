@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "color.h"
 
-void	print_prompt()
+void	print_prompt(void)
 {
 	char	*pwd;
 
