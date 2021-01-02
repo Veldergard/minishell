@@ -18,8 +18,8 @@ void	print_prompt(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	ft_putstr_fd(CLRLBLUE, 1);
-	ft_putstr_fd(pwd, 1);
-	ft_putstr_fd(CLRGREEN " ᐅ " CLRRESET, 1);
+	ft_putstr_fd(CLRLBLUE, 2);
+	ft_putstr_fd(pwd, 2);
+	ft_putstr_fd(CLRGREEN " ᐅ " CLRRESET, 2);
 	free(pwd);
 }
