@@ -22,8 +22,19 @@ void	print_prompt();
 
 void	add_redirect(t_all *all, char *filename, int type);
 void	ft_exec(t_all *all);
+
+/*
+**	ENV
+*/
+
 void	write_env(t_all *all, char *name, int size, char *buf);
 int		get_env_len(t_all *all, char *name, int size);
 char	*get_env(t_all *all, char *name, int size);
+
+/*
+**	Builtins
+*/
+
+int		ft_exit(int argc, char *argv[]);
 
 #endif

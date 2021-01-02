@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2020/12/31 19:46:14 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/02 14:44:52 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
+	$(addprefix builtin/,\
+		exit.c\
+	)\
 	$(addprefix env/,\
 		get_env.c\
 		get_env_len.c\
@@ -54,7 +57,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-_OBJSUBDIR = env error exec parser types
+_OBJSUBDIR = builtin env error exec parser types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
