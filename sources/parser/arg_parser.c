@@ -6,14 +6,14 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/03 18:13:06 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/03 18:50:56 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-void	parse_quote(t_all *all, char *buf, int *pos, int *i)
+void	parse_quote(t_all *all, const char *buf, int *pos, int *i)
 {
 	(*pos)++;
 	while (buf[*pos] && buf[*pos] != CHAR_QUOTE)
@@ -25,11 +25,11 @@ void	parse_quote(t_all *all, char *buf, int *pos, int *i)
 		(*pos)++;
 }
 
-void 	parse_escape(t_all *all, char *buf, int *pos, int *i)
+void 	parse_quoted_escape(t_all *all, const char *buf, int *pos, int *i)
 {
 	(*pos)++;
 	if (buf[*pos] != '$' && buf[*pos] != '`'
-		&& buf[*pos] != '"' && buf[*pos] != '\'')
+		&& buf[*pos] != '"' && buf[*pos] != '\\')
 	{
 		all->args[all->arg_len - 1][(*i)++] = buf[(*pos) - 1];
 		all->args[all->arg_len - 1][(*i)++] = buf[*pos];
@@ -39,6 +39,16 @@ void 	parse_escape(t_all *all, char *buf, int *pos, int *i)
 		all->args[all->arg_len - 1][(*i)++] = buf[*pos];
 	}
 	(*pos)++;
+}
+
+void 	parse_escape(t_all *all, const char *buf, int *pos, int *i)
+{
+	(*pos)++;
+	if (buf[*pos] != 0)
+	{
+		all->args[all->arg_len - 1][(*i)++] = buf[*pos];
+		(*pos)++;
+	}
 }
 
 void 	parse_subtitution(t_all *all, char *buf, int *pos, int *i)
@@ -73,7 +83,7 @@ void	parse_double_quote(t_all *all, char *buf, int *pos, int *i)
 	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
 	{
 		if (buf[*pos] == CHAR_ESCAPESEQUENCE)
-			parse_escape(all, buf, pos, i);
+			parse_quoted_escape(all, buf, pos, i);
 		else if (buf[*pos] == CHAR_SUBSTITUTION)
 			parse_subtitution(all, buf, pos, i);
 		else
@@ -86,7 +96,7 @@ void	parse_double_quote(t_all *all, char *buf, int *pos, int *i)
 		(*pos)++;
 }
 
-void	parse_common(t_all *all, char *buf, int *pos, int *i)
+void	parse_common(t_all *all, const char *buf, int *pos, int *i)
 {
 	all->args[all->arg_len - 1][*i] = buf[*pos];
 	(*i)++;
@@ -101,10 +111,10 @@ void    parse_arg(t_all *all, char *buf, int *pos, int len)
 	all->args[all->arg_len - 1][len] = 0;
 	while (i < len) {
 		if ((i >= 1 && (buf[*pos] == ' ' || buf[*pos] == '\t' ||
-			buf[*pos] == '<' || buf[(*pos) - 1] == '<' || (buf[(*pos) - 1] != '>'
-			&& buf[*pos] == '>') || (buf[(*pos) - 1] == '>' &&
-			buf[*pos] != '>'))) || (i == 2 && buf[(*pos) - 1] == '>'
-			&& buf[(*pos) - 2] == '>'))
+			buf[*pos] == '<' || buf[(*pos) - 1] == '<' ||
+			(buf[(*pos) - 1] != '>' && buf[*pos] == '>') ||
+			(buf[(*pos) - 1] == '>' && buf[*pos] != '>'))) ||
+			(i == 2 && buf[(*pos) - 1] == '>' && buf[(*pos) - 2] == '>'))
 			break;
 		else if (buf[*pos] == CHAR_QUOTE)
 			parse_quote(all, buf, pos, &i);

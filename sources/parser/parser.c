@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "minishell.h"
 #include "parser.h"
 #include "get_next_line.h"
 
@@ -41,7 +40,8 @@ int		parse_line(t_all *all, char *buf, int pos)
 {
 	int		len;
 
-	while (buf[pos])
+	len = 1;
+	while (buf[pos] && len)
 	{
 		while (is_space(buf[pos]))
 			pos++;
