@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 19:19:20 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/03 18:13:06 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ void	parse_double_quote(t_all *all, char *buf, int *pos, int *i)
 
 void	parse_common(t_all *all, char *buf, int *pos, int *i)
 {
-	all->args[all->arg_len - 1][(*i)++] = buf[(*pos)++];
+	all->args[all->arg_len - 1][*i] = buf[*pos];
+	(*i)++;
+	(*pos)++;
 }
 
 void    parse_arg(t_all *all, char *buf, int *pos, int len)
@@ -98,9 +100,10 @@ void    parse_arg(t_all *all, char *buf, int *pos, int len)
 	i = 0;
 	all->args[all->arg_len - 1][len] = 0;
 	while (i < len) {
-		if ((len >= 1 && (buf[*pos] == ' ' || buf[*pos] == '\t' ||
-			buf[*pos] == '<' || buf[(*pos) - 1] == '<' || (buf[(*pos) - 1] == '>'
-			&& buf[*pos] != '>'))) || (len == 2 && buf[(*pos) - 1] == '>'
+		if ((i >= 1 && (buf[*pos] == ' ' || buf[*pos] == '\t' ||
+			buf[*pos] == '<' || buf[(*pos) - 1] == '<' || (buf[(*pos) - 1] != '>'
+			&& buf[*pos] == '>') || (buf[(*pos) - 1] == '>' &&
+			buf[*pos] != '>'))) || (i == 2 && buf[(*pos) - 1] == '>'
 			&& buf[(*pos) - 2] == '>'))
 			break;
 		else if (buf[*pos] == CHAR_QUOTE)
