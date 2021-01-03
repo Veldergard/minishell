@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/02 15:24:53 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/03 16:01:21 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,4 +123,4 @@ test_parser: libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 
-include $(OBJ .o=.d)
+include $(OBJ:.o=.d)
