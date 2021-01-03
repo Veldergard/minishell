@@ -123,4 +123,4 @@ test_parser: libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 
-include $(OBJ:.o=.d)
+-include $(OBJ:.o=.d)
