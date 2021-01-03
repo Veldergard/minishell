@@ -53,6 +53,10 @@ int		parse_line(t_all *all, char *buf, int pos)
 			return (1);
 		parse_arg(all, buf, &pos, len);
 	}
+	if (all->arg_len && all->args[0][0])
+	{
+		
+	}
 	return (0);
 }
 
