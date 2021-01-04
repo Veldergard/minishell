@@ -39,4 +39,16 @@ char	*get_env(t_all *all, char *name, int size);
 
 int		ft_exit(int argc, char *argv[]);
 
+/*
+**	CMD List  // TODO
+*/
+
+t_cmd			*ft_create_cmd(void);
+void			ft_cmd_addfront(t_cmd **cmd, t_cmd *new);
+int				ft_cmdlen(t_cmd *cmd);
+t_cmd			*ft_get_cmd_end(t_cmd *cmd);
+void			ft_cmd_addback(t_cmd **cmd, t_cmd *new);
+void			ft_cmd_delete(t_cmd *cmd);
+void			ft_cmd_clearall(t_cmd **cmd);
+
 #endif
