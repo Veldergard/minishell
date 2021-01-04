@@ -14,48 +14,75 @@
 #include "parser.h"
 #include "get_next_line.h"
 
-int		args_increase(t_all *all)
+int		args_increase(t_cmd	*cmd)
 {
 	char	**tmp;
 	int		i;
 
-	if (!(tmp = malloc(sizeof(char*) * (all->arg_len + 2))))
-		return (1);
-	i = all->arg_len;
-	all->arg_len += 1;
+	if (!(tmp = malloc(sizeof(char*) * (cmd->arg_len + 2))))
+		return (0);
+	i = cmd->arg_len;
+	cmd->arg_len += 1;
 	tmp[i + 1] = 0;
 	tmp[i] = 0;
-	while (i > 0)
-	{
-		i--;
-		tmp[i] = all->args[i];
-	}
-	if (all->args)
-		free(all->args);
-	all->args = tmp;
+	while (i-- > 0)
+		tmp[i] = cmd->args[i];
+	if (cmd->args)
+		free(cmd->args);
+	cmd->args = tmp;
+	return (1);
+}
+
+int		parse_new_cmd(t_cmd **cmd, int *pos)
+{
+	t_cmd *new_cmd;
+
+	if (!new_cmd = ft_cmd_new())
+		return (0);
+	ft_cmd_addback(new_cmd);
+	*cmd = (*cmd)->next;
+	(*pos)++;
+	return (1);
+}
+
+int		parse_redirections(int *pos)
+{
+	// затычечка
+	(*pos)++;
 	return (0);
 }
 
 int		parse_line(t_all *all, char *buf, int pos)
 {
 	int		len;
+	t_cmd	*cmd;
 
-	len = 1;
-	while (buf[pos] && len)
+	cmd = ft_cmd_new();
+	all->cmds = cmd;
+	while (buf[pos])
 	{
 		while (is_space(buf[pos]))
 			pos++;
 		if (!buf[pos])
 			break;
-		args_increase(all);
-		len = get_arg_len(all, buf, pos);
-		if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
-			return (1);
-		parse_arg(all, buf, &pos, len);
-	}
-	if (all->arg_len && all->args[0][0])
-	{
-		
+		len = get_arg_len(buf, pos);
+		if (len <= 1 && ft_strchr(";|", buf[pos]))
+		{
+			if (!parse_new_cmd(&cmd, &pos))
+				return (1);
+		}
+		else if (len <= 2 && ft_strchr("><", buf[pos]))
+		{
+			parse_redirections(&pos);
+		}
+		else
+		{
+			if (!args_increase(cmd))
+				return (1);
+			if (!(cmd->args[cmd->arg_len - 1] = malloc(len + 1)))
+				return (1);
+			parse_arg(cmd, buf, &pos, len);
+		}
 	}
 	return (0);
 }

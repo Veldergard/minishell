@@ -67,11 +67,7 @@ typedef struct				s_cmd {
 }							t_cmd;
 
 typedef struct				s_all {
-	char					**args;
-	int						arg_len;
 	char					**envp;
-	t_redirect				*redirect;
-	enum e_pipe				pipe;
 	int						stdfd[2];
 	char					**path;
 	int						last_exit_status;

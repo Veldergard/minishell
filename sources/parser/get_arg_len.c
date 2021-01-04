@@ -47,7 +47,7 @@ void	quote_len(const char *buf, int *pos, int *len)
 		(*pos)++;
 }
 
-void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
+void	subtitution_len(char *buf, int *pos, int *len)
 {
 	int size;
 	int ret;
@@ -62,7 +62,7 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 	(*pos)++;
 	if (size)
 	{
-		(*len) += get_env_len(all, buf + (*pos), size);
+		(*len) += get_env_len(buf + (*pos), size);
 		(*pos) += 1 + size;
 	}
 	else
@@ -72,7 +72,7 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 	}
 }
 
-void	dquote_len(t_all *all, char *buf, int *pos, int *len)
+void	dquote_len(char *buf, int *pos, int *len)
 {
 	(*pos)++;
 	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
@@ -82,7 +82,7 @@ void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 			escape_len(buf, pos, len, 1);
 		}
 		else if (buf[*pos] == CHAR_SUBSTITUTION)
-			subtitution_len(all, buf, pos, len);
+			subtitution_len(buf, pos, len);
 		else
 		{
 			(*pos)++;
@@ -93,25 +93,29 @@ void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 		(*pos)++;
 }
 
-int		get_arg_len(t_all *all, char *buf, int pos)
+int		get_arg_len(char *buf, int pos)
 {
 	int		len;
 
 	len = 0;
 	while (buf[pos])
 	{
-		if ((len >= 1 && (buf[pos] == ' ' || buf[pos] == '\t' ||
-				buf[pos] == '<' || buf[pos - 1] == '<' || (buf[pos - 1] != '>'
-				&& buf[pos] == '>') || (buf[pos - 1] == '>' &&
+		if (len >= 1 && (ft_strchr("<;|", buf[pos - 1])
+			|| ft_strchr(" \t<;|", buf[pos]))
+			|| ((buf[pos - 1] != '>' && buf[pos] == '>')
+			|| (buf[pos - 1] == '>' && buf[pos] != '>'))
+			|| buf[pos] == '>' && buf[pos - 1] == '>')
+			return (len);
+		if ((len >= 1 && ((buf[pos - 1] != '>' && buf[pos] == '>') || (buf[pos - 1] == '>' &&
 				buf[pos] != '>'))) || (len == 2 && buf[pos - 1] == '>'
 				&& buf[pos - 2] == '>'))
 			break;
 		else if (buf[pos] == CHAR_QUOTE)
 			quote_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_DQUOTE)
-			dquote_len(all, buf, &pos, &len);
+			dquote_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_SUBSTITUTION)
-			subtitution_len(all, buf, &pos, &len);
+			subtitution_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_ESCAPESEQUENCE)
 			escape_len(buf, &pos, &len, 0);
 		else
