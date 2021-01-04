@@ -62,7 +62,7 @@ typedef struct				s_cmd {
 	char					**args;
 	int						arg_len;
 	t_redirect				*redirect;
-	enum e_pip				pipe;
+	enum e_pipe				pipe;
 	struct s_cmd			*next;
 }							t_cmd;
 
@@ -77,7 +77,7 @@ typedef struct				s_all {
 	int						last_exit_status;
 	enum e_status			status;
 	uint8_t					exit_status;
-	t_cmd					*cmds
+	t_cmd					*cmds;
 }							t_all;
 
 void						init_t_all(t_all *all, char **envp);

@@ -40,7 +40,7 @@ void			ft_cmd_addback(t_cmd **cmd, t_cmd *new)
 	(void)new;
 }
 
-void			ft_cmd_delete(t_cmd *cmd);
+void			ft_cmd_delete(t_cmd *cmd)
 {
 	(void)cmd;
 }
