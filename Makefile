@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/04 15:53:23 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/04 18:49:32 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,13 +72,13 @@ TESTS = $(patsubst %.c, $(OBJDIR)/%.o,\
 
 ################################################################################
 
-all: libft $(NAME)
+all: $(NAME)
 
-libft:
+libft $(LFT):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	make -C $(LFTDIR)
 
-$(NAME): $(OBJDIR) $(OBJSUBDIR) $(OBJ)
+$(NAME): $(OBJ) | libft
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(OBJ) -o $@
 
@@ -90,7 +90,7 @@ $(OBJSUBDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	mkdir -p $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(LFT) | $(OBJDIR) $(OBJSUBDIR)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
@@ -112,7 +112,7 @@ fclean: libfclean clean
 
 re: fclean all
 
-$(OBJDIR)/%.o: test/%.c
+$(OBJDIR)/%.o: test/%.c $(LFT)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
