@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:17:03 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/04 16:23:16 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 18:58:49 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 void	do_common_signals(int num)
 {
-	if (g_pid == 0 && num == SIGQUIT)
+	if (num == SIGQUIT)
 	{
-		ft_putstr_fd("\b\b  \b\b", 2);
+		ft_putstr_fd("\a\b \b", 2);
 	}
 }
 
@@ -37,11 +37,7 @@ void	apply_signals_common(void)
 
 void	apply_signals_parent(void)
 {
-	int		stat;
-	pid_t	pid;
-
 	signal(SIGINT, do_parent_signals);
-	pid = waitpid(-1, &stat, 0);
 }
 
 void	remove_signals_parent(void)

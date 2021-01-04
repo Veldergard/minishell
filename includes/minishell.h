@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include "types.h"
 
-pid_t g_pid;
-
 void	debug_print_arg(int argc, char *argv[], char *envp[]);
 void	print_prompt();
 

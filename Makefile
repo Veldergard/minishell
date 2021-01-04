@@ -14,7 +14,7 @@ NAME = minishell
 
 LFTDIR = libft
 LFT = $(LIBFT_DIR)/libft.a
-CLIBFLAGS = -L$(LFTDIR) -lft -D BUFFER_SIZE=1
+CLIBFLAGS = -L$(LFTDIR) -lft
 
 I_DIR = includes
 HEADERS = $(addprefix $(I_DIR)/,\

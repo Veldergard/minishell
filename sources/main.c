@@ -6,21 +6,19 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/04 16:24:40 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 18:56:35 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "ft_signal.h"
-#include "get_next_line.h"
 
 void	minishell(t_all *all)
 {
 	int		stat;
 	pid_t	pid;
 
-	g_pid = 0;
 	if (!(pid = fork()))
 	{
 		while (1)
@@ -36,12 +34,17 @@ void	minishell(t_all *all)
 	}
 	else
 	{
-		g_pid = pid;
 		apply_signals_parent();
+		waitpid(pid, &stat, 0);
+		if (WIFEXITED(stat))
+		{
+			all->status = MS_STATUS_STOP;
+			all->exit_status = WSTOPSIG(stat);
+		}
 		remove_signals_parent();
 	}
 }
-#include <stdio.h>
+
 int		main(int argc, char *argv[], char *envp[])
 {
 	t_all	all;
@@ -53,8 +56,6 @@ int		main(int argc, char *argv[], char *envp[])
 	while (all.status == MS_STATUS_RUN)
 	{
 		minishell(&all);
-		printf("shell finished\n");
-		break;
 	}
 	destroy_t_all(&all);
 	return (all.exit_status);
