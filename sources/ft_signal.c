@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:17:03 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 20:14:08 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 18:58:49 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	do_common_signals(int num)
 {
 	if (num == SIGQUIT)
 	{
-		ft_putstr_fd("\b \b", 2);
+		ft_putstr_fd("\a\b \b", 2);
 	}
 }
 
@@ -26,7 +26,7 @@ void	do_parent_signals(int num)
 {
 	if (num == SIGINT)
 	{
-		ft_putendl_fd("", 2);
+		ft_putendl_fd("\b\b  \b\b", 2);
 	}
 }
 
