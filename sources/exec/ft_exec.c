@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 15:16:27 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/03 18:20:32 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_isbuiltin_cmd(char *cmd)
 
 int		ft_builtin(t_all *all)
 {
-	return (ft_exit(all->arg_len, all->args));
+	return (ft_exit(all->arg_len, all->args, all));
 }
 
 char	*get_exec_cmd(t_all *all)
@@ -78,7 +78,12 @@ void	ft_exec(t_all *all)
 	}
 	else
 	{
-		waitpid(pid, &(all->last_exit_status), 0);
+		waitpid(pid, &stat, 0);
+		all->last_exit_status = 0;
+		if (WIFEXITED(stat))
+			all->last_exit_status = WEXITSTATUS(stat);
+		if (WIFSIGNALED(stat))
+			all->last_exit_status = 128 + WTERMSIG(stat);
 	}
 	free(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 17:16:45 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 15:55:59 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_env(t_all *all, char *name, int size);
 **	Builtins
 */
 
-int		ft_exit(int argc, char *argv[]);
+int		ft_exit(int argc, char *argv[], t_all *all);
 
 /*
 **	CMD List  // TODO
