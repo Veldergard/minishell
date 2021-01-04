@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/03 16:01:21 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/04 15:53:23 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 LFTDIR = libft
 LFT = $(LIBFT_DIR)/libft.a
-CLIBFLAGS = -L$(LFTDIR) -lft
+CLIBFLAGS = -L$(LFTDIR) -lft -D BUFFER_SIZE=1
 
 I_DIR = includes
 HEADERS = $(addprefix $(I_DIR)/,\
