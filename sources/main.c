@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 20:14:34 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 20:04:46 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	minishell(t_all *all)
 			if (1 == parse(all))
 				break;
 			// do_redirects();
-			if (all->args)
+			if (all->cmds)
 				ft_exec(all);
-			clear_args(all);
+			clear_args(all->cmds);
 		}
 	}
 	else

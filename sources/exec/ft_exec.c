@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/03 18:20:32 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/04 19:48:51 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,47 +32,47 @@ int		ft_isbuiltin_cmd(char *cmd)
 	return (0);
 }
 
-int		ft_builtin(t_all *all)
+int		ft_builtin(t_cmd *cmd, t_all *all)
 {
-	return (ft_exit(all->arg_len, all->args, all));
+	return (ft_exit(cmd->arg_len, cmd->args, all));
 }
 
-char	*get_exec_cmd(t_all *all)
+char	*get_exec_cmd(t_cmd *cmd, t_all *all)
 {
 	int			i;
-	char		*cmd;
+	char		*command;
 	struct stat	buf;
 	char		*tmp;
 
-	if (ft_strchr(all->args[0], '/'))
-		return (ft_strdup(all->args[0]));
+	if (ft_strchr(cmd->args[0], '/'))
+		return (ft_strdup(cmd->args[0]));
 	i = 0;
 	while (all->path[i])
 	{
 		tmp = ft_strjoin(all->path[i], "/");
-		cmd = ft_strjoin(tmp, all->args[0]);
+		command = ft_strjoin(tmp, cmd->args[0]);
 		free(tmp);
-		if (!stat(cmd, &buf))
-			return (cmd);
-		free(cmd);
+		if (!stat(command, &buf))
+			return (command);
+		free(command);
 		i++;
 	}
-	return (ft_strdup(all->args[0]));
+	return (ft_strdup(cmd->args[0]));
 }
 
-void	ft_exec(t_all *all)
+void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 {
 	pid_t	pid;
-	char	*cmd;
+	char	*command;
 	int		stat;
 
-	if (ft_isbuiltin_cmd(all->args[0]))
-		ft_builtin(all);
-	cmd = get_exec_cmd(all);
+	if (ft_isbuiltin_cmd(cmd->args[0]))
+		ft_builtin(cmd, all);
+	command = get_exec_cmd(cmd, all);
 	if (!(pid = fork()))
 	{
-		stat = execve(cmd, all->args, all->envp);
-		print_exec_error_errno(all->args[0]);
+		stat = execve(command, cmd->args, all->envp);
+		print_exec_error_errno(cmd->args[0]);
 		if (stat == -1)
 			exit(errno);
 	}
@@ -86,4 +86,17 @@ void	ft_exec(t_all *all)
 			all->last_exit_status = 128 + WTERMSIG(stat);
 	}
 	free(cmd);
+}
+
+void	ft_exec(t_all *all)
+{
+	t_cmd *backup;
+
+	backup = all->cmds;
+	while (all->cmds)
+	{
+		ft_exec_cmd(all->cmds, all);
+		all->cmds = all->cmds->next;
+	}
+	all->cmds = backup;
 }

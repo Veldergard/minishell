@@ -14,7 +14,10 @@
 
 t_cmd			*ft_create_cmd(void)
 {
-	return (NULL);
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	return (cmd);
 }
 
 void			ft_cmd_addfront(t_cmd **cmd, t_cmd *new)

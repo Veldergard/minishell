@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "minishell.h"
 #include "parser.h"
 #include "get_next_line.h"
 
@@ -37,9 +38,9 @@ int		parse_new_cmd(t_cmd **cmd, int *pos)
 {
 	t_cmd *new_cmd;
 
-	if (!new_cmd = ft_cmd_new())
+	if (!(new_cmd = ft_create_cmd()))
 		return (0);
-	ft_cmd_addback(new_cmd);
+	ft_cmd_addback(cmd, new_cmd);
 	*cmd = (*cmd)->next;
 	(*pos)++;
 	return (1);
@@ -57,7 +58,7 @@ int		parse_line(t_all *all, char *buf, int pos)
 	int		len;
 	t_cmd	*cmd;
 
-	cmd = ft_cmd_new();
+	cmd = ft_create_cmd();
 	all->cmds = cmd;
 	while (buf[pos])
 	{
@@ -65,7 +66,7 @@ int		parse_line(t_all *all, char *buf, int pos)
 			pos++;
 		if (!buf[pos])
 			break;
-		len = get_arg_len(buf, pos);
+		len = get_arg_len(all, buf, pos);
 		if (len <= 1 && ft_strchr(";|", buf[pos]))
 		{
 			if (!parse_new_cmd(&cmd, &pos))
@@ -89,8 +90,8 @@ int		parse_line(t_all *all, char *buf, int pos)
 
 void	do_eot_signal(t_all *all)
 {
-	args_increase(all);
-	all->args[all->arg_len - 1] = ft_strdup("exit");
+	args_increase(all->cmds);
+	all->cmds->args[all->cmds->arg_len - 1] = ft_strdup("exit");
 }
 
 int		parse(t_all *all)
