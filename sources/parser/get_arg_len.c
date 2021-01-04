@@ -47,7 +47,7 @@ void	quote_len(const char *buf, int *pos, int *len)
 		(*pos)++;
 }
 
-void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
+void	subtitution_len(char *buf, int *pos, int *len)
 {
 	int size;
 	int ret;
@@ -72,7 +72,7 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 	}
 }
 
-void	dquote_len(t_all *all, char *buf, int *pos, int *len)
+void	dquote_len(char *buf, int *pos, int *len)
 {
 	(*pos)++;
 	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
@@ -82,7 +82,7 @@ void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 			escape_len(buf, pos, len, 1);
 		}
 		else if (buf[*pos] == CHAR_SUBSTITUTION)
-			subtitution_len(all, buf, pos, len);
+			subtitution_len(buf, pos, len);
 		else
 		{
 			(*pos)++;
@@ -93,7 +93,7 @@ void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 		(*pos)++;
 }
 
-int		get_arg_len(t_all *all, char *buf, int pos)
+int		get_arg_len(char *buf, int pos)
 {
 	int		len;
 
@@ -113,9 +113,9 @@ int		get_arg_len(t_all *all, char *buf, int pos)
 		else if (buf[pos] == CHAR_QUOTE)
 			quote_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_DQUOTE)
-			dquote_len(all, buf, &pos, &len);
+			dquote_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_SUBSTITUTION)
-			subtitution_len(all, buf, &pos, &len);
+			subtitution_len(buf, &pos, &len);
 		else if (buf[pos] == CHAR_ESCAPESEQUENCE)
 			escape_len(buf, &pos, &len, 0);
 		else
