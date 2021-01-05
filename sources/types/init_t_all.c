@@ -25,4 +25,9 @@ void	destroy_t_all(t_all *all)
 {
 	close(all->stdfd[0]);
 	close(all->stdfd[1]);
+	int i = 0;
+	while (all->path[i])
+		free(all->path[i++]);
+	free(all->path);
+	all->path = (char*)0;
 }
