@@ -30,3 +30,9 @@ int		is_space(char c)
 		return (1);
 	return (0);
 }
+
+void	skip_spaces(char *buf, int *pos)
+{
+	while (is_space(buf[*pos]))
+		(*pos)++;
+}

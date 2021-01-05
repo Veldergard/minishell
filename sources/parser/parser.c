@@ -34,11 +34,11 @@ int		args_increase(t_cmd	*cmd)
 	return (1);
 }
 
-int		parse_new_cmd(t_cmd **cmd, int *pos)
+int		parse_new_cmd(t_all *all, t_cmd **cmd, int *pos)
 {
 	t_cmd *new_cmd;
 
-	if (!(new_cmd = ft_create_cmd()))
+	if (!(new_cmd = ft_create_cmd(all)))
 		return (0);
 	ft_cmd_addback(cmd, new_cmd);
 	*cmd = (*cmd)->next;
@@ -46,9 +46,34 @@ int		parse_new_cmd(t_cmd **cmd, int *pos)
 	return (1);
 }
 
-int		parse_redirections(int *pos)
+int		parse_redirections(t_all *all, t_cmd *cmd, char *buf, int *pos)
 {
-	// затычечка
+	e_redirect_type		type;
+	char				*filename;
+	int					len;
+	int					i;
+
+	if (buf[*pos] == '<')
+		type = REDIRECT_INPUT;
+	else if (buf[*pos] == '>')
+	{
+		type = REDIRECT_OUTPUT;
+		if (buf[(*pos) + 1] == '>')
+		{
+			type = REDIRECT_OUTPUT_APPEND;
+			(*pos)++;
+		}
+	}
+	(*pos)++;
+	skip_spaces(buf, pos);
+	len = get_arg_len(all, buf, pos);
+	if (!(filename = malloc(len + 1)))
+		return (1);
+	i = 0;
+	while (i < len)
+		filename[i++] = 1;
+	filename[len] = 0;
+	parse_filename(all, buf, filename, pos);
 	(*pos)++;
 	return (0);
 }
@@ -58,23 +83,22 @@ int		parse_line(t_all *all, char *buf, int pos)
 	int		len;
 	t_cmd	*cmd;
 
-	cmd = ft_create_cmd();
+	cmd = ft_create_cmd(all);
 	all->cmds = cmd;
 	while (buf[pos])
 	{
-		while (is_space(buf[pos]))
-			pos++;
+		skip_spaces(buf, &pos);
 		if (!buf[pos])
 			break;
 		len = get_arg_len(all, buf, pos);
 		if (len <= 1 && ft_strchr(";|", buf[pos]))
 		{
-			if (!parse_new_cmd(&cmd, &pos))
+			if (!parse_new_cmd(all, &cmd, &pos))
 				return (1);
 		}
 		else if (len <= 2 && ft_strchr("><", buf[pos]))
 		{
-			parse_redirections(&pos);
+			parse_redirections(all, cmd, buf, &pos);
 		}
 		else
 		{
@@ -82,6 +106,7 @@ int		parse_line(t_all *all, char *buf, int pos)
 				return (1);
 			if (!(cmd->args[cmd->arg_len - 1] = malloc(len + 1)))
 				return (1);
+			cmd->args[cmd->arg_len - 1][len] = 0;
 			parse_arg(cmd, buf, &pos, len);
 		}
 	}

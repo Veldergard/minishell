@@ -43,7 +43,7 @@ int		ft_exit(int argc, char *argv[], t_all *all);
 **	CMD List  // TODO
 */
 
-t_cmd			*ft_create_cmd(void);
+t_cmd			*ft_create_cmd(t_all *all);
 void			ft_cmd_addfront(t_cmd **cmd, t_cmd *new);
 int				ft_cmdlen(t_cmd *cmd);
 t_cmd			*ft_get_cmd_end(t_cmd *cmd);

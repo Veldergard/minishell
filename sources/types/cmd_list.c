@@ -12,11 +12,18 @@
 
 #include "minishell.h"
 
-t_cmd			*ft_create_cmd(void)
+t_cmd			*ft_create_cmd(t_all *all)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	if (!(cmd = malloc(sizeof(t_cmd))))
+		return (0);
+	cmd->args = 0;
+	cmd->arg_len = 0;
+	cmd->redirect = 0;
+	cmd->all_ptr = all;
+	cmd->pipe = PIPE_NO;
+	cmd->next = 0;
 	return (cmd);
 }
 

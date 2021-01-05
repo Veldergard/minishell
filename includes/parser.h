@@ -21,5 +21,6 @@ void    parse_arg(t_cmd *cmd, char *buf, int *pos, int len);
 int 	is_envp_symbol(char c);
 int		is_space(char c);
 void	clear_args(t_cmd *cmd);
+void	skip_spaces(char *buf, int *pos);
 
 #endif
