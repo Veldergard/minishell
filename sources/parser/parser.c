@@ -52,36 +52,37 @@ int		parse_new_cmd(t_all *all, t_cmd **cmd, const char *buf)
 
 int		parse_redirections(t_all *all, t_cmd *cmd, char *buf)
 {
-	enum e_redirect_type		type;
-	char						*filename;
-	int							len;
-	int							i;
-	t_redirect					*redirect;
-
-	if (buf[all->buf_pos] == '<')
-		type = REDIRECT_INPUT;
-	else if (buf[all->buf_pos] == '>')
-	{
-		type = REDIRECT_OUTPUT;
-		if (buf[all->buf_pos + 1] == '>')
-		{
-			type = REDIRECT_OUTPUT_APPEND;
-			all->buf_pos++;
-		}
-	}
 	all->buf_pos++;
-	skip_spaces(buf, &all->buf_pos);
-	len = get_arg_len(all, buf);
-	if (!(filename = malloc(len + 1)))
-		return (1);
-	i = 0;
-	while (i < len)
-		filename[i++] = 1;
-	filename[len] = 0;
-	all->str_ptr = filename;
-	parse_arg(all, buf, len);
-	cmd->redirect = redirect;
-	return (0);
+//	enum e_redirect_type		type;
+//	char						*filename;
+//	int							len;
+//	int							i;
+//	t_redirect					*redirect;
+//
+//	if (buf[all->buf_pos] == '<')
+//		type = REDIRECT_INPUT;
+//	else if (buf[all->buf_pos] == '>')
+//	{
+//		type = REDIRECT_OUTPUT;
+//		if (buf[all->buf_pos + 1] == '>')
+//		{
+//			type = REDIRECT_OUTPUT_APPEND;
+//			all->buf_pos++;
+//		}
+//	}
+//	all->buf_pos++;
+//	skip_spaces(buf, &all->buf_pos);
+//	len = get_arg_len(all, buf);
+//	if (!(filename = malloc(len + 1)))
+//		return (1);
+//	i = 0;
+//	while (i < len)
+//		filename[i++] = 1;
+//	filename[len] = 0;
+//	all->str_ptr = filename;
+//	parse_arg(all, buf, len);
+//	cmd->redirect = redirect;
+//	return (0);
 }
 
 int		parse_line(t_all *all, char *buf)
