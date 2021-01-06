@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/04 16:20:49 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/06 16:17:06 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ typedef struct				s_all {
 	enum e_status			status;
 	uint8_t					exit_status;
 	t_cmd					*cmds;
+	char					*str_ptr;
+	int						buf_pos;
+	int						arg_pos;
 }							t_all;
 
 void						init_t_all(t_all *all, char **envp);
