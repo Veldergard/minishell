@@ -16,9 +16,9 @@
 # include "types.h"
 
 int		parse(t_all *all);
-int		get_arg_len(t_all *all, char *buf, int pos);
-void    parse_arg(t_cmd *cmd, char *buf, int *pos, int len);
-int 	is_envp_symbol(char c);
+int		get_arg_len(t_all *all, char *buf);
+void	parse_arg(t_all *all, char *buf, int len);
+int		is_envp_symbol(char c);
 int		is_space(char c);
 void	clear_args(t_cmd *cmd);
 void	skip_spaces(char *buf, int *pos);

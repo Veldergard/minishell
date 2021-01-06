@@ -34,7 +34,7 @@ int		args_increase(t_cmd	*cmd)
 	return (1);
 }
 
-int		parse_new_cmd(t_all *all, t_cmd **cmd, int *pos)
+int		parse_new_cmd(t_all *all, t_cmd **cmd, const char *buf)
 {
 	t_cmd *new_cmd;
 
@@ -42,72 +42,78 @@ int		parse_new_cmd(t_all *all, t_cmd **cmd, int *pos)
 		return (0);
 	ft_cmd_addback(cmd, new_cmd);
 	*cmd = (*cmd)->next;
-	(*pos)++;
+	if (buf[all->buf_pos] == '|')
+		(*cmd)->pipe = PIPE_YES;
+	else
+		(*cmd)->pipe = PIPE_NO;
+	all->buf_pos++;
 	return (1);
 }
 
-int		parse_redirections(t_all *all, t_cmd *cmd, char *buf, int *pos)
+int		parse_redirections(t_all *all, t_cmd *cmd, char *buf)
 {
-	e_redirect_type		type;
-	char				*filename;
-	int					len;
-	int					i;
-
-	if (buf[*pos] == '<')
-		type = REDIRECT_INPUT;
-	else if (buf[*pos] == '>')
-	{
-		type = REDIRECT_OUTPUT;
-		if (buf[(*pos) + 1] == '>')
-		{
-			type = REDIRECT_OUTPUT_APPEND;
-			(*pos)++;
-		}
-	}
-	(*pos)++;
-	skip_spaces(buf, pos);
-	len = get_arg_len(all, buf, pos);
-	if (!(filename = malloc(len + 1)))
-		return (1);
-	i = 0;
-	while (i < len)
-		filename[i++] = 1;
-	filename[len] = 0;
-	parse_filename(all, buf, filename, pos);
-	(*pos)++;
-	return (0);
+	all->buf_pos++;
+//	enum e_redirect_type		type;
+//	char						*filename;
+//	int							len;
+//	int							i;
+//	t_redirect					*redirect;
+//
+//	if (buf[all->buf_pos] == '<')
+//		type = REDIRECT_INPUT;
+//	else if (buf[all->buf_pos] == '>')
+//	{
+//		type = REDIRECT_OUTPUT;
+//		if (buf[all->buf_pos + 1] == '>')
+//		{
+//			type = REDIRECT_OUTPUT_APPEND;
+//			all->buf_pos++;
+//		}
+//	}
+//	all->buf_pos++;
+//	skip_spaces(buf, &all->buf_pos);
+//	len = get_arg_len(all, buf);
+//	if (!(filename = malloc(len + 1)))
+//		return (1);
+//	i = 0;
+//	while (i < len)
+//		filename[i++] = 1;
+//	filename[len] = 0;
+//	all->str_ptr = filename;
+//	parse_arg(all, buf, len);
+//	cmd->redirect = redirect;
+//	return (0);
 }
 
-int		parse_line(t_all *all, char *buf, int pos)
+int		parse_line(t_all *all, char *buf)
 {
 	int		len;
 	t_cmd	*cmd;
 
 	cmd = ft_create_cmd(all);
 	all->cmds = cmd;
-	while (buf[pos])
+	while (buf[all->buf_pos])
 	{
-		skip_spaces(buf, &pos);
-		if (!buf[pos])
+		skip_spaces(buf, &(all->buf_pos));
+		if (!buf[all->buf_pos])
 			break;
-		len = get_arg_len(all, buf, pos);
-		if (len <= 1 && ft_strchr(";|", buf[pos]))
+		len = get_arg_len(all, buf);
+		if (len <= 1 && ft_strchr(";|", buf[all->buf_pos]))
 		{
-			if (!parse_new_cmd(all, &cmd, &pos))
+			if (!parse_new_cmd(all, &cmd, buf))
 				return (1);
 		}
-		else if (len <= 2 && ft_strchr("><", buf[pos]))
-		{
-			parse_redirections(all, cmd, buf, &pos);
-		}
+		else if (len <= 2 && ft_strchr("><", buf[all->buf_pos]))
+			parse_redirections(all, cmd, buf);
 		else
 		{
 			if (!args_increase(cmd))
 				return (1);
 			if (!(cmd->args[cmd->arg_len - 1] = malloc(len + 1)))
 				return (1);
-			cmd->args[cmd->arg_len - 1][len] = 0;
-			parse_arg(cmd, buf, &pos, len);
+			all->str_ptr = cmd->args[cmd->arg_len - 1];
+			all->str_ptr[len] = 0;
+			parse_arg(all, buf, len);
 		}
 	}
 	return (0);
@@ -130,7 +136,7 @@ int		parse(t_all *all)
 	if (!buf[0] && ret == 0)
 		do_eot_signal(all);
 	else
-		ret = parse_line(all, buf, 0);
+		ret = parse_line(all, buf);
 	free(buf);
 	return (ret);
 }
