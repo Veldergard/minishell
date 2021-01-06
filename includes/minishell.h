@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/04 15:55:59 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/06 19:46:39 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ int		ft_exit(int argc, char *argv[], t_all *all);
 */
 
 t_cmd			*ft_create_cmd(t_all *all);
-void			ft_cmd_addfront(t_cmd **cmd, t_cmd *new);
-int				ft_cmdlen(t_cmd *cmd);
-t_cmd			*ft_get_cmd_end(t_cmd *cmd);
 void			ft_cmd_addback(t_cmd **cmd, t_cmd *new);
 void			ft_cmd_delete(t_cmd *cmd);
 void			ft_cmd_clearall(t_cmd **cmd);
+
+t_redirect		*ft_create_redirect();
+void			ft_redirect_addback(t_redirect **redirect, t_redirect *new);
+void			ft_redirect_delete(t_redirect *redirect);
+void			ft_redirect_clearall(t_redirect **redirect);
+
 
 #endif

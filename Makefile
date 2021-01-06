@@ -50,6 +50,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 	)\
 	$(addprefix types/,\
 		cmd_list.c\
+		redirect_list.c\
 		init_t_all.c\
 	)\
 	print_prompt.c\
