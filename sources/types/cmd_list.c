@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:51:42 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/06 16:18:34 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/06 17:53:28 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ void			ft_cmd_addback(t_cmd **cmd, t_cmd *new)
 	current->next = new;
 }
 
+void			ft_cmd_delete(t_cmd *cmd)
+{
+	if (cmd->arg_len)
+		while (0 <= --cmd->arg_len)
+		{
+			free(cmd->args[cmd->arg_len]);
+		}
+	free(cmd);
+}
+
 void			ft_cmd_clearall(t_cmd **cmd)
 {
 	t_cmd	*next;
@@ -48,7 +58,7 @@ void			ft_cmd_clearall(t_cmd **cmd)
 	while (next)
 	{
 		*cmd = next->next;
-		free(next);
+		ft_cmd_delete(next);
 		next = *cmd;
 	}
 }

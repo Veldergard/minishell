@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/04 19:48:51 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/06 17:48:32 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 		if (WIFSIGNALED(stat))
 			all->last_exit_status = 128 + WTERMSIG(stat);
 	}
-	free(cmd);
+	free(command);
 }
 
 void	ft_exec(t_all *all)
