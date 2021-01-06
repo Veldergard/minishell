@@ -20,7 +20,7 @@ int		get_arg_len(t_all *all, char *buf);
 void	parse_arg(t_all *all, char *buf, int len);
 int		is_envp_symbol(char c);
 int		is_space(char c);
-void	clear_args(t_cmd *cmd);
+void	clear_args(t_all *all);
 void	skip_spaces(char *buf, int *pos);
 
 #endif

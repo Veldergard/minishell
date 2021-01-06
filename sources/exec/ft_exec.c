@@ -95,7 +95,8 @@ void	ft_exec(t_all *all)
 	backup = all->cmds;
 	while (all->cmds)
 	{
-		ft_exec_cmd(all->cmds, all);
+		if (all->cmds->args)
+			ft_exec_cmd(all->cmds, all);
 		all->cmds = all->cmds->next;
 	}
 	all->cmds = backup;

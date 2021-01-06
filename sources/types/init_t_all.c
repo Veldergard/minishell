@@ -29,5 +29,5 @@ void	destroy_t_all(t_all *all)
 	while (all->path[i])
 		free(all->path[i++]);
 	free(all->path);
-	all->path = (char*)0;
+	all->path = (char**)0;
 }

@@ -86,6 +86,7 @@ void	parse_double_quote(t_all *all, char *buf)
 
 void	parse_arg(t_all *all, char *buf, int len)
 {
+	all->arg_pos = 0;
 	while (all->arg_pos < len) {
 		if (ft_strchr(" \t<>;|", buf[all->buf_pos]))
 			break;

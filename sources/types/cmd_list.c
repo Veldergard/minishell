@@ -47,6 +47,7 @@ void			ft_cmd_delete(t_cmd *cmd)
 		{
 			free(cmd->args[cmd->arg_len]);
 		}
+	free(cmd->args);
 	free(cmd);
 }
 

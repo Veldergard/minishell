@@ -29,7 +29,7 @@ void	minishell(t_all *all)
 			// do_redirects();
 			if (all->cmds)
 				ft_exec(all);
-			ft_cmd_clearall(&all->cmds);
+			clear_args(all);
 		}
 	}
 	else

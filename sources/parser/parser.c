@@ -98,7 +98,9 @@ int		parse_line(t_all *all, char *buf)
 		if (!buf[all->buf_pos])
 			break;
 		len = get_arg_len(all, buf);
-		if (len <= 1 && ft_strchr(";|", buf[all->buf_pos]))
+		if (len == 0)
+			all->buf_pos++;
+		else if (len <= 1 && ft_strchr(";|", buf[all->buf_pos]))
 		{
 			if (!parse_new_cmd(all, &cmd, buf))
 				return (1);
