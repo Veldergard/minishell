@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:57:26 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/06 16:41:33 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:04:21 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	escape_len(const char *buf, int *pos, int *len, int quoted)
 void	quote_len(const char *buf, int *pos, int *len)
 {
 	(*pos)++;
-	while (buf[*pos] && buf[*pos] != CHAR_QUOTE)
+	while (buf[*pos] && buf[*pos] != '\'')
 	{
 		(*pos)++;
 		(*len)++;
 	}
-	if (buf[*pos] == CHAR_QUOTE)
+	if (buf[*pos] == '\'')
 		(*pos)++;
 }
 
@@ -75,13 +75,13 @@ void	subtitution_len(t_all *all, char *buf, int *pos, int *len)
 void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 {
 	(*pos)++;
-	while (buf[*pos] && buf[*pos] != CHAR_DQUOTE)
+	while (buf[*pos] && buf[*pos] != '\"')
 	{
-		if (buf[*pos] == CHAR_ESCAPESEQUENCE)
+		if (buf[*pos] == '\\')
 		{
 			escape_len(buf, pos, len, 1);
 		}
-		else if (buf[*pos] == CHAR_SUBSTITUTION)
+		else if (buf[*pos] == '$')
 			subtitution_len(all, buf, pos, len);
 		else
 		{
@@ -89,7 +89,7 @@ void	dquote_len(t_all *all, char *buf, int *pos, int *len)
 			(*len)++;
 		}
 	}
-	if (buf[*pos] == CHAR_DQUOTE)
+	if (buf[*pos] == '\"')
 		(*pos)++;
 }
 
@@ -108,13 +108,13 @@ int		get_arg_len(t_all *all, char *buf)
 			|| (buf[pos - 1] == '>' && buf[pos] != '>'))
 			|| (buf[pos] == '>' && buf[pos - 1] == '>')))
 			return (len);
-		else if (buf[pos] == CHAR_QUOTE)
+		else if (buf[pos] == '\'')
 			quote_len(buf, &pos, &len);
-		else if (buf[pos] == CHAR_DQUOTE)
+		else if (buf[pos] == '\"')
 			dquote_len(all, buf, &pos, &len);
-		else if (buf[pos] == CHAR_SUBSTITUTION)
+		else if (buf[pos] == '$')
 			subtitution_len(all, buf, &pos, &len);
-		else if (buf[pos] == CHAR_ESCAPESEQUENCE)
+		else if (buf[pos] == '\\')
 			escape_len(buf, &pos, &len, 0);
 		else
 		{

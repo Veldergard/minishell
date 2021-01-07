@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:51:42 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/06 17:53:28 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 16:52:35 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void			ft_cmd_clearall(t_cmd **cmd)
 	while (next)
 	{
 		*cmd = next->next;
+		if (next->redirect)
+			ft_redirect_clearall(&next->redirect);
 		ft_cmd_delete(next);
 		next = *cmd;
 	}

@@ -12,7 +12,6 @@
 
 #ifndef PARSE_H
 # define PARSE_H
-# define pass (void)0;
 # include "types.h"
 
 int		parse(t_all *all);

@@ -41,23 +41,6 @@ enum	e_env_visible
 	ENV_HIDDEN
 };
 
-enum	e_token
-{
-	CHAR_NULL				= '\0',
-	CHAR_QUOTE				= '\'',
-	CHAR_DQUOTE				= '\"',
-	CHAR_PIPE				= '|',
-	CHAR_AMPERSAND			= '&',
-	CHAR_WHITESPACE			= ' ',
-	CHAR_SEMICOLON			= ';',
-	CHAR_ESCAPESEQUENCE		= '\\',
-	CHAR_TAB				= '\t',
-	CHAR_NEWLINE			= '\n',
-	CHAR_GREATER			= '>',
-	CHAR_LESSER				= '<',
-	CHAR_SUBSTITUTION		= '$'
-};
-
 typedef struct				s_envlist {
 	char					*key;
 	char					*value;

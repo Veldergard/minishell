@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/06 17:49:20 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:04:21 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void	parse_quote(t_all *all, const char *buf)
 {
 	all->buf_pos++;
-	while (buf[all->buf_pos] && buf[all->buf_pos] != CHAR_QUOTE)
+	while (buf[all->buf_pos] && buf[all->buf_pos] != '\'')
 		all->str_ptr[all->arg_pos++] = buf[all->buf_pos++];
-	if (buf[all->buf_pos] == CHAR_QUOTE)
+	if (buf[all->buf_pos] == '\'')
 		all->buf_pos++;
 }
 
@@ -71,34 +71,36 @@ void 	parse_subtitution(t_all *all, char *buf)
 void	parse_double_quote(t_all *all, char *buf)
 {
 	all->buf_pos++;
-	while (buf[all->buf_pos] && buf[all->buf_pos] != CHAR_DQUOTE)
+	while (buf[all->buf_pos] && buf[all->buf_pos] != '\"')
 	{
-		if (buf[all->buf_pos] == CHAR_ESCAPESEQUENCE)
+		if (buf[all->buf_pos] == '\\')
 			parse_dquoted_escape(all, buf);
-		else if (buf[all->buf_pos] == CHAR_SUBSTITUTION)
+		else if (buf[all->buf_pos] == '$')
 			parse_subtitution(all, buf);
 		else
 			all->str_ptr[all->arg_pos] = buf[all->buf_pos++];
 	}
-	if (buf[all->buf_pos] == CHAR_DQUOTE)
+	if (buf[all->buf_pos] == '\"')
 		all->buf_pos++;
 }
 
 void	parse_arg(t_all *all, char *buf, int len)
 {
 	all->arg_pos = 0;
-	while (all->arg_pos < len) {
+	while (1) {
 		if (ft_strchr(" \t<>;|", buf[all->buf_pos]))
 			break;
-		else if (buf[all->buf_pos] == CHAR_QUOTE)
+		else if (buf[all->buf_pos] == '\'')
 			parse_quote(all, buf);
-		else if (buf[all->buf_pos] == CHAR_DQUOTE)
+		else if (buf[all->buf_pos] == '\"')
 			parse_double_quote(all, buf);
-		else if (buf[all->buf_pos] == CHAR_SUBSTITUTION)
+		else if (buf[all->buf_pos] == '$')
 			parse_subtitution(all, buf);
-		else if (buf[all->buf_pos] == CHAR_ESCAPESEQUENCE)
+		else if (buf[all->buf_pos] == '\\')
 			parse_escape(all, buf);
 		else
 			all->str_ptr[all->arg_pos++] = buf[all->buf_pos++];
+		if (all->arg_pos >= len)
+			break;
 	}
 }
