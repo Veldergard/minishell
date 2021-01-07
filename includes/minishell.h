@@ -37,21 +37,12 @@ char	*get_env(t_all *all, char *name, int size);
 **	Builtins
 */
 
-int		ft_exit(int argc, char *argv[], t_all *all);
-
-/*
-**	CMD List  // TODO
-*/
-
-t_cmd			*ft_create_cmd(t_all *all);
-void			ft_cmd_addback(t_cmd **cmd, t_cmd *new);
-void			ft_cmd_delete(t_cmd *cmd);
-void			ft_cmd_clearall(t_cmd **cmd);
-
-t_redirect		*ft_create_redirect();
-void			ft_redirect_addback(t_redirect **redirect, t_redirect *new);
-void			ft_redirect_delete(t_redirect *redirect);
-void			ft_redirect_clearall(t_redirect **redirect);
-
+int			ft_exit(int argc, char *argv[], t_all *all);
+int			ft_pwd(int argc, char *argv[], t_all *all);
+int			ft_cd(int argc, char *argv[], t_all *all);
+int			ft_echo(int argc, char *argv[], t_all *all);
+int			ft_unset(int argc, char *argv[], t_all *all);
+int			ft_env(int argc, char *argv[], t_all *all);
+int			ft_export(int argc, char *argv[], t_all *all);
 
 #endif

@@ -35,6 +35,12 @@ enum	e_pipe
 	PIPE_YES
 };
 
+enum	e_env_visible
+{
+	ENV_VISIBLE,
+	ENV_HIDDEN
+};
+
 enum	e_token
 {
 	CHAR_NULL				= '\0',
@@ -51,6 +57,13 @@ enum	e_token
 	CHAR_LESSER				= '<',
 	CHAR_SUBSTITUTION		= '$'
 };
+
+typedef struct				s_envlist {
+	char					*key;
+	char					*value;
+	enum e_env_visible		is_hidden;
+	struct s_envlist		*next;
+}							t_envlist;
 
 typedef struct				s_redirect {
 	enum e_redirect_type	type;
@@ -82,5 +95,21 @@ typedef struct				s_all {
 
 void						init_t_all(t_all *all, char **envp);
 void						destroy_t_all(t_all *all);
+
+t_cmd						*ft_create_cmd(t_all *all);
+void						ft_cmd_addback(t_cmd **cmd, t_cmd *new);
+void						ft_cmd_delete(t_cmd *cmd);
+void						ft_cmd_clearall(t_cmd **cmd);
+
+t_redirect					*ft_create_redirect();
+void						ft_redirect_addback(t_redirect **redirect,
+												t_redirect *new);
+void						ft_redirect_delete(t_redirect *redirect);
+void						ft_redirect_clearall(t_redirect **redirect);
+
+t_envlist					*ft_create_envlist(int keysize, int valuesize);
+void						ft_envlist_addback(t_envlist **env, t_envlist *new);
+void						ft_envlist_delete(t_envlist *env);
+void						ft_envlist_clearall(t_envlist **env);
 
 #endif
