@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/07 04:12:38 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/07 04:31:07 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
 	$(addprefix builtin/,\
 		exit.c\
+		ft_env.c\
 	)\
 	$(addprefix env/,\
 		envp_to_envlist.c\
