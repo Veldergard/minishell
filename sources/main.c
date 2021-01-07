@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include "parser.h"
 #include "ft_signal.h"
+#include <sys/wait.h>
 
 void	minishell(t_all *all)
 {

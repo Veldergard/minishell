@@ -73,7 +73,7 @@ typedef struct				s_all {
 	char					**path;
 	int						last_exit_status;
 	enum e_status			status;
-	uint8_t					exit_status;
+	char					exit_status;
 	t_cmd					*cmds;
 	char					*str_ptr;
 	int						buf_pos;

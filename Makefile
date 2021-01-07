@@ -6,14 +6,14 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/04 18:49:32 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/07 04:12:38 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 LFTDIR = libft
-LFT = $(LIBFT_DIR)/libft.a
+LFT = $(LFTDIR)/libft.a
 CLIBFLAGS = -L$(LFTDIR) -lft
 
 I_DIR = includes
@@ -81,7 +81,11 @@ libft $(LFT):
 
 $(NAME): $(OBJ) | libft
 	@echo -e "\r\033[1;32m> $@\033[0m"
+ifeq ($(shell uname -s),Linux)
+	$(CC) $(CFLAGS) $(OBJ) $(CLIBFLAGS) -o $@
+else
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(OBJ) -o $@
+endif
 
 $(OBJDIR):
 	@echo -e "\r\033[1;32m> $@\033[0m"

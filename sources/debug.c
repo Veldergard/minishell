@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/wait.h>
 
 void	debug_print_arg(int argc, char *argv[], char *envp[])
 {
