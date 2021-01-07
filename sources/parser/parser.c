@@ -40,11 +40,11 @@ int		parse_new_cmd(t_all *all, t_cmd **cmd, const char *buf)
 	if (!(new_cmd = ft_create_cmd(all)))
 		return (0);
 	ft_cmd_addback(cmd, new_cmd);
-	*cmd = (*cmd)->next;
 	if (buf[all->buf_pos] == '|')
 		(*cmd)->pipe = PIPE_YES;
 	else
 		(*cmd)->pipe = PIPE_NO;
+	*cmd = (*cmd)->next;
 	all->buf_pos++;
 	return (1);
 }
