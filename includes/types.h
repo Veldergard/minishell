@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 04:30:30 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 16:11:00 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ typedef struct				s_cmd {
 }							t_cmd;
 
 typedef struct				s_all {
-	char					**envp;
+	char					**envp; // TODO remove
 	t_envlist				*env;
 	int						stdfd[2];
 	char					**path;
+	char					*pwd;
 	int						last_exit_status;
 	enum e_status			status;
 	char					exit_status;

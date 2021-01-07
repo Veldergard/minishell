@@ -18,7 +18,7 @@
 # include "types.h"
 
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
-void		print_prompt();
+void		print_prompt(t_all *all);
 
 void		add_redirect(t_all *all, char *filename, int type);
 void		ft_exec(t_all *all);

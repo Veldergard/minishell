@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/07 04:31:07 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/07 16:09:52 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
 	$(addprefix builtin/,\
-		exit.c\
+		cd_pwd.c\
 		ft_env.c\
+		ft_exit.c\
 	)\
 	$(addprefix env/,\
 		envp_to_envlist.c\
@@ -68,6 +69,7 @@ OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
 TESTS = $(patsubst %.c, $(OBJDIR)/%.o,\
+	debug_main.c\
 	test_get_env.c\
 	test_parser.c\
 )
@@ -124,11 +126,7 @@ $(OBJDIR)/%.o: test/%.c $(LFT)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
-test_get_env: libft $(TOBJ) $(TESTS)
-	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
-
-test_parser: libft $(TOBJ) $(TESTS)
+$(patsubst $(OBJDIR)/%.o, %, $(TESTS)): libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 

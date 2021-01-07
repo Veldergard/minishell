@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_parser.c                                      :+:      :+:    :+:   */
+/*   debug_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/31 14:56:20 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 19:48:45 by itressa          ###   ########.fr       */
+/*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
+/*   Updated: 2021/01/07 19:48:56 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "minishell.h"
 #include "parser.h"
+#include "ft_signal.h"
+#include <sys/wait.h>
 
-void	print_parsed(t_all *all)
+void	minishell(t_all *all)
 {
-	int		i;
-
-	printf("\rParsed arg num: %d\n", all->cmds->arg_len);
-	i = 0;
-	while (all->cmds->args[i])
+	while (1)
 	{
-		printf("\"%s\" ", all->cmds->args[i]);
-		i++;
+		print_prompt(&all);
+		if (1 == parse(all))
+			break;
+		// do_redirects();
+		if (all->cmds)
+			ft_exec(all);
+		clear_args(all);
 	}
-	printf("\n");
 }
 
 int		main(int argc, char *argv[], char *envp[])
@@ -35,14 +36,11 @@ int		main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	init_t_all(&all, envp);
-	while (1)
+	apply_signals_common();
+	while (all.status == MS_STATUS_RUN)
 	{
-		print_prompt(&all);
-		if (1 == parse(&all))
-			break ;
-		print_parsed(&all);
-		clear_args(&all);
+		minishell(&all);
 	}
 	destroy_t_all(&all);
-	return (0);
+	return (all.exit_status);
 }

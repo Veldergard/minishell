@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 05:18:39 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 17:24:00 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int		ft_builtin(t_cmd *cmd, t_all *all)
 {
 //	if (!ft_strncmp(cmd->args[0], "echo", 4))
 //		return (ft_echo(cmd->arg_len, cmd->args, all));
-//	if (!ft_strncmp(cmd->args[0], "cd", 2))
-//		return (ft_cd(cmd->arg_len, cmd->args, all));
-//	if (!ft_strncmp(cmd->args[0], "pwd", 3))
-//		return (ft_pwd(cmd->arg_len, cmd->args, all));
+	if (!ft_strncmp(cmd->args[0], "cd", 2))
+		return (ft_cd(cmd->arg_len, cmd->args, all));
+	if (!ft_strncmp(cmd->args[0], "pwd", 3))
+		return (ft_pwd(cmd->arg_len, cmd->args, all));
 //	if (!ft_strncmp(cmd->args[0], "export", 6))
 //		return (ft_export(cmd->arg_len, cmd->args, all));
 //	if (!ft_strncmp(cmd->args[0], "unset", 5))
@@ -71,7 +71,8 @@ char	*get_exec_cmd(t_cmd *cmd, t_all *all)
 		free(command);
 		i++;
 	}
-	return (ft_strdup(cmd->args[0]));
+	print_exec_error_errno(cmd->args[0]); // todo change message
+	return (NULL);
 }
 
 void	ft_exec_cmd(t_cmd *cmd, t_all *all)
@@ -81,8 +82,15 @@ void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 	int		stat;
 
 	if (ft_isbuiltin_cmd(cmd->args[0]))
-		ft_builtin(cmd, all);
-	command = get_exec_cmd(cmd, all);
+	{
+		all->last_exit_status = ft_builtin(cmd, all);
+		return ;
+	}
+	if (!(command = get_exec_cmd(cmd, all)))
+	{
+		all->last_exit_status = 127;
+		return ;
+	}
 	if (!(pid = fork()))
 	{
 		stat = execve(command, cmd->args, all->envp);
