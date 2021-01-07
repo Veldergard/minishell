@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 05:18:39 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 18:59:57 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,19 @@ void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 
 void	ft_exec(t_all *all)
 {
-	t_cmd *backup;
+	t_cmd *cmd_backup;
 
-	backup = all->cmds;
+	cmd_backup = all->cmds;
 	while (all->cmds)
 	{
-		if (all->cmds->args)
+		if (all->cmds->redirect)
+			ft_redirects(all->cmds);
+		if (all->cmds->args && all->cmds->pipe == PIPE_NO)
 			ft_exec_cmd(all->cmds, all);
+//		else
+//			ft_pipes_exec_cmd();
+		return_fd(all);
 		all->cmds = all->cmds->next;
 	}
-	all->cmds = backup;
+	all->cmds = cmd_backup;
 }

@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 17:27:19 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/07 18:32:09 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	minishell(t_all *all)
 			print_prompt();
 			if (1 == parse(all))
 				break;
-			// do_redirects();
 			if (all->cmds)
 				ft_exec(all);
 			clear_args(all);

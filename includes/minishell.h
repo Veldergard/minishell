@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 04:59:33 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 18:59:27 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ int			ft_echo(int argc, char *argv[], t_all *all);
 int			ft_unset(int argc, char *argv[], t_all *all);
 int			ft_env(int argc, char *argv[], t_all *all);
 int			ft_export(int argc, char *argv[], t_all *all);
+void		ft_redirects(t_cmd *cmd);
+void		return_fd(t_all *all);
 
 #endif

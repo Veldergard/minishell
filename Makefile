@@ -49,6 +49,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		get_arg_len.c\
 		arg_parser.c\
 		cleaner.c\
+		redirects.c\
 	)\
 	$(addprefix types/,\
 		cmd_list.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 04:30:30 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/07 19:41:25 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct				s_cmd {
 	char					**args;
 	int						arg_len;
 	t_redirect				*redirect;
+	int						has_output;
+	int						has_input;
 	void					*all_ptr;
 	enum e_pipe				pipe;
 	struct s_cmd			*next;
