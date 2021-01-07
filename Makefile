@@ -31,6 +31,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		exit.c\
 	)\
 	$(addprefix env/,\
+		envp_to_envlist.c\
 		get_env.c\
 		get_env_len.c\
 		write_env.c\
