@@ -16,47 +16,47 @@
 
 void	return_fd(t_all *all)
 {
+	dup2(0, all->stdfd[0]);
+	dup2(1, all->stdfd[1]);
 }
 
-void	do_redirects(t_cmd *cmd, t_redirect *redirect)
+void	clear_redirects(t_all *all, int a, int b)
 {
-	int fd;
-	int closed;
+	if (a != -1)
+		close(a);
+	if (b != -1)
+		close(b);
+	return_fd(all);
+}
 
-	if (redirect->next)
-		do_redirects(cmd, redirect->next);
-	if (redirect->type == REDIRECT_INPUT)
-	{
-		fd = open(redirect->filename, O_RDONLY);
-		cmd->has_input = 1;
-	}
-	else if (redirect->type == REDIRECT_OUTPUT)
-	{
-		fd = open(redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
-		cmd->has_output = 1;
-	}
-	else if (redirect->type == REDIRECT_OUTPUT_APPEND)
-	{
-		fd = open(redirect->filename, O_WRONLY | O_APPEND | O_CREAT);
-		cmd->has_output = 1;
-	}
-	if (redirect->next)
-	{
-		if (cmd->has_output && (redirect->next == REDIRECT_OUTPUT
-			|| redirect->next == REDIRECT_OUTPUT_APPEND))
-			closed = 1;
-		if (cmd->has_input && redirect->next == REDIRECT_INPUT)
-			closed = 1;
-	}
-	if (closed)
-		close(fd);
-	else
+void	do_redirects(t_all *all, t_cmd *cmd)
+{
+	while (cmd->redirect)
 	{
 		if (redirect->type == REDIRECT_INPUT)
-			dup2(0, fd);
-		else
-			dup2(1, fd);
-		close(fd);
+		{
+			fd = open(redirect->filename, O_RDONLY);
+			if (!dup2(0, fd))
+				clear_redirects(all, 0, fd);
+			close(fd);
+		}
+		else if (redirect->type == REDIRECT_OUTPUT)
+		{
+			cmd->has_output = 1;
+			fd = open(redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
+			if (!dup2(1, fd))
+				clear_redirects(all, 1, fd);
+			close(fd);
+		}
+		else if (redirect->type == REDIRECT_OUTPUT_APPEND)
+		{
+			fd = open(redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
+			cmd->has_output = 1;
+			if (!dup2(1, fd))
+				clear_redirects(all, 1, fd);
+			close(fd);
+		}
+		cmd->redirect = cmd->redirect->next;
 	}
 }
 
@@ -65,6 +65,6 @@ void	ft_redirects(t_cmd *cmd)
 	t_redirect *backup;
 
 	backup = cmd->redirect;
-	do_redirects(cmd, cmd->redirect);
+	do_redirects(cmd);
 	cmd->redirect = backup;
 }

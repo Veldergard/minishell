@@ -59,7 +59,6 @@ typedef struct				s_cmd {
 	int						arg_len;
 	t_redirect				*redirect;
 	int						has_output;
-	int						has_input;
 	void					*all_ptr;
 	enum e_pipe				pipe;
 	struct s_cmd			*next;
