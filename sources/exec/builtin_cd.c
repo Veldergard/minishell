@@ -6,12 +6,26 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:07:09 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 20:09:40 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/08 18:25:33 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
+
+/*
+** File types
+*/
+# define FT_STAT_FT		0170000
+# define FT_STAT_FT_DIR	0040000
+
+int		ft_stat_is_dir(int mode)
+{
+	int		isdir;
+
+	isdir = mode & FT_STAT_FT;
+	return (isdir == FT_STAT_FT_DIR);
+}
 
 char	*concat_path(char *start, char *end)
 {
@@ -64,7 +78,7 @@ char	*normalize_path(char *abspath)
 		while (abspath[i + 1] == '/')
 			i++;
 	}
-	while (normalized[--j] == '/')
+	while (j > 1 && normalized[--j] == '/')
 		normalized[j] = 0;
 	tmp = ft_strdup(normalized);
 	free(normalized);
@@ -79,14 +93,12 @@ int		ft_cd(int argc, char *argv[], t_all *all)
 
 	if (argc > 1)
 	{
-		printf("Concat  and normalize: \"%s\" with \"%s\"\n", all->pwd, argv[1]);
-		tmp = concat_path(all->pwd, argv[1]);
-		printf("Concatenated: \"%s\"\n", tmp);
+		tmp = argv[1][0] == '/' ? ft_strdup(argv[1]) :
+				concat_path(all->pwd, argv[1]);
 		new_pwd = normalize_path(tmp);
+		stat(tmp, &sstat);
 		free(tmp);
-		stat(new_pwd, &sstat);
-		printf("New path: \"%s\"\n", new_pwd);
-		if (S_ISDIR(sstat.st_mode))
+		if (ft_stat_is_dir(sstat.st_mode))
 		{
 			free(all->pwd);
 			all->pwd = new_pwd;
@@ -97,13 +109,9 @@ int		ft_cd(int argc, char *argv[], t_all *all)
 			dprintf(2, "Wrong path!\n");
 		}
 	}
-	return (0);
-}
-
-int		ft_pwd(int argc, char *argv[], t_all *all)
-{
-	(void)argc;
-	(void)argv;
-	ft_putendl_fd(all->pwd, 1);
+	else
+	{
+		// go to home
+	}
 	return (0);
 }

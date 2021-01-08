@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static long	ft_strtoll(const char *nptr)
+static long	ft_exit_strtoll(const char *nptr)
 {
 	long	integer;
 	int		sign;
@@ -42,7 +42,7 @@ int			ft_exit(int argc, char *argv[], t_all *all)
 	if (argc > 1)
 	{
 		if (ft_isdigit(argv[1][0]))
-			status = ft_strtoll(argv[1]) % 256;
+			status = ft_exit_strtoll(argv[1]) % 256;
 		else
 			status = -1;
 	}

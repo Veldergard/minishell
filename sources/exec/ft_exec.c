@@ -34,16 +34,16 @@ int		ft_isbuiltin_cmd(char *cmd)
 
 int		ft_builtin(t_cmd *cmd, t_all *all)
 {
-//	if (!ft_strncmp(cmd->args[0], "echo", 4))
-//		return (ft_echo(cmd->arg_len, cmd->args, all));
+	if (!ft_strncmp(cmd->args[0], "echo", 4))
+		return (ft_echo(cmd->arg_len, cmd->args, all));
 	if (!ft_strncmp(cmd->args[0], "cd", 2))
 		return (ft_cd(cmd->arg_len, cmd->args, all));
 	if (!ft_strncmp(cmd->args[0], "pwd", 3))
 		return (ft_pwd(cmd->arg_len, cmd->args, all));
-//	if (!ft_strncmp(cmd->args[0], "export", 6))
-//		return (ft_export(cmd->arg_len, cmd->args, all));
-//	if (!ft_strncmp(cmd->args[0], "unset", 5))
-//		return (ft_unset(cmd->arg_len, cmd->args, all));
+	if (!ft_strncmp(cmd->args[0], "export", 6))
+		return (ft_export(cmd->arg_len, cmd->args, all));
+	if (!ft_strncmp(cmd->args[0], "unset", 5))
+		return (ft_unset(cmd->arg_len, cmd->args, all));
 	if (!ft_strncmp(cmd->args[0], "env", 3))
 		return (ft_env(cmd->arg_len, cmd->args, all));
 	if (!ft_strncmp(cmd->args[0], "exit", 4))

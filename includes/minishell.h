@@ -33,6 +33,7 @@ void		write_env(t_all *all, char *name, int size, char *buf);
 int			get_env_len(t_all *all, char *name, int size);
 char		*get_env(t_all *all, char *name, int size);
 t_envlist	*envp_to_envlist(char *envp[]);
+t_envlist	*get_envlist_pre(t_all *all, char *name);
 
 /*
 **	Builtins
