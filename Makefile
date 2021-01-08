@@ -42,6 +42,8 @@ SRC = $(addprefix $(SRCDIR)/, \
 	)\
 	$(addprefix exec/,\
 		ft_exec.c\
+		redirects.c\
+		pipes.c\
 	)\
 	$(addprefix parser/,\
 		parser_utils.c\
@@ -49,7 +51,6 @@ SRC = $(addprefix $(SRCDIR)/, \
 		get_arg_len.c\
 		arg_parser.c\
 		cleaner.c\
-		redirects.c\
 	)\
 	$(addprefix types/,\
 		cmd_list.c\

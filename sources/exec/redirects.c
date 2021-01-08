@@ -14,19 +14,19 @@
 #include "types.h"
 #include <fcntl.h>
 
-void	return_fd(t_all *all)
+void	ft_return_fd(t_all *all)
 {
 	dup2(all->stdfd[0], 0);
 	dup2(all->stdfd[1], 1);
 }
 
-void	clear_redirects(t_all *all, int a, int b)
+void	ft_clear_redirects(t_all *all, int a, int b)
 {
 	if (a != -1)
 		close(a);
 	if (b != -1)
 		close(b);
-	return_fd(all);
+	ft_return_fd(all);
 }
 
 void	ft_input(t_all *all, t_cmd *cmd)
@@ -35,7 +35,7 @@ void	ft_input(t_all *all, t_cmd *cmd)
 
 	fd = open(redirect->filename, O_RDONLY);
 	if (!dup2(fd, 0))
-		clear_redirects(all, 0, fd);
+		ft_clear_redirects(all, 0, fd);
 	close(fd);
 }
 
@@ -48,7 +48,7 @@ void	ft_output(t_all *all, t_cmd *cmd, int type)
 		cmd->has_output = 1;
 		fd = open(redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
 		if (!dup2(fd, 1))
-			clear_redirects(all, 1, fd);
+			ft_clear_redirects(all, 1, fd);
 		close(fd);
 	}
 	else
@@ -56,7 +56,7 @@ void	ft_output(t_all *all, t_cmd *cmd, int type)
 		fd = open(redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
 		cmd->has_output = 1;
 		if (!dup2(fd, 1))
-			clear_redirects(all, 1, fd);
+			ft_clear_redirects(all, 1, fd);
 		close(fd);
 	}
 }

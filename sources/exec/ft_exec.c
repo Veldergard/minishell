@@ -109,12 +109,12 @@ void	ft_exec(t_all *all)
 	cmd_backup = all->cmds;
 	while (all->cmds)
 	{
+		if (all->cmds->pipe == PIPE_YES)
+			ft_pipes();
 		if (all->cmds->redirect)
 			ft_redirects(all->cmds);
 		if (all->cmds->args && all->cmds->pipe == PIPE_NO)
 			ft_exec_cmd(all->cmds, all);
-//		else
-//			ft_pipes_exec_cmd();
 		return_fd(all);
 		all->cmds = all->cmds->next;
 	}
