@@ -46,6 +46,7 @@ int			ft_unset(int argc, char *argv[], t_all *all);
 int			ft_env(int argc, char *argv[], t_all *all);
 int			ft_export(int argc, char *argv[], t_all *all);
 void		ft_redirects(t_cmd *cmd);
-void		return_fd(t_all *all);
+void		ft_restore_fd(t_all *all);
+
 
 #endif

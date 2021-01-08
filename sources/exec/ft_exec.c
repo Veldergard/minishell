@@ -115,7 +115,9 @@ void	ft_exec(t_all *all)
 			ft_redirects(all->cmds);
 		if (all->cmds->args && all->cmds->pipe == PIPE_NO)
 			ft_exec_cmd(all->cmds, all);
-		return_fd(all);
+		else if (all->cmds->args && all->cmds->pipe == PIPE_YES)
+			ft_exec_with_pipe();
+		ft_restore_fd(all);
 		all->cmds = all->cmds->next;
 	}
 	all->cmds = cmd_backup;

@@ -14,7 +14,7 @@
 #include "types.h"
 #include <fcntl.h>
 
-void	ft_return_fd(t_all *all)
+void	ft_restore_fd(t_all *all)
 {
 	dup2(all->stdfd[0], 0);
 	dup2(all->stdfd[1], 1);
@@ -22,18 +22,25 @@ void	ft_return_fd(t_all *all)
 
 void	ft_clear_redirects(t_all *all, int a, int b)
 {
-	if (a != -1)
+	if (a >= 0)
 		close(a);
-	if (b != -1)
+	if (b >= 0)
 		close(b);
-	ft_return_fd(all);
+	ft_restore_fd(all);
 }
 
 void	ft_input(t_all *all, t_cmd *cmd)
 {
 	int fd;
 
-	fd = open(redirect->filename, O_RDONLY);
+	fd = open(cmd->redirect->filename, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->redirect->filename, 2);
+		ft_putstr_fd(": No such file or directory", 2);
+		return ;
+	}
 	if (!dup2(fd, 0))
 		ft_clear_redirects(all, 0, fd);
 	close(fd);
@@ -43,22 +50,21 @@ void	ft_output(t_all *all, t_cmd *cmd, int type)
 {
 	int fd;
 
+	cmd->has_output = 1;
 	if (type)
-	{
-		cmd->has_output = 1;
-		fd = open(redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
-		if (!dup2(fd, 1))
-			ft_clear_redirects(all, 1, fd);
-		close(fd);
-	}
+		fd = open(cmd->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
 	else
+		fd = open(cmd->redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
+	if (fd == -1)
 	{
-		fd = open(redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
-		cmd->has_output = 1;
-		if (!dup2(fd, 1))
-			ft_clear_redirects(all, 1, fd);
-		close(fd);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->redirect->filename, 2);
+		ft_putstr_fd(": No such file or directory", 2);
+		return ;
 	}
+	if (!dup2(fd, 1))
+		ft_clear_redirects(all, 1, fd);
+	close(fd);
 }
 
 void	ft_redirects(t_cmd *cmd)
