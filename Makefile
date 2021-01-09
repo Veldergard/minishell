@@ -19,7 +19,7 @@ CLIBFLAGS = -L$(LFTDIR) -lft
 I_DIR = includes
 
 CC = clang
-CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
+CFLAGS = -Wall -Wextra -g -fsanitize=address -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \

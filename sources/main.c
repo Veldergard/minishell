@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/09 15:05:39 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 15:59:29 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@
 
 void	call_exec(t_all *all, int flag)
 {
+	int		ret;
+
 	while (1)
 	{
-		if (!parse(all, 1))
-			break;
+		clear_args(all);
+		ret = parse(all, 1);
 		if (all->args)
 			ft_exec(all);
-		clear_args(all);
+		if (!ret)
+			break;
 	}
 }
 
@@ -35,6 +38,7 @@ int		parse_cmd_line(t_all *all)
 	int ret;
 
 	print_prompt(all);
+	clear_not_args(all);
 	ret = get_next_line(0, &buf);
 	if (ret < 0)
 		return (1);
@@ -52,21 +56,21 @@ void	minishell(t_all *all)
 	int		stat;
 	pid_t	pid;
 
-	if (!(pid = fork()))
+//	if (!(pid = fork()))
 		while (1)
 			if (parse_cmd_line(all))
 				break;
-	else
-	{
-		apply_signals_parent();
-		waitpid(pid, &stat, 0);
-		if (WIFEXITED(stat))
-		{
-			all->status = MS_STATUS_STOP;
-			all->exit_status = WSTOPSIG(stat);
-		}
-		remove_signals_parent();
-	}
+//	else
+//	{
+//		apply_signals_parent();
+//		waitpid(pid, &stat, 0);
+//		if (WIFEXITED(stat))
+//		{
+//			all->status = MS_STATUS_STOP;
+//			all->exit_status = WSTOPSIG(stat);
+//		}
+//		remove_signals_parent();
+//	}
 }
 
 int		main(int argc, char *argv[], char *envp[])
