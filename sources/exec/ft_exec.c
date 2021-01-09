@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 18:59:57 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 11:59:16 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,14 @@ void	ft_exec(t_all *all)
 	cmd_backup = all->cmds;
 	while (all->cmds)
 	{
-		if (all->cmds->pipe == PIPE_YES)
-			ft_pipes();
+//		if (all->cmds->pipe == PIPE_YES)
+//			ft_pipes();
 		if (all->cmds->redirect)
-			ft_redirects(all->cmds);
+			ft_redirects(all, all->cmds);
 		if (all->cmds->args && all->cmds->pipe == PIPE_NO)
 			ft_exec_cmd(all->cmds, all);
-		else if (all->cmds->args && all->cmds->pipe == PIPE_YES)
-			ft_exec_with_pipe();
+//		else if (all->cmds->args && all->cmds->pipe == PIPE_YES)
+//			ft_exec_with_pipe();
 		ft_restore_fd(all);
 		all->cmds = all->cmds->next;
 	}

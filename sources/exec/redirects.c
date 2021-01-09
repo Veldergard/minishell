@@ -67,18 +67,18 @@ void	ft_output(t_all *all, t_cmd *cmd, int type)
 	close(fd);
 }
 
-void	ft_redirects(t_cmd *cmd)
+void	ft_redirects(t_all *all, t_cmd *cmd)
 {
 	t_redirect *backup;
 
 	backup = cmd->redirect;
 	while (cmd->redirect)
 	{
-		if (redirect->type == REDIRECT_INPUT)
+		if (cmd->redirect->type == REDIRECT_INPUT)
 			ft_input(all, cmd);
-		else if (redirect->type == REDIRECT_OUTPUT)
+		else if (cmd->redirect->type == REDIRECT_OUTPUT)
 			ft_output(all, cmd, 1);
-		else if (redirect->type == REDIRECT_OUTPUT_APPEND)
+		else if (cmd->redirect->type == REDIRECT_OUTPUT_APPEND)
 			ft_output(all, cmd, 0);
 		cmd->redirect = cmd->redirect->next;
 	}
