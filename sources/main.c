@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/09 14:11:20 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 15:05:39 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	call_exec(t_all *all, int flag)
 {
 	while (1)
 	{
-		if (parse(all, 1))
+		if (!parse(all, 1))
 			break;
 		if (all->args)
 			ft_exec(all);
@@ -29,7 +29,7 @@ void	call_exec(t_all *all, int flag)
 	}
 }
 
-int		nigger_working(t_all *all)
+int		parse_cmd_line(t_all *all)
 {
 	char	*buf;
 	int ret;
@@ -54,7 +54,7 @@ void	minishell(t_all *all)
 
 	if (!(pid = fork()))
 		while (1)
-			if (nigger_working(all))
+			if (parse_cmd_line(all))
 				break;
 	else
 	{

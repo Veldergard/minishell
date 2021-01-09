@@ -20,7 +20,7 @@
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
 void		print_prompt(t_all *all);
 void		ft_exec(t_all *all);
-void		ft_redirects(t_all *all, t_cmd *cmd);
+void		ft_redirects(t_all *all);
 void		ft_restore_fd(t_all *all);
 
 void		minishell(t_all *all);

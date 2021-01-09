@@ -42,7 +42,7 @@ void	parse_new_cmd(t_all *all)
 	all->buf_pos++;
 }
 
-int		parse_redirections(t_all *all, t_cmd *cmd, char *buf)
+int		parse_redirections(t_all *all, char *buf)
 {
 	t_redirect					*redirect;
 	int							len;
@@ -61,13 +61,13 @@ int		parse_redirections(t_all *all, t_cmd *cmd, char *buf)
 	}
 	all->buf_pos++;
 	skip_spaces(buf, &all->buf_pos);
-	len = get_arg_len(all, buf);
+	len = get_arg_len(all);
 	if (!(redirect->filename = malloc(len + 1)))
 		return (0);
 	redirect->filename[len] = 0;
 	all->str_ptr = redirect->filename;
-	parse_arg(all, buf, len);
-	ft_redirect_addback(&cmd->redirect, redirect);
+	parse_arg(all, len);
+	ft_redirect_addback(&all->redirect, redirect);
 	return (1);
 }
 
@@ -79,26 +79,26 @@ int		parse_line(t_all *all)
 	{
 		skip_spaces(all->buf, &all->buf_pos);
 		if (!all->buf[all->buf_pos])
-			return (0);
+			return (1);
 		len = get_arg_len(all);
 		if (len == 0 && all->buf[all->buf_pos] == '\\')
 			all->buf_pos++;
 		else if (len <= 1 && ft_strchr(";|", all->buf[all->buf_pos]))
 		{
 			parse_new_cmd(all);
-			return (0);
+			return (1);
 		}
 		else if (len <= 2 && ft_strchr("><", all->buf[all->buf_pos]))
-			parse_redirections(all, all->buf); //todo
+			parse_redirections(all, all->buf);
 		else
 		{
-			if (!args_increase(cmd)) //todo
+			if (!args_increase(all))
 				return (1);
-			if (!(cmd->args[cmd->arg_len - 1] = malloc(len + 1))) //todo
+			if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
 				return (1);
-			all->str_ptr = cmd->args[cmd->arg_len - 1]; //todo
-			all->str_ptr[len] = 0;  //todo
-			parse_arg(all, buf, len); //todo
+			all->str_ptr = all->args[all->arg_len - 1];
+			all->str_ptr[len] = 0;
+			parse_arg(all, len);
 		}
 	}
 	return (0);

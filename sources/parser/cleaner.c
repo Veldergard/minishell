@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 18:54:19 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/09 13:05:56 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 15:38:42 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	clear_args(t_all *all)
 {
-	ft_cmd_delete(all->cmds);
+	ft_redirect_clearall(&all->redirect);
+	if (all->arg_len)
+		while (0 <= --all->arg_len)
+		{
+			free(all->args[all->arg_len]);
+		}
+	free(all->args);
 	all->str_ptr = NULL;
 	all->buf_pos = 0;
 }

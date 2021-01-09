@@ -16,7 +16,7 @@
 
 int		parse(t_all *all, int flag);
 int		get_arg_len(t_all *all);
-void	parse_arg(t_all *all, char *buf, int len);
+void	parse_arg(t_all *all, int len);
 int		is_envp_symbol(char c);
 int		is_space(char c);
 void	clear_args(t_all *all);

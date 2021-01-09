@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 18:32:34 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/07 20:15:18 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 15:30:47 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	ft_clear_redirects(t_all *all, int a, int b)
 	ft_restore_fd(all);
 }
 
-void	ft_input(t_all *all, t_cmd *cmd)
+void	ft_input(t_all *all)
 {
 	int fd;
 
-	fd = open(cmd->redirect->filename, O_RDONLY);
+	fd = open(all->redirect->filename, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->redirect->filename, 2);
+		ft_putstr_fd(all->redirect->filename, 2);
 		ft_putstr_fd(": No such file or directory", 2);
 		return ;
 	}
@@ -46,19 +46,19 @@ void	ft_input(t_all *all, t_cmd *cmd)
 	close(fd);
 }
 
-void	ft_output(t_all *all, t_cmd *cmd, int type)
+void	ft_output(t_all *all, int type)
 {
 	int fd;
 
-	cmd->has_output = 1;
+	all->has_output = 1;
 	if (type)
-		fd = open(cmd->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
 	else
-		fd = open(cmd->redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->redirect->filename, 2);
+		ft_putstr_fd(all->redirect->filename, 2);
 		ft_putstr_fd(": No such file or directory", 2);
 		return ;
 	}
@@ -67,20 +67,20 @@ void	ft_output(t_all *all, t_cmd *cmd, int type)
 	close(fd);
 }
 
-void	ft_redirects(t_all *all, t_cmd *cmd)
+void	ft_redirects(t_all *all)
 {
 	t_redirect *backup;
 
-	backup = cmd->redirect;
-	while (cmd->redirect)
+	backup = all->redirect;
+	while (all->redirect)
 	{
-		if (cmd->redirect->type == REDIRECT_INPUT)
-			ft_input(all, cmd);
-		else if (cmd->redirect->type == REDIRECT_OUTPUT)
-			ft_output(all, cmd, 1);
-		else if (cmd->redirect->type == REDIRECT_OUTPUT_APPEND)
-			ft_output(all, cmd, 0);
-		cmd->redirect = cmd->redirect->next;
+		if (all->redirect->type == REDIRECT_INPUT)
+			ft_input(all);
+		else if (all->redirect->type == REDIRECT_OUTPUT)
+			ft_output(all, 1);
+		else if (all->redirect->type == REDIRECT_OUTPUT_APPEND)
+			ft_output(all, 0);
+		all->redirect = all->redirect->next;
 	}
-	cmd->redirect = backup;
+	all->redirect = backup;
 }

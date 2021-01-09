@@ -52,7 +52,6 @@ SRC = $(addprefix $(SRCDIR)/, \
 		cleaner.c\
 	)\
 	$(addprefix types/,\
-		cmd_list.c\
 		envlist.c\
 		redirect_list.c\
 		init_t_all.c\
