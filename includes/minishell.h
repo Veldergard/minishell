@@ -19,9 +19,9 @@
 
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
 void		print_prompt(t_all *all);
-
-void		add_redirect(t_all *all, char *filename, int type);
 void		ft_exec(t_all *all);
+void		ft_redirects(t_all *all, t_cmd *cmd);
+void		ft_restore_fd(t_all *all);
 
 void		minishell(t_all *all);
 
@@ -46,8 +46,5 @@ int			ft_echo(int argc, char *argv[], t_all *all);
 int			ft_unset(int argc, char *argv[], t_all *all);
 int			ft_env(int argc, char *argv[], t_all *all);
 int			ft_export(int argc, char *argv[], t_all *all);
-void		ft_redirects(t_all *all, t_cmd *cmd);
-void		ft_restore_fd(t_all *all);
-
 
 #endif

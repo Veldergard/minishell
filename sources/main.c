@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 18:32:09 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 12:50:41 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parser.h"
 #include "ft_signal.h"
 #include <sys/wait.h>
-
+#include <stdio.h>
 void	minishell(t_all *all)
 {
 	int		stat;
@@ -27,6 +27,7 @@ void	minishell(t_all *all)
 			print_prompt(all);
 			if (1 == parse(all))
 				break;
+			fflush(stdout);
 			if (all->cmds)
 				ft_exec(all);
 			clear_args(all);

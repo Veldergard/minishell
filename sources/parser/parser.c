@@ -116,6 +116,10 @@ int		parse_line(t_all *all, char *buf)
 
 void	do_eot_signal(t_all *all)
 {
+	t_cmd	*cmd;
+
+	cmd = ft_create_cmd(all);
+	all->cmds = cmd;
 	args_increase(all->cmds);
 	all->cmds->args[all->cmds->arg_len - 1] = ft_strdup("exit");
 }

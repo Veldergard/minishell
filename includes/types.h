@@ -78,6 +78,7 @@ typedef struct				s_all {
 	int						buf_pos;
 	int						arg_pos;
 	int						pipe_pid;
+	char					*buf;
 }							t_all;
 
 void						init_t_all(t_all *all, char **envp);
