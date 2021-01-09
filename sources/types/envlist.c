@@ -28,7 +28,7 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 				return ((t_envlist*)0);
 			}
 		}
-		if (valuesize > 0)
+		if (valuesize >= 0)
 		{
 			if (!(env->value = malloc(sizeof(char) * (valuesize + 1))))
 			{

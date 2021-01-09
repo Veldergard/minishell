@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/07 04:31:07 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/08 18:39:14 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,20 +17,12 @@ LFT = $(LFTDIR)/libft.a
 CLIBFLAGS = -L$(LFTDIR) -lft
 
 I_DIR = includes
-HEADERS = $(addprefix $(I_DIR)/,\
-	shell_color.h\
-	ms.h\
-)
 
 CC = clang
 CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
-	$(addprefix builtin/,\
-		exit.c\
-		ft_env.c\
-	)\
 	$(addprefix env/,\
 		envp_to_envlist.c\
 		get_env.c\
@@ -41,6 +33,13 @@ SRC = $(addprefix $(SRCDIR)/, \
 		print_error.c\
 	)\
 	$(addprefix exec/,\
+		builtin_cd.c\
+		builtin_echo.c\
+		builtin_env.c\
+		builtin_exit.c\
+		builtin_export.c\
+		builtin_pwd.c\
+		builtin_unset.c\
 		ft_exec.c\
 		redirects.c\
 		pipes.c\
@@ -70,6 +69,7 @@ OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
 TESTS = $(patsubst %.c, $(OBJDIR)/%.o,\
+	debug_main.c\
 	test_get_env.c\
 	test_parser.c\
 )
@@ -126,11 +126,7 @@ $(OBJDIR)/%.o: test/%.c $(LFT)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $< -c -o $@ -MMD
 
-test_get_env: libft $(TOBJ) $(TESTS)
-	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
-
-test_parser: libft $(TOBJ) $(TESTS)
+$(patsubst $(OBJDIR)/%.o, %, $(TESTS)): libft $(TOBJ) $(TESTS)
 	@echo -e "\r\033[1;32m> $@\033[0m"
 	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 

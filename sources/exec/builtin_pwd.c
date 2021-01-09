@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_command.c                                     :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 17:38:13 by itressa           #+#    #+#             */
-/*   Updated: 2020/12/29 16:41:09 by itressa          ###   ########.fr       */
+/*   Created: 2021/01/08 18:42:52 by itressa           #+#    #+#             */
+/*   Updated: 2021/01/08 18:42:58 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "color.h"
 
-void	print_prompt(t_all *all)
+int		ft_pwd(int argc, char *argv[], t_all *all)
 {
-	ft_putstr_fd(CLRLBLUE, 2);
-	ft_putstr_fd(all->pwd, 2);
-	ft_putstr_fd(CLRGREEN " ᐅ " CLRRESET, 2);
+	(void)argc;
+	(void)argv;
+	ft_putendl_fd(all->pwd, 1);
+	return (0);
 }

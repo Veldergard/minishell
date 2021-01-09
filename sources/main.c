@@ -24,7 +24,7 @@ void	minishell(t_all *all)
 	{
 		while (1)
 		{
-			print_prompt();
+			print_prompt(all);
 			if (1 == parse(all))
 				break;
 			if (all->cmds)

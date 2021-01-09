@@ -18,7 +18,7 @@
 # include "types.h"
 
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
-void		print_prompt();
+void		print_prompt(t_all *all);
 
 void		add_redirect(t_all *all, char *filename, int type);
 void		ft_exec(t_all *all);
@@ -33,6 +33,7 @@ void		write_env(t_all *all, char *name, int size, char *buf);
 int			get_env_len(t_all *all, char *name, int size);
 char		*get_env(t_all *all, char *name, int size);
 t_envlist	*envp_to_envlist(char *envp[]);
+t_envlist	*get_envlist_pre(t_all *all, char *name);
 
 /*
 **	Builtins

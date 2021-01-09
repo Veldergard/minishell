@@ -65,10 +65,11 @@ typedef struct				s_cmd {
 }							t_cmd;
 
 typedef struct				s_all {
-	char					**envp;
+	char					**envp; // TODO remove
 	t_envlist				*env;
 	int						stdfd[2];
 	char					**path;
+	char					*pwd;
 	int						last_exit_status;
 	enum e_status			status;
 	char					exit_status;
