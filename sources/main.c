@@ -17,32 +17,14 @@
 #include <stdio.h>
 void	minishell(t_all *all)
 {
-	int		stat;
-	pid_t	pid;
-
-	if (!(pid = fork()))
+	while (1)
 	{
-		while (1)
-		{
-			print_prompt(all);
-			if (1 == parse(all))
-				break;
-			fflush(stdout);
-			if (all->cmds)
-				ft_exec(all);
-			clear_args(all);
-		}
-	}
-	else
-	{
-		apply_signals_parent();
-		waitpid(pid, &stat, 0);
-		if (WIFEXITED(stat))
-		{
-			all->status = MS_STATUS_STOP;
-			all->exit_status = WSTOPSIG(stat);
-		}
-		remove_signals_parent();
+		print_prompt(all);
+		if (1 == parse(all))
+			break;
+		if (all->cmds)
+			ft_exec(all);
+		clear_args(all);
 	}
 }
 
