@@ -14,8 +14,8 @@
 # define PARSE_H
 # include "types.h"
 
-int		parse(t_all *all);
-int		get_arg_len(t_all *all, char *buf);
+int		parse(t_all *all, int flag);
+int		get_arg_len(t_all *all);
 void	parse_arg(t_all *all, char *buf, int len);
 int		is_envp_symbol(char c);
 int		is_space(char c);
