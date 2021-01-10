@@ -28,7 +28,7 @@ void 	parse_dquoted_escape(t_all *all)
 	if (all->buf[all->buf_pos] != '$' && all->buf[all->buf_pos] != '`'
 		&& all->buf[all->buf_pos] != '"' && all->buf[all->buf_pos] != '\\')
 	{
-		all->str_ptr[all->arg_pos] = all->buf[all->buf_pos - 1];
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos - 1];
 		all->str_ptr[all->arg_pos] = all->buf[all->buf_pos];
 	}
 	else
