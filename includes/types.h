@@ -26,7 +26,8 @@ enum	e_redirect_type
 enum	e_status
 {
 	MS_STATUS_RUN = 0,
-	MS_STATUS_STOP
+	MS_STATUS_STOP,
+	MS_STATUS_SIGNALED
 };
 
 enum	e_pipe

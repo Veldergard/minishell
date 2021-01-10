@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 14:45:04 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/03 16:03:20 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/09 14:00:14 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ int			ft_exit(int argc, char *argv[], t_all *all)
 			status = -1;
 	}
 	ft_putendl_fd("exit", 2);
-	exit((int)status);
+	all->status = MS_STATUS_STOP;
+	all->exit_status = (char)(status % 256);
+	return (all->exit_status);
 }

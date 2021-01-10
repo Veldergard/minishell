@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 18:59:27 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:26:22 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <unistd.h>
 # include "types.h"
 
+int			handle_signals;
+
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
-void		print_prompt(t_all *all);
+void		print_prompt(void);
 void		ft_exec(t_all *all);
 void		ft_redirects(t_all *all, t_cmd *cmd);
 void		ft_restore_fd(t_all *all);

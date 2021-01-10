@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/09 11:59:16 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 14:09:45 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_error.h"
 #include <errno.h>
+#include "ft_signal.h"
 #include <sys/wait.h>
 #include <sys/stat.h>
 
@@ -75,11 +76,37 @@ char	*get_exec_cmd(t_cmd *cmd, t_all *all)
 	return (NULL);
 }
 
+void	ft_exec_parent(t_all *all, pid_t pid)
+{
+	int		stat;
+
+	waitpid(pid, &stat, 0);
+	all->last_exit_status = 0;
+	if (WIFEXITED(stat))
+		all->last_exit_status = WEXITSTATUS(stat);
+	if (WIFSIGNALED(stat))
+	{
+		all->last_exit_status = 128 + WTERMSIG(stat);
+		if (all->last_exit_status == 128 + SIGQUIT)
+		{
+			ft_putstr_fd("Quit: ", 2);
+			ft_putnbr_fd((int)SIGQUIT, 2);
+			ft_putendl_fd("", 2);
+			print_prompt();
+		}
+		if (all->last_exit_status == 128 + SIGINT)
+		{
+			ft_putendl_fd("", 2);
+			print_prompt();
+		}
+		all->status = MS_STATUS_SIGNALED;
+	}
+}
+
 void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 {
 	pid_t	pid;
 	char	*command;
-	int		stat;
 
 	if (ft_isbuiltin_cmd(cmd->args[0]))
 	{
@@ -91,22 +118,20 @@ void	ft_exec_cmd(t_cmd *cmd, t_all *all)
 		all->last_exit_status = 127;
 		return ;
 	}
+	handle_signals = 0;
 	if (!(pid = fork()))
 	{
-		stat = execve(command, cmd->args, all->envp);
-		print_exec_error_errno(cmd->args[0]);
-		if (stat == -1)
+		if (!execve(command, cmd->args, all->envp))
+		{
+			print_exec_error_errno(cmd->args[0]);
 			exit(errno);
+		}
 	}
 	else
 	{
-		waitpid(pid, &stat, 0);
-		all->last_exit_status = 0;
-		if (WIFEXITED(stat))
-			all->last_exit_status = WEXITSTATUS(stat);
-		if (WIFSIGNALED(stat))
-			all->last_exit_status = 128 + WTERMSIG(stat);
+		ft_exec_parent(all, pid);
 	}
+	handle_signals = 1;
 	free(command);
 }
 
