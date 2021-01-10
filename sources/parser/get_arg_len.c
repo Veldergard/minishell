@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:57:26 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/09 14:03:56 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:52:14 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ void	subtitution_len(t_all *all, int *pos, int *len)
 	int ret;
 
 	size = 0;
-	ret = is_envp_symbol(all->buf[(*pos) + 1 + size]);
+	(*pos)++;
+	ret = is_envp_symbol(all->buf[(*pos) + size]);
 	if (ret == 1)
-		while (is_envp_symbol(all->buf[(*pos) + 1 + size]) & 1)
+		while (is_envp_symbol(all->buf[(*pos) + size]) & 1)
 			size++;
 	else if (ret & 2)
 		size = 1;
-	(*pos)++;
 	if (size)
 	{
 		(*len) += get_env_len(all, 	all->buf + (*pos), size);
-		(*pos) += 1 + size;
+		(*pos) += size;
 	}
 	else
 	{
