@@ -67,7 +67,7 @@ int		parse_redirections(t_all *all, char *buf)
 		return (0);
 	redirect->filename[len] = 0;
 	all->str_ptr = redirect->filename;
-	parse_arg(all, len);
+	parse_arg(all);
 	ft_redirect_addback(&all->redirect, redirect);
 	return (1);
 }
@@ -99,7 +99,7 @@ int		parse_line(t_all *all)
 				return (1);
 			all->str_ptr = all->args[all->arg_len - 1];
 			all->str_ptr[len] = 0;
-			parse_arg(all, len);
+			parse_arg(all);
 		}
 	}
 	return (0);
