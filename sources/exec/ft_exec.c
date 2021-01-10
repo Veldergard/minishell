@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:38:44 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:53:27 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_exec_cmd(t_all *all)
 {
 	pid_t	pid;
 	char	*command;
+	char	**envp;
 
 	if (ft_isbuiltin_cmd(all->args[0]))
 	{
@@ -120,11 +121,13 @@ void	ft_exec_cmd(t_all *all)
 	handle_signals = 0;
 	if (!(pid = fork()))
 	{
-		if (!execve(command, all->args, all->envp))
+		envp = envlist_to_envp(all->env);
+		if (!execve(command, all->args, envp))
 		{
 			print_exec_error_errno(all->args[0]);
 			exit(errno);
 		}
+		free_envp(envp);
 	}
 	else
 	{

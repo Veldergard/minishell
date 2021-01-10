@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:22:58 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 04:46:40 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 16:48:40 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 	if (env)
 	{
 		ft_bzero(env, sizeof(*env));
-		if (keysize > 0)
+		if ((env->key_len = keysize) > 0)
 		{
 			if (!(env->key = malloc(sizeof(char) * (keysize + 1))))
 			{
@@ -28,7 +28,7 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 				return ((t_envlist*)0);
 			}
 		}
-		if (valuesize >= 0)
+		if ((env->value_len = valuesize) >= 0)
 		{
 			if (!(env->value = malloc(sizeof(char) * (valuesize + 1))))
 			{
@@ -38,6 +38,19 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 		}
 	}
 	return (env);
+}
+
+int							ft_envlist_len(t_envlist *envlist)
+{
+	int		len;
+
+	len = 0;
+	while (envlist)
+	{
+		len++;
+		envlist = envlist->next;
+	}
+	return (len);
 }
 
 void						ft_envlist_addback(t_envlist **env, t_envlist *new)

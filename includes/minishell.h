@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:03:25 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:56:50 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <unistd.h>
 # include "types.h"
+# include "ft_error.h"
 
 int			handle_signals;
 
@@ -35,8 +36,11 @@ void		ft_pipes(t_all *all);
 void		write_env(t_all *all, char *name, int size, char *buf);
 int			get_env_len(t_all *all, char *name, int size);
 char		*get_env(t_all *all, char *name, int size);
-t_envlist	*envp_to_envlist(char *envp[]);
 t_envlist	*get_envlist_pre(t_all *all, char *name);
+
+t_envlist	*envp_to_envlist(char *envp[]);
+char		**envlist_to_envp(t_envlist *envlist);
+void		free_envp(char **envp);
 
 /*
 **	Builtins
