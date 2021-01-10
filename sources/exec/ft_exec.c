@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:09:08 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:38:44 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ void	ft_exec(t_all *all)
 {
 	if (all->pipe == PIPE_YES)
 		ft_pipes(all);
+	if (all->pipe == PIPE_YES && all->pipe_pid != -1)
+		return ;
 	if (all->redirect)
 		ft_redirects(all);
 	if (all->args)
 		ft_exec_cmd(all);
-//	else if (all->args && all->pipe == PIPE_YES)
-//		ft_exec_with_pipe();
 	ft_restore_fd(all);
 }

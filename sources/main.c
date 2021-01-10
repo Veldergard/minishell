@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:13:21 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:46:27 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,14 @@ void	parse_and_exec(t_all *all, int flag)
 		clear_args(all);
 		ret = parse(all, flag);
 		if (all->args)
+		{
 			ft_exec(all);
+			if (all->pipe == PIPE_YES && all->pipe_pid == -1)
+			{
+				clear_args(all);
+				break;
+			}
+		}
 		if (!ret)
 			break;
 	}
@@ -49,6 +56,8 @@ int		minishell(t_all *all)
 	else
 		parse_and_exec(all, 1);
 	free(buf);
+	if (all->pipe == PIPE_YES && all->pipe_pid == -1)
+		return (1);
 	return (0);
 }
 

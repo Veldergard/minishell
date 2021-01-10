@@ -26,7 +26,7 @@ void		ft_redirects(t_all *all);
 void		ft_restore_fd(t_all *all);
 
 int			minishell(t_all *all);
-int			ft_pipes(t_all *all);
+void		ft_pipes(t_all *all);
 
 /*
 **	ENV

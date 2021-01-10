@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 18:54:19 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/10 13:13:23 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:14:13 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	clear_args(t_all *all)
 	all->str_ptr = NULL;
 	all->pipe = PIPE_NO;
 	all->has_output = 0;
+	all->pipe_pid = 0;
 }
