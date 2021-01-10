@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:56:20 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 19:48:45 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/09 15:32:09 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	print_parsed(t_all *all)
 {
 	int		i;
 
-	printf("\rParsed arg num: %d\n", all->cmds->arg_len);
+	printf("\rParsed arg num: %d\n", all->arg_len);
 	i = 0;
-	while (all->cmds->args[i])
+	while (all->args[i])
 	{
-		printf("\"%s\" ", all->cmds->args[i]);
+		printf("\"%s\" ", all->args[i]);
 		i++;
 	}
 	printf("\n");

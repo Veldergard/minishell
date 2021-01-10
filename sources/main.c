@@ -6,30 +6,42 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 13:49:29 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 14:24:21 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "ft_signal.h"
+#include "get_next_line.h"
+
+int		parse_cmd_line(t_all *all)
+{
+	char	*buf;
+	int		ret;
+
+	if (all->status == MS_STATUS_SIGNALED)
+		all->status = MS_STATUS_RUN;
+	else
+		print_prompt();
+	all->buf_pos = 0;
+	ret = get_next_line(0, &buf);
+	if (ret < 0)
+		return (1);
+	all->buf = buf;
+	if (!buf[0] && ret == 0)
+		parse(all, 0);
+	else
+		parse(all, 1);
+	free(buf);
+	return (0);
+}
 
 void	minishell(t_all *all)
 {
 	while (1)
-	{
-		if (all->status == MS_STATUS_SIGNALED)
-			all->status = MS_STATUS_RUN;
-		else
-			print_prompt();
-		if (1 == parse(all))
+		if (parse_cmd_line(all))
 			break;
-		if (all->cmds)
-			ft_exec(all);
-		if (all->status == MS_STATUS_STOP)
-			break;
-		clear_args(all);
-	}
 }
 
 int		main(int argc, char *argv[], char *envp[])

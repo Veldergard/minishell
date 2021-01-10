@@ -23,7 +23,7 @@ void	minishell(t_all *all)
 		if (1 == parse(all))
 			break;
 		// do_redirects();
-		if (all->cmds)
+		if (all->args)
 			ft_exec(all);
 		clear_args(all);
 	}

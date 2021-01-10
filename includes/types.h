@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 19:41:25 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/09 13:07:51 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,12 @@ typedef struct				s_redirect {
 	struct s_redirect		*next;
 }							t_redirect;
 
-typedef struct				s_cmd {
+typedef struct				s_all {
 	char					**args;
 	int						arg_len;
 	t_redirect				*redirect;
 	int						has_output;
-	void					*all_ptr;
 	enum e_pipe				pipe;
-	struct s_cmd			*next;
-}							t_cmd;
-
-typedef struct				s_all {
 	char					**envp; // TODO remove
 	t_envlist				*env;
 	int						stdfd[2];
@@ -74,7 +69,6 @@ typedef struct				s_all {
 	int						last_exit_status;
 	enum e_status			status;
 	char					exit_status;
-	t_cmd					*cmds;
 	char					*str_ptr;
 	int						buf_pos;
 	int						arg_pos;
@@ -84,11 +78,6 @@ typedef struct				s_all {
 
 void						init_t_all(t_all *all, char **envp);
 void						destroy_t_all(t_all *all);
-
-t_cmd						*ft_create_cmd(t_all *all);
-void						ft_cmd_addback(t_cmd **cmd, t_cmd *new);
-void						ft_cmd_delete(t_cmd *cmd);
-void						ft_cmd_clearall(t_cmd **cmd);
 
 t_redirect					*ft_create_redirect();
 void						ft_redirect_addback(t_redirect **redirect,
