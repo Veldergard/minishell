@@ -65,5 +65,7 @@ int				ft_unset(int argc, char *argv[], t_all *all)
 		}
 		i++;
 	}
+	free_envp(all->envp);
+	all->envp = envlist_to_envp(all->env);
 	return (0);
 }

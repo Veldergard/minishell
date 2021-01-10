@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:53:27 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:40:11 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,13 @@ char	*get_exec_cmd(t_all *all)
 	i = 0;
 	while (all->path[i])
 	{
-		tmp = ft_strjoin(all->path[i], "/");
-		command = ft_strjoin(tmp, all->args[0]);
-		free(tmp);
+		command = malloc(ft_strlen(all->path[i]) + ft_strlen(all->args[0]) + 2);
+		ft_strlcpy(command, all->path[i], ft_strlen(all->path[i]) + 1);
+		command[ft_strlen(all->path[i])] = '/';
+		ft_strlcpy(command + ft_strlen(all->path[i]) + 1, all->args[0], ft_strlen(all->args[0]) + 1);
+//		tmp = ft_strjoin(all->path[i], "/");
+//		command = ft_strjoin(tmp, all->args[0]);
+//		free(tmp);
 		if (!stat(command, &buf))
 			return (command);
 		free(command);
@@ -121,13 +125,11 @@ void	ft_exec_cmd(t_all *all)
 	handle_signals = 0;
 	if (!(pid = fork()))
 	{
-		envp = envlist_to_envp(all->env);
-		if (!execve(command, all->args, envp))
+		if (!execve(command, all->args, all->envp))
 		{
 			print_exec_error_errno(all->args[0]);
 			exit(errno);
 		}
-		free_envp(envp);
 	}
 	else
 	{

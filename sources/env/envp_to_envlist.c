@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:30:53 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 17:06:01 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 19:01:24 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ char		**envlist_to_envp(t_envlist *envlist)
 			return ((char**)0);
 		}
 		ft_strlcpy(envp[i], envlist->key, envlist->key_len + 1);
-		envp[i][envlist->key_len] = 0;
-		ft_strlcpy(envp[i] + envlist->key_len + 1, envlist->key,
+		envp[i][envlist->key_len] = '=';
+		ft_strlcpy(envp[i] + envlist->key_len + 1, envlist->value,
 			envlist->value_len + 1);
 		envp[i][envlist->key_len + envlist->value_len + 1] = 0;
 		i++;
@@ -75,6 +75,6 @@ void		free_envp(char **envp)
 
 	i = 0;
 	while (envp[i])
-		free(envp[i]);
+		free(envp[i++]);
 	free(envp);
 }
