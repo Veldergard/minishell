@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 16:53:44 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 17:27:49 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		main(int argc, char *argv[], char *envp[])
 	apply_signals_common();
 	signal(SIGINT, do_parent_signals);
 	error = 0;
-	while (all.status == MS_STATUS_RUN && !error)
+	while (all.status != MS_STATUS_STOP && !error)
 	{
 		error = minishell(&all);
 	}
