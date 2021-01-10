@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/08 20:14:15 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 13:59:53 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		ft_export(int argc, char *argv[], t_all *all)
 		{
 			new = ft_create_envlist(ft_strlen(argv[i]), 0);
 			ft_strlcpy(new->key, argv[i], ft_strlen(argv[i]) + 1);
+			new->value[0] = 0;
 		}
 		ft_envlist_addback(&all->env, new);
 		i++;
