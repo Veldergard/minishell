@@ -16,7 +16,6 @@ void	init_t_all(t_all *all, char **envp)
 {
 	ft_bzero(all, sizeof(t_all));
 	all->env = envp_to_envlist(envp);
-	all->envp = envp;
 	all->stdfd[0] = dup(0);
 	all->stdfd[1] = dup(1);
 	all->path = ft_split(get_env(all, "PATH", 4), ':');

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/09 13:07:51 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 16:56:41 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ enum	e_env_visible
 
 typedef struct				s_envlist {
 	char					*key;
+	int						key_len;
 	char					*value;
+	int						value_len;
 	enum e_env_visible		is_hidden;
 	struct s_envlist		*next;
 }							t_envlist;
@@ -61,7 +63,6 @@ typedef struct				s_all {
 	t_redirect				*redirect;
 	int						has_output;
 	enum e_pipe				pipe;
-	char					**envp; // TODO remove
 	t_envlist				*env;
 	int						stdfd[2];
 	char					**path;
@@ -86,6 +87,7 @@ void						ft_redirect_delete(t_redirect *redirect);
 void						ft_redirect_clearall(t_redirect **redirect);
 
 t_envlist					*ft_create_envlist(int keysize, int valuesize);
+int							ft_envlist_len(t_envlist *envlist);
 void						ft_envlist_addback(t_envlist **env, t_envlist *new);
 void						ft_envlist_delete(t_envlist *env);
 void						ft_envlist_clearall(t_envlist **env);
