@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:46:27 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 16:53:44 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	parse_and_exec(t_all *all, int flag)
 
 	while (1)
 	{
-		clear_args(all);
+		clear_all(all);
 		ret = parse(all, flag);
 		if (all->args)
 		{
 			ft_exec(all);
 			if (all->pipe == PIPE_YES && all->pipe_pid == -1)
 			{
-				clear_args(all);
+				clear_args_and_redirects(all);
 				break;
 			}
 		}
@@ -46,6 +46,7 @@ int		minishell(t_all *all)
 		all->status = MS_STATUS_RUN;
 	else
 		print_prompt();
+	all->pipe = 0;
 	all->buf_pos = 0;
 	ret = get_next_line(0, &buf);
 	if (ret < 0)

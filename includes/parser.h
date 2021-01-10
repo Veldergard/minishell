@@ -19,7 +19,8 @@ int		get_arg_len(t_all *all);
 void	parse_arg(t_all *all);
 int		is_envp_symbol(char c);
 int		is_space(char c);
-void	clear_args(t_all *all);
+void	clear_all(t_all *all);
 void	skip_spaces(char *buf, int *pos);
+void	clear_args_and_redirects(t_all *all);
 
 #endif
