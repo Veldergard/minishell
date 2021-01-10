@@ -100,7 +100,5 @@ void	parse_arg(t_all *all, int len)
 			parse_escape(all);
 		else
 			all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos++];
-		if (all->arg_pos >= len)
-			break;
 	}
 }
