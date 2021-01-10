@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/10 13:36:49 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 17:42:51 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void 	parse_dquoted_escape(t_all *all)
 		&& all->buf[all->buf_pos] != '"' && all->buf[all->buf_pos] != '\\')
 	{
 		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos - 1];
-		all->str_ptr[all->arg_pos] = all->buf[all->buf_pos];
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos];
 	}
 	else
 	{
-		all->str_ptr[all->arg_pos] = all->buf[all->buf_pos];
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos];
 	}
 	all->buf_pos++;
 }
@@ -65,7 +65,7 @@ void 	parse_subtitution(t_all *all)
 		all->buf_pos += size;
 	}
 	else
-		all->str_ptr[all->arg_pos] = all->buf[all->buf_pos++];
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos++];
 }
 
 void	parse_double_quote(t_all *all)
@@ -78,7 +78,7 @@ void	parse_double_quote(t_all *all)
 		else if (all->buf[all->buf_pos] == '$')
 			parse_subtitution(all);
 		else
-			all->str_ptr[all->arg_pos] = all->buf[all->buf_pos++];
+			all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos++];
 	}
 	if (all->buf[all->buf_pos] == '\"')
 		all->buf_pos++;
