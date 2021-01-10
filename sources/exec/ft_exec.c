@@ -136,8 +136,8 @@ void	ft_exec_cmd(t_all *all)
 
 void	ft_exec(t_all *all)
 {
-//	if (all->pipe == PIPE_YES)
-//		ft_pipes();
+	if (all->pipe == PIPE_YES)
+		ft_pipes();
 	if (all->redirect)
 		ft_redirects(all);
 	if (all->args)

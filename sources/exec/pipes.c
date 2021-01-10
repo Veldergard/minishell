@@ -1,5 +1,7 @@
-//int		ft_pipes(t_all *all)
-//{
+#include "types.h"
+
+int		ft_pipes(t_all *all)
+{
 //	pid_t	pid;
 //	int		fds[2];
 //
@@ -18,4 +20,4 @@
 //		close(fds[1]);
 //		all->pipe_pid = pid;
 //	}
-//}
+}
