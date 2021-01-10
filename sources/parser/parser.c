@@ -105,24 +105,14 @@ int		parse_line(t_all *all)
 	return (0);
 }
 
-int		parse(t_all *all, int flag)
+int parse(t_all *all, int flag)
 {
-	int		ret;
-
-	while (1)
+	if (flag)
+		return (parse_line(all));
+	else
 	{
-		clear_args(all);
-		if (flag)
-			ret = parse_line(all);
-		else
-		{
-			args_increase(all);
-			all->args[all->arg_len - 1] = ft_strdup("exit");
-			ret = 0;
-		}
-		if (all->args)
-			ft_exec(all);
-		if (!ret)
-			break;
+		args_increase(all);
+		all->args[all->arg_len - 1] = ft_strdup("exit");
 	}
+	return (0);
 }

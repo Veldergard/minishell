@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 14:24:21 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 14:37:20 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include "parser.h"
 #include "ft_signal.h"
 #include "get_next_line.h"
+
+int		parse_and_exec(t_all *all, int flag)
+{
+	int		ret;
+
+	while (1)
+	{
+		clear_args(all);
+		ret = parse(all, flag);
+		if (all->args)
+			ft_exec(all);
+		if (!ret)
+			break;
+	}
+}
 
 int		parse_cmd_line(t_all *all)
 {
