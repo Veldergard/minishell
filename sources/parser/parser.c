@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "get_next_line.h"
+#include "minishell.h"
 
 int		args_increase(t_all	*all)
 {
@@ -106,12 +107,22 @@ int		parse_line(t_all *all)
 
 int		parse(t_all *all, int flag)
 {
-	if (flag)
-		return (parse_line(all));
-	else
+	int		ret;
+
+	while (1)
 	{
-		args_increase(all);
-		all->args[all->arg_len - 1] = ft_strdup("exit");
+		clear_args(all);
+		if (flag)
+			ret = parse_line(all);
+		else
+		{
+			args_increase(all);
+			all->args[all->arg_len - 1] = ft_strdup("exit");
+			ret = 0;
+		}
+		if (all->args)
+			ft_exec(all);
+		if (!ret)
+			break;
 	}
-	return (0);
 }

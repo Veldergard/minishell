@@ -21,6 +21,5 @@ int		is_envp_symbol(char c);
 int		is_space(char c);
 void	clear_args(t_all *all);
 void	skip_spaces(char *buf, int *pos);
-void	clear_not_args(t_all *all);
 
 #endif

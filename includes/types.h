@@ -59,7 +59,6 @@ typedef struct				s_all {
 	int						arg_len;
 	t_redirect				*redirect;
 	int						has_output;
-	void					*all_ptr;
 	enum e_pipe				pipe;
 	char					**envp; // TODO remove
 	t_envlist				*env;
