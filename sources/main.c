@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:04:12 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:13:21 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_signal.h"
 #include "get_next_line.h"
 
-int		parse_and_exec(t_all *all, int flag)
+void	parse_and_exec(t_all *all, int flag)
 {
 	int		ret;
 

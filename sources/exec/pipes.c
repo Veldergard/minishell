@@ -20,4 +20,6 @@ int		ft_pipes(t_all *all)
 //		close(fds[1]);
 //		all->pipe_pid = pid;
 //	}
+	return 228;
+	(void)all;
 }

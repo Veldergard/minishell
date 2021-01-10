@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 14:09:45 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 15:09:08 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	ft_exec_cmd(t_all *all)
 void	ft_exec(t_all *all)
 {
 	if (all->pipe == PIPE_YES)
-		ft_pipes();
+		ft_pipes(all);
 	if (all->redirect)
 		ft_redirects(all);
 	if (all->args)

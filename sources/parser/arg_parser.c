@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/09 15:23:43 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:36:49 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	parse_double_quote(t_all *all)
 		all->buf_pos++;
 }
 
-void	parse_arg(t_all *all, int len)
+void	parse_arg(t_all *all)
 {
 	all->arg_pos = 0;
 	while (1) {
