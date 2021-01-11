@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/08 18:39:14 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/11 13:48:03 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		envp_to_envlist.c\
 		get_env.c\
 		get_env_len.c\
+		is_valid_env_name.c\
 		write_env.c\
 	)\
 	$(addprefix error/,\

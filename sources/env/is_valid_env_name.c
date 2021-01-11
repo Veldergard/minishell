@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   is_valid_env_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 14:32:36 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/11 14:32:36 by itressa          ###   ########.fr       */
+/*   Created: 2021/01/11 14:02:27 by itressa           #+#    #+#             */
+/*   Updated: 2021/01/11 14:02:57 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "types.h"
+#include "parser.h"
 
-void	ft_pipes(t_all *all)
+int		is_valid_env_name(const char *str)
 {
-	pid_t	pid;
-	int		fds[2];
-
-	pipe(fds);
-	if ((pid = fork()) == 0)
+	while (*str != '=' && *str)
 	{
-		close(fds[0]);
-		dup2(fds[1], 1);
-		close(fds[1]);
-		all->pipe_pid = -1;
+		if (1 != is_envp_symbol(*str))
+			return (0);
+		str++;
 	}
-	else
-	{
-		close(fds[1]);
-		dup2(fds[0], 0);
-		close(fds[0]);
-		all->pipe_pid = pid;
-	}
+	return (1);
 }

@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_pwd.c                                           :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:07:09 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/08 18:25:33 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 14:25:34 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
-
-/*
-** File types
-*/
-# define FT_STAT_FT		0170000
-# define FT_STAT_FT_DIR	0040000
 
 int		ft_stat_is_dir(int mode)
 {
@@ -43,6 +37,30 @@ char	*concat_path(char *start, char *end)
 	return (concat);
 }
 
+void	normalize_path_inner(const char *abspath, char **new, int *i, int *j)
+{
+	char *normalized;
+
+	normalized = *new;
+	if (abspath[*i] == '.' && abspath[*i + 1] == '.' &&
+		(abspath[*i + 2] == '/' || !abspath[*i + 2]))
+	{
+		*i += 2;
+		if (*j != 1)
+		{
+			normalized[*j--] = 0;
+			while (normalized[--*j] != '/')
+				normalized[*j] = 0;
+		}
+	}
+	else if (abspath[*i] == '.' && (abspath[*i + 1] == '/' || !abspath[*i + 1]))
+		*i += 1;
+	else
+		while (abspath[*i] != 0 && abspath[*i] != '/')
+			normalized[*j++] = abspath[*i++];
+	*new = normalized;
+}
+
 char	*normalize_path(char *abspath)
 {
 	char	*normalized;
@@ -59,22 +77,7 @@ char	*normalize_path(char *abspath)
 			normalized[j++] = abspath[i++];
 		else
 			i++;
-		if (abspath[i] == '.' && abspath[i + 1] == '.' &&
-				(abspath[i + 2] == '/' || !abspath[i + 2]))
-		{
-			i += 2;
-			if (j != 1)
-			{
-				normalized[j--] = 0;
-				while (normalized[--j] != '/')
-					normalized[j] = 0;
-			}
-		}
-		else if (abspath[i] == '.' && (abspath[i + 1] == '/' || !abspath[i + 1]))
-			i += 1;
-		else
-			while (abspath[i] != 0 && abspath[i] != '/')
-				normalized[j++] = abspath[i++];
+		normalize_path_inner(abspath, &normalized, &i, &j);
 		while (abspath[i + 1] == '/')
 			i++;
 	}
@@ -89,29 +92,20 @@ int		ft_cd(int argc, char *argv[], t_all *all)
 {
 	struct stat		sstat;
 	char			*tmp;
-	char			*new_pwd;
 
 	if (argc > 1)
 	{
 		tmp = argv[1][0] == '/' ? ft_strdup(argv[1]) :
 				concat_path(all->pwd, argv[1]);
-		new_pwd = normalize_path(tmp);
 		stat(tmp, &sstat);
-		free(tmp);
 		if (ft_stat_is_dir(sstat.st_mode))
 		{
 			free(all->pwd);
-			all->pwd = new_pwd;
+			all->pwd = normalize_path(tmp);
 		}
 		else
-		{
-			free(new_pwd);
-			dprintf(2, "Wrong path!\n");
-		}
-	}
-	else
-	{
-		// go to home
+			ft_putendl_fd("Wrong path!", 2);
+		free(tmp);
 	}
 	return (0);
 }

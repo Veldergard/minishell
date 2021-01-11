@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 05:03:48 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/07 05:23:31 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 13:54:34 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int			ft_env(int argc, char *argv[], t_all *all)
 {
 	t_envlist	*current;
 
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 	current = all->env;
 	while (current)
 	{

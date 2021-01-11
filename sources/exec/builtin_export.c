@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 19:17:01 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 14:07:20 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,6 @@ int		print_export_error(char *arg, int error) // todo defines
 	return (0);
 }
 
-static int		is_valid_name(const char *str)
-{
-	while (*str != '=' && *str)
-	{
-		if (1 != is_envp_symbol(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
 int		ft_export(int argc, char *argv[], t_all *all)
 {
 	int			i;
@@ -69,7 +58,7 @@ int		ft_export(int argc, char *argv[], t_all *all)
 		return (print_export_error(argv[i], 0));
 	while (argv[i])
 	{
-		if (!is_valid_name(argv[i])) // todo function
+		if (!is_valid_env_name(argv[i]))
 			print_export_error(argv[i], 1);
 		// todo search by key
 		else if ((equalsign = ft_strchr(argv[i], '=')))
