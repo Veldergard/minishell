@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 16:56:41 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/10 18:22:11 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct				s_all {
 	int						has_output;
 	enum e_pipe				pipe;
 	t_envlist				*env;
+	char					**envp;
 	int						stdfd[2];
 	char					**path;
 	char					*pwd;

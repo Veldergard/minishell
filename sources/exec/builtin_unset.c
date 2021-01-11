@@ -28,12 +28,6 @@ int				print_unset_error(char *arg, int error) // todo defines
 	return (0);
 }
 
-static int		is_valid_name(const char *str)
-{
-	(void)str;
-	return (1);
-}
-
 int				ft_unset(int argc, char *argv[], t_all *all)
 {
 	int			i;
@@ -45,7 +39,7 @@ int				ft_unset(int argc, char *argv[], t_all *all)
 		return (print_unset_error(argv[i], 0));
 	while (argv[i])
 	{
-		if (!is_valid_name(argv[i])) // todo function
+		if (!is_valid_env_name(argv[i]))
 			print_unset_error(argv[i], 1);
 		if (!ft_strncmp(all->env->key, argv[i], ft_strlen(argv[i])))
 		{
@@ -65,5 +59,7 @@ int				ft_unset(int argc, char *argv[], t_all *all)
 		}
 		i++;
 	}
+	free_envp(all->envp);
+	all->envp = envlist_to_envp(all->env);
 	return (0);
 }

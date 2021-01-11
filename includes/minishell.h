@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 15:56:50 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 14:08:59 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <unistd.h>
 # include "types.h"
 # include "ft_error.h"
+
+/*
+** File types for stat struct
+*/
+
+# define FT_STAT_FT		0170000
+# define FT_STAT_FT_DIR	0040000
 
 int			handle_signals;
 
@@ -32,6 +39,8 @@ void		ft_pipes(t_all *all);
 /*
 **	ENV
 */
+
+int		is_valid_env_name(const char *str);
 
 void		write_env(t_all *all, char *name, int size, char *buf);
 int			get_env_len(t_all *all, char *name, int size);

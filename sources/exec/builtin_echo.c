@@ -6,13 +6,27 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:41:45 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/08 18:50:55 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 14:00:52 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_echo(int argc, char *argv[], t_all *all)
+static int	ft_echo_check_n(char *arg, int argc)
+{
+	int		print_n;
+
+	print_n = 1;
+	if (!ft_strncmp(arg, "-n", 2))
+	{
+		print_n = 0;
+		if (argc <= 2)
+			return (-1);
+	}
+	return (print_n);
+}
+
+int			ft_echo(int argc, char *argv[], t_all *all)
 {
 	int		i;
 	int		print_n;
@@ -22,13 +36,9 @@ int		ft_echo(int argc, char *argv[], t_all *all)
 	if (argc > 1)
 	{
 		i = 1;
-		if (!ft_strncmp(argv[i], "-n", 2))
-		{
-			i++;
-			print_n = 0;
-			if (argc <= i)
-				return (0);
-		}
+		if (-1 == (print_n = ft_echo_check_n(argv[i], argc)))
+			return (0);
+		i += print_n ? 0 : 1;
 		while (1)
 		{
 			ft_putstr_fd(argv[i], 1);

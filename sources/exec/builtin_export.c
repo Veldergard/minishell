@@ -6,11 +6,12 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 13:59:53 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 14:07:20 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 int		print_export(t_all *all)
 {
@@ -44,12 +45,6 @@ int		print_export_error(char *arg, int error) // todo defines
 	return (0);
 }
 
-static int		is_valid_name(const char *str)
-{
-	(void)str;
-	return (1);
-}
-
 int		ft_export(int argc, char *argv[], t_all *all)
 {
 	int			i;
@@ -63,14 +58,15 @@ int		ft_export(int argc, char *argv[], t_all *all)
 		return (print_export_error(argv[i], 0));
 	while (argv[i])
 	{
-		if (!is_valid_name(argv[i])) // todo function
+		if (!is_valid_env_name(argv[i]))
 			print_export_error(argv[i], 1);
 		// todo search by key
 		else if ((equalsign = ft_strchr(argv[i], '=')))
 		{
-			new = ft_create_envlist((int)(equalsign - argv[i]) - 1, ft_strlen(equalsign) - 1);
-			ft_strlcpy(new->key, argv[i], (int)(equalsign - argv[i]));
-			ft_strlcpy(new->value, equalsign + 1, ft_strlen(equalsign));
+			new = ft_create_envlist((int)(equalsign - argv[i]), ft_strlen(equalsign));
+			printf("%d\n", new->key_len);
+			ft_strlcpy(new->key, argv[i], (int)(equalsign - argv[i]) + 1);
+			ft_strlcpy(new->value, equalsign + 1, ft_strlen(equalsign) + 1);
 		}
 		else
 		{
@@ -81,5 +77,7 @@ int		ft_export(int argc, char *argv[], t_all *all)
 		ft_envlist_addback(&all->env, new);
 		i++;
 	}
+	free_envp(all->envp);
+	all->envp = envlist_to_envp(all->env);
 	return (0);
 }

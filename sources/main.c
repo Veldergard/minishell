@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 17:27:49 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:17:56 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	parse_and_exec(t_all *all, int flag)
 			ft_exec(all);
 			if (all->pipe == PIPE_YES && all->pipe_pid == -1)
 			{
-				clear_args_and_redirects(all);
-				break;
+				exit(1);
 			}
 		}
 		if (!ret)
