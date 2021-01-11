@@ -2,8 +2,6 @@
 
 int		ft_syntax_error(int status, char *token)
 {
-	char	*error;
-
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd("syntax error near unexpected token \'", 2);
 	ft_putstr_fd(token, 2);
