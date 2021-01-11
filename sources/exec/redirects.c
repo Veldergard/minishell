@@ -52,9 +52,9 @@ void	ft_output(t_all *all, int type)
 
 	all->has_output = 1;
 	if (type)
-		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
