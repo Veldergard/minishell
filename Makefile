@@ -50,8 +50,6 @@ SRC = $(addprefix $(SRCDIR)/, \
 		get_arg_len.c\
 		arg_parser.c\
 		cleaner.c\
-	)\
-	$(addprefix lexer/,\
 		lexer.c\
 	)\
 	$(addprefix types/,\

@@ -22,5 +22,6 @@ int		is_space(char c);
 void	clear_all(t_all *all);
 void	skip_spaces(char *buf, int *pos);
 void	clear_args_and_redirects(t_all *all);
+int	lexer(char *buf);
 
 #endif
