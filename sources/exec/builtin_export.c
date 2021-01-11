@@ -6,27 +6,40 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/11 14:07:20 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 15:39:30 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
+void	print_declare_variable(t_envlist *env)
+{
+	if (env->is_hidden == ENV_HIDDEN)
+		return ;
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(env->key, 1);
+	if (env->value)
+	{
+		ft_putstr_fd("=\"", 1);
+		ft_putstr_fd(env->value, 1);
+		ft_putendl_fd("\"", 1);
+	}
+}
+
 int		print_export(t_all *all)
 {
 	t_envlist	*sorted;
 	t_envlist	*current;
 
-	sorted = all->env; // todo sort
+	sorted = ft_sort_envlist(all->env);
 	current = sorted;
 	while (current)
 	{
-		printf("declare -x %s=%s\n", current->key, current->value); // todo no printf
-		// todo no = if no value
+		print_declare_variable(current);
 		current = current->next;
 	}
-	//ft_envlist_clearall(&sorted); // todo clear when sorted
+	ft_envlist_clearall(&sorted);
 	return (0);
 }
 
@@ -64,7 +77,6 @@ int		ft_export(int argc, char *argv[], t_all *all)
 		else if ((equalsign = ft_strchr(argv[i], '=')))
 		{
 			new = ft_create_envlist((int)(equalsign - argv[i]), ft_strlen(equalsign));
-			printf("%d\n", new->key_len);
 			ft_strlcpy(new->key, argv[i], (int)(equalsign - argv[i]) + 1);
 			ft_strlcpy(new->value, equalsign + 1, ft_strlen(equalsign) + 1);
 		}
