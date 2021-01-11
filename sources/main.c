@@ -51,6 +51,11 @@ int		minishell(t_all *all)
 	ret = get_next_line(0, &buf);
 	if (ret < 0)
 		return (1);
+	if (!lexer(buf))
+	{
+		free(buf);
+		return (0);
+	}
 	all->buf = buf;
 	if (!buf[0] && ret == 0)
 		parse_and_exec(all, 0);
