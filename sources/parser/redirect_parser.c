@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "parser.h"
 
-static void		set_redirect_type(t_all *all)
+static void		set_redirect_type(t_all *all, t_redirect *redirect)
 {
 	if (all->buf[all->buf_pos] == '<')
 		redirect->type = REDIRECT_INPUT;
@@ -22,9 +22,9 @@ int				parse_redirections(t_all *all)
 	int							len;
 
 	redirect = ft_create_redirect();
-	set_redirect_type(all);
+	set_redirect_type(all, redirect);
 	all->buf_pos++;
-	skip_spaces(buf, &all->buf_pos);
+	skip_spaces(all->buf, &all->buf_pos);
 	len = get_arg_len(all);
 	if (!(redirect->filename = malloc(len + 1)))
 		return (0);

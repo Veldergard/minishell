@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/29 19:59:34 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:57:49 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		parse_new_cmd(t_all *all)
 	all->buf_pos++;
 }
 
-static int	call_parser(t_all *all)
+static int	call_parser(t_all *all, int len)
 {
 	if (!args_increase(all))
 		return (1);
@@ -74,7 +74,7 @@ int			parse_line(t_all *all)
 		else if (len <= 2 && ft_strchr("><", all->buf[all->buf_pos]))
 			parse_redirections(all);
 		else
-			if (call_parser(all))
+			if (call_parser(all, len))
 				return (1);
 	}
 	return (0);
