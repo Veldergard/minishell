@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "parser.h"
-#include "get_next_line.h"
 #include "minishell.h"
+#include "parser.h"
 
-int		args_increase(t_all	*all)
+int			args_increase(t_all	*all)
 {
 	char	**tmp;
 	int		i;
@@ -34,7 +33,7 @@ int		args_increase(t_all	*all)
 	return (1);
 }
 
-void	parse_new_cmd(t_all *all)
+void		parse_new_cmd(t_all *all)
 {
 	if (all->buf[all->buf_pos] == '|')
 		all->pipe = PIPE_YES;
@@ -43,36 +42,19 @@ void	parse_new_cmd(t_all *all)
 	all->buf_pos++;
 }
 
-int		parse_redirections(t_all *all, char *buf)
+static int	call_parser(t_all *all)
 {
-	t_redirect					*redirect;
-	int							len;
-
-	redirect = ft_create_redirect();
-	if (buf[all->buf_pos] == '<')
-		redirect->type = REDIRECT_INPUT;
-	else if (buf[all->buf_pos] == '>')
-	{
-		redirect->type = REDIRECT_OUTPUT;
-		if (buf[all->buf_pos + 1] == '>')
-		{
-			redirect->type = REDIRECT_OUTPUT_APPEND;
-			all->buf_pos++;
-		}
-	}
-	all->buf_pos++;
-	skip_spaces(buf, &all->buf_pos);
-	len = get_arg_len(all);
-	if (!(redirect->filename = malloc(len + 1)))
-		return (0);
-	redirect->filename[len] = 0;
-	all->str_ptr = redirect->filename;
+	if (!args_increase(all))
+		return (1);
+	if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
+		return (1);
+	all->str_ptr = all->args[all->arg_len - 1];
+	all->str_ptr[len] = 0;
 	parse_arg(all);
-	ft_redirect_addback(&all->redirect, redirect);
-	return (1);
+	return (0);
 }
 
-int		parse_line(t_all *all)
+int			parse_line(t_all *all)
 {
 	int		len;
 
@@ -90,22 +72,15 @@ int		parse_line(t_all *all)
 			return (1);
 		}
 		else if (len <= 2 && ft_strchr("><", all->buf[all->buf_pos]))
-			parse_redirections(all, all->buf);
+			parse_redirections(all);
 		else
-		{
-			if (!args_increase(all))
+			if (call_parser(all))
 				return (1);
-			if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
-				return (1);
-			all->str_ptr = all->args[all->arg_len - 1];
-			all->str_ptr[len] = 0;
-			parse_arg(all);
-		}
 	}
 	return (0);
 }
 
-int parse(t_all *all, int flag)
+int			parse(t_all *all, int flag)
 {
 	if (flag)
 		return (parse_line(all));
