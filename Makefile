@@ -51,6 +51,9 @@ SRC = $(addprefix $(SRCDIR)/, \
 		arg_parser.c\
 		cleaner.c\
 	)\
+	$(addprefix lexer/,\
+		lexer.c\
+	)\
 	$(addprefix types/,\
 		envlist.c\
 		redirect_list.c\
