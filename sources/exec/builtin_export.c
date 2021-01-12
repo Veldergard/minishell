@@ -77,12 +77,12 @@ int					ft_export(int argc, char *argv[], t_all *all)
 		return (print_export(all));
 	i = 1;
 	if (argv[i][0] == '-')
-		print_error_usage(argv[i], FT_EXPORT, E_BADENV, FT_USG_EXPORT);
+		print_error_usage(argv[i], FT_EXPORT, E_BADOPT, FT_USG_EXPORT);
 	while (argv[i])
 	{
 		add_env = 0;
 		if (!is_valid_env_name(argv[i]))
-			return (print_error_builtin(FT_EXPORT, argv[i], E_BADOPT));
+			return (print_error_builtin(FT_EXPORT, argv[i], E_BADENV));
 		else
 		{
 			if ((equalsign = ft_strchr(argv[i], '=')))
