@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/11 14:29:59 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/12 15:07:50 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,20 @@ char	*get_exec_cmd(t_all *all)
 	if (ft_strchr(all->args[0], '/'))
 		return (ft_strdup(all->args[0]));
 	i = 0;
-	while (all->path[i])
-	{
-		command = malloc(ft_strlen(all->path[i]) + ft_strlen(all->args[0]) + 2);
-		ft_strlcpy(command, all->path[i], ft_strlen(all->path[i]) + 1);
-		command[ft_strlen(all->path[i])] = '/';
-		ft_strlcpy(command + ft_strlen(all->path[i]) + 1,
-			all->args[0], ft_strlen(all->args[0]) + 1);
-		if (!stat(command, &buf))
-			return (command);
-		free(command);
-		i++;
-	}
-	print_exec_error_errno(all->args[0]); // todo change message
+	if (ft_strlen(all->args[0]))
+		while (all->path[i])
+		{
+			command = malloc(ft_strlen(all->path[i]) + ft_strlen(all->args[0]) + 2);
+			ft_strlcpy(command, all->path[i], ft_strlen(all->path[i]) + 1);
+			command[ft_strlen(all->path[i])] = '/';
+			ft_strlcpy(command + ft_strlen(all->path[i]) + 1,
+				all->args[0], ft_strlen(all->args[0]) + 1);
+			if (!stat(command, &buf))
+				return (command);
+			free(command);
+			i++;
+		}
+	print_exec_error(all->args[0], E_NOCMD);
 	return (NULL);
 }
 

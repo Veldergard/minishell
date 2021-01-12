@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:32:35 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 13:59:39 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/12 14:04:06 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define FT_USG_UNSET	"unset [name ...]"
 
 void	print_exec_error_errno(char *cmd);
-int		print_exec_error_msg(char *cmd, char *message);
+int		print_exec_error(char *cmd, char *message);
 int		print_error_builtin(char *command, char *arg, char *msg);
 int		print_error_usage(char *command, char *arg, char *msg, char *usage);
 

@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:26:11 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 14:03:54 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/12 14:08:46 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_exec_error_errno(char *cmd)
 	ft_putendl_fd(error, 2);
 }
 
-int		print_exec_error_msg(char *command, char *message)
+int		print_exec_error(char *command, char *message)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
