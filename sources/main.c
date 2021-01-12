@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 18:17:56 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/12 16:03:44 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 #include "ft_signal.h"
 #include "get_next_line.h"
 
-void	parse_and_exec(t_all *all, int flag)
+void	parse_and_exec(t_all *all, int eof)
 {
 	int		ret;
 
+	if (!all->buf[0] && eof == 0)
+	{
+		args_increase(all);
+		all->args[all->arg_len - 1] = ft_strdup("exit");
+	}
 	while (1)
 	{
 		clear_all(all);
-		ret = parse(all, flag);
+		ret = parse(all);
 		if (all->args)
 		{
 			ft_exec(all);
@@ -32,7 +37,7 @@ void	parse_and_exec(t_all *all, int flag)
 			}
 		}
 		if (!ret)
-			break;
+			break ;
 	}
 }
 
@@ -50,16 +55,13 @@ int		minishell(t_all *all)
 	ret = get_next_line(0, &buf);
 	if (ret < 0)
 		return (1);
-	if (!lexer(buf))
+	if (!lexer(buf, 0, 0))
 	{
 		free(buf);
 		return (0);
 	}
 	all->buf = buf;
-	if (!buf[0] && ret == 0)
-		parse_and_exec(all, 0);
-	else
-		parse_and_exec(all, 1);
+	parse_and_exec(all, ret);
 	free(buf);
 	if (all->pipe == PIPE_YES && all->pipe_pid == -1)
 		return (1);

@@ -37,7 +37,7 @@ int		ft_input(t_all *all)
 	if (fd == -1)
 	{
 		print_exec_error_errno(all->redirect->filename);
-		return 0;
+		return (0);
 	}
 	if (!dup2(fd, 0))
 		ft_clear_redirects(all, 0, fd);

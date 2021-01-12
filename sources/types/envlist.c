@@ -40,7 +40,7 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 	return (env);
 }
 
-int							ft_envlist_len(t_envlist *envlist)
+int								ft_envlist_len(t_envlist *envlist)
 {
 	int		len;
 
@@ -53,7 +53,7 @@ int							ft_envlist_len(t_envlist *envlist)
 	return (len);
 }
 
-void						ft_envlist_addback(t_envlist **env, t_envlist *new)
+void							ft_envlist_addback(t_envlist **env, t_envlist *new)
 {
 	t_envlist	*current;
 
@@ -68,14 +68,14 @@ void						ft_envlist_addback(t_envlist **env, t_envlist *new)
 	current->next = new;
 }
 
-void						ft_envlist_delete(t_envlist *env)
+void							ft_envlist_delete(t_envlist *env)
 {
 	free(env->key);
 	free(env->value);
 	free(env);
 }
 
-void						ft_envlist_clearall(t_envlist **env)
+void							ft_envlist_clearall(t_envlist **env)
 {
 	t_envlist	*next;
 

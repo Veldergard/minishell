@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 14:22:01 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 15:48:57 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	call_parser(t_all *all, int len)
 	return (0);
 }
 
-int			parse_line(t_all *all)
+int			parse(t_all *all)
 {
 	int		len;
 
@@ -75,18 +75,6 @@ int			parse_line(t_all *all)
 			parse_redirections(all);
 		else if (call_parser(all, len))
 			return (1);
-	}
-	return (0);
-}
-
-int			parse(t_all *all, int flag)
-{
-	if (flag)
-		return (parse_line(all));
-	else
-	{
-		args_increase(all);
-		all->args[all->arg_len - 1] = ft_strdup("exit");
 	}
 	return (0);
 }

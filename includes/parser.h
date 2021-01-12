@@ -14,8 +14,8 @@
 # define PARSE_H
 # include "types.h"
 
-int		lexer(char *buf);
-int		parse(t_all *all, int flag);
+int		lexer(char *buf, int i, int pos);
+int		parse(t_all *all);
 void	parse_arg(t_all *all);
 void	parse_double_quote(t_all *all);
 void	parse_escape(t_all *all);
@@ -23,6 +23,7 @@ void	parse_dquoted_escape(t_all *all);
 void	parse_quote(t_all *all);
 void	parse_substitution(t_all *all);
 int		parse_redirections(t_all *all);
+int		args_increase(t_all *all);
 
 /*
 **	Len functions
