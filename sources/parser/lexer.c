@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:41 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/11 19:57:41 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 14:19:52 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int		lexer(char *buf)
 		pos++;
 		skip_spaces(buf, &pos);
 		if (!buf[pos] && ft_strchr("|<>", last))
-			return ft_syntax_error(0, "newline");
+			return (ft_syntax_error(0, "newline"));
 		if (buf[pos] == ';' && buf[pos - 1] == ';')
-			return ft_syntax_error(0, ";;");
+			return (ft_syntax_error(0, ";;"));
 		if (buf[pos] == ';' && ft_strchr("|><;", last))
-			return ft_syntax_error(0, ";");
+			return (ft_syntax_error(0, ";"));
 		if (buf[pos] == '<' && last == '<')
-			return ft_syntax_error(0, "<");
+			return (ft_syntax_error(0, "<"));
 		if (buf[pos] == '|' && last == '|')
-			return ft_syntax_error(0, "|");
+			return (ft_syntax_error(0, "|"));
 	}
 	return (1);
 }

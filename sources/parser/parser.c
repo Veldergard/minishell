@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/11 19:57:49 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 14:22:01 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "parser.h"
 
-int			args_increase(t_all	*all)
+int			args_increase(t_all *all)
 {
 	char	**tmp;
 	int		i;
@@ -73,9 +73,8 @@ int			parse_line(t_all *all)
 		}
 		else if (len <= 2 && ft_strchr("><", all->buf[all->buf_pos]))
 			parse_redirections(all);
-		else
-			if (call_parser(all, len))
-				return (1);
+		else if (call_parser(all, len))
+			return (1);
 	}
 	return (0);
 }

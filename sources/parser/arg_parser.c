@@ -6,16 +6,16 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/11 19:57:19 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 14:20:25 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-int		is_arg_ended(int len, char prev, char cur)
+int		is_arg_ended(char prev, char cur)
 {
-	if (len >= 1 && ((ft_strchr("<;|", prev)
+	if (((ft_strchr("<;|", prev)
 			|| ft_strchr(" \t<;|", cur))
 			|| ((prev != '>' && cur == '>')
 			|| (prev == '>' && cur != '>'))
@@ -33,7 +33,7 @@ int		get_arg_len(t_all *all)
 	len = 0;
 	while (all->buf[pos])
 	{
-		if (is_arg_ended(len, all->buf[pos - 1], all->buf[pos]))
+		if (len > 0 && is_arg_ended(all->buf[pos - 1], all->buf[pos]))
 			return (len);
 		else if (all->buf[pos] == '\'')
 			quote_len(all, &pos, &len);
@@ -55,9 +55,10 @@ int		get_arg_len(t_all *all)
 void	parse_arg(t_all *all)
 {
 	all->arg_pos = 0;
-	while (1) {
+	while (1)
+	{
 		if (ft_strchr(" \t<>;|", all->buf[all->buf_pos]))
-			break;
+			break ;
 		else if (all->buf[all->buf_pos] == '\'')
 			parse_quote(all);
 		else if (all->buf[all->buf_pos] == '\"')

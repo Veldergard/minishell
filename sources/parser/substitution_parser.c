@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/11 19:57:55 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 14:22:28 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	substitution_len(t_all *all, int *pos, int *len)
 		size = 1;
 	if (size)
 	{
-		(*len) += get_env_len(all, 	all->buf + (*pos), size);
+		(*len) += get_env_len(all, all->buf + (*pos), size);
 		(*pos) += size;
 	}
 	else
@@ -53,7 +53,8 @@ void	parse_substitution(t_all *all)
 		size = 1;
 	if (size)
 	{
-		write_env(all, all->buf + all->buf_pos, size, all->str_ptr + all->arg_pos);
+		write_env(all, all->buf + all->buf_pos,
+			size, all->str_ptr + all->arg_pos);
 		all->arg_pos += get_env_len(all, all->buf + all->buf_pos, size);
 		all->buf_pos += size;
 	}

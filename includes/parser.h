@@ -38,7 +38,7 @@ void	substitution_len(t_all *all, int *pos, int *len);
 **	Utils
 */
 
-int		is_arg_ended(int len, char prev, char cur);
+int		is_arg_ended(char prev, char cur);
 int		is_space(char c);
 int		is_envp_symbol(char c);
 void	skip_spaces(char *buf, int *pos);
