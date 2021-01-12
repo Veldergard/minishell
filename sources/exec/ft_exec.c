@@ -57,7 +57,6 @@ char	*get_exec_cmd(t_all *all)
 	int			i;
 	char		*command;
 	struct stat	buf;
-	char		*tmp;
 
 	if (ft_strchr(all->args[0], '/'))
 		return (ft_strdup(all->args[0]));

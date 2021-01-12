@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/11 20:12:33 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/12 14:43:45 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int			ft_export(int argc, char *argv[], t_all *all)
 		return (print_export(all));
 	i = 1;
 	if (argv[i][0] == '-')
-		return (print_error_builtin(argv[i], FT_EXPORT, E_BADOPT, 0));
+		print_error_usage(argv[i], FT_EXPORT, E_BADENV, FT_USG_EXPORT);
 	while (argv[i])
 	{
 		if (!is_valid_env_name(argv[i]))
-			print_error_builtin(argv[i], FT_EXPORT, E_BADENV, FT_USG_EXPORT);
+			return (print_error_builtin(argv[i], FT_EXPORT, E_BADOPT));
 		// todo search by key
 		else if ((equalsign = ft_strchr(argv[i], '=')))
 		{
