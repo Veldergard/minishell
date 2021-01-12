@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/11 13:48:03 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/11 15:21:56 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLIBFLAGS = -L$(LFTDIR) -lft
 I_DIR = includes
 
 CC = clang
-CFLAGS = -Wall -Wextra -g -fsanitize=address -I$(LFTDIR) -I$(I_DIR)
+CFLAGS = -Wall -Wextra -g -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
@@ -28,6 +28,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		get_env.c\
 		get_env_len.c\
 		is_valid_env_name.c\
+		sort_envlist.c\
 		write_env.c\
 	)\
 	$(addprefix error/,\
@@ -59,6 +60,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 	)\
 	$(addprefix types/,\
 		envlist.c\
+		envlist_2.c\
 		redirect_list.c\
 		init_t_all.c\
 	)\

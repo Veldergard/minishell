@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 18:22:11 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/11 15:39:13 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ void						ft_redirect_delete(t_redirect *redirect);
 void						ft_redirect_clearall(t_redirect **redirect);
 
 t_envlist					*ft_create_envlist(int keysize, int valuesize);
+t_envlist					*ft_clone_envlist(t_envlist *envlist);
 int							ft_envlist_len(t_envlist *envlist);
 void						ft_envlist_addback(t_envlist **env, t_envlist *new);
 void						ft_envlist_delete(t_envlist *env);
 void						ft_envlist_clearall(t_envlist **env);
+t_envlist					*ft_sort_envlist(t_envlist *envlist);
 
 #endif
