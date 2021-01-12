@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 15:48:57 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 16:58:40 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,22 @@ void		parse_new_cmd(t_all *all)
 
 static int	call_parser(t_all *all, int len)
 {
-	if (!args_increase(all))
-		return (1);
-	if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
-		return (1);
-	all->str_ptr = all->args[all->arg_len - 1];
-	all->str_ptr[len] = 0;
-	parse_arg(all);
+	if (len == 0 && all->buf[all->buf_pos] == '$')
+	{
+		while (all->buf[all->buf_pos]
+			&& !ft_strchr(" <>;|", all->buf[all->buf_pos]))
+			all->buf_pos++;
+	}
+	else
+	{
+		if (!args_increase(all))
+			return (1);
+		if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
+			return (1);
+		all->str_ptr = all->args[all->arg_len - 1];
+		all->str_ptr[len] = 0;
+		parse_arg(all);
+	}
 	return (0);
 }
 
