@@ -6,13 +6,14 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:07:38 by olaurine          #+#    #+#             */
-/*   Updated: 2020/12/31 16:29:44 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:57:53 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "parser.h"
 
-int 	is_envp_symbol(char c)
+int		is_envp_symbol(char c)
 {
 	if (c >= 48 && c <= 57)
 		return (3);

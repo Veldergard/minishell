@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner.c                                          :+:      :+:    :+:   */
+/*   quote_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/31 18:54:19 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/11 19:57:21 by olaurine         ###   ########.fr       */
+/*   Created: 2021/01/11 19:57:51 by olaurine          #+#    #+#             */
+/*   Updated: 2021/01/11 19:57:51 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-void	clear_args_and_redirects(t_all *all)
+void	quote_len(t_all *all, int *pos, int *len)
 {
-	ft_redirect_clearall(&all->redirect);
-	if (all->arg_len)
-		while (0 <= --all->arg_len)
-			free(all->args[all->arg_len]);
-	free(all->args);
-	all->args = NULL;
-	all->arg_len = 0;
-	all->arg_pos = 0;
-	all->str_ptr = NULL;
+	(*pos)++;
+	while (all->buf[*pos] && all->buf[*pos] != '\'')
+	{
+		(*pos)++;
+		(*len)++;
+	}
+	if (all->buf[*pos] == '\'')
+		(*pos)++;
 }
 
-void	clear_all(t_all *all)
+void	parse_quote(t_all *all)
 {
-	clear_args_and_redirects(all);
-	all->pipe = PIPE_NO;
-	all->has_output = 0;
-	all->pipe_pid = 0;
+	all->buf_pos++;
+	while (all->buf[all->buf_pos] && all->buf[all->buf_pos] != '\'')
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos++];
+	if (all->buf[all->buf_pos] == '\'')
+		all->buf_pos++;
 }

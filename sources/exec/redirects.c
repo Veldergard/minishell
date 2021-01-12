@@ -29,42 +29,40 @@ void	ft_clear_redirects(t_all *all, int a, int b)
 	ft_restore_fd(all);
 }
 
-void	ft_input(t_all *all)
+int		ft_input(t_all *all)
 {
 	int fd;
 
 	fd = open(all->redirect->filename, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(all->redirect->filename, 2);
-		ft_putstr_fd(": No such file or directory", 2);
-		return ;
+		print_exec_error_errno(all->redirect->filename);
+		return 0;
 	}
 	if (!dup2(fd, 0))
 		ft_clear_redirects(all, 0, fd);
 	close(fd);
+	return (1);
 }
 
-void	ft_output(t_all *all, int type)
+int		ft_output(t_all *all, int type)
 {
 	int fd;
 
 	all->has_output = 1;
 	if (type)
-		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(all->redirect->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(all->redirect->filename, 2);
-		ft_putstr_fd(": No such file or directory", 2);
-		return ;
+		print_exec_error_errno(all->redirect->filename);
+		return (0);
 	}
 	if (!dup2(fd, 1))
 		ft_clear_redirects(all, 1, fd);
 	close(fd);
+	return (1);
 }
 
 void	ft_redirects(t_all *all)

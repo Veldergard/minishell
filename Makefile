@@ -47,11 +47,16 @@ SRC = $(addprefix $(SRCDIR)/, \
 		pipes.c\
 	)\
 	$(addprefix parser/,\
-		parser_utils.c\
-		parser.c\
-		get_arg_len.c\
 		arg_parser.c\
 		cleaner.c\
+		dquote_parser.c\
+		escape_parser.c\
+		lexer.c\
+		parser_utils.c\
+		parser.c\
+		quote_parser.c\
+		redirect_parser.c\
+		substitution_parser.c\
 	)\
 	$(addprefix types/,\
 		envlist.c\
