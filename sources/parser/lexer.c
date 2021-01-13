@@ -28,13 +28,23 @@ int		lexer(char *buf, int i, int pos)
 
 	skip_spaces(buf, &pos);
 	last = buf[pos];
+	if (last == ';')
+		return (ft_syntax_error(0, ";"));
 	while (buf[pos])
 	{
 		pos++;
+		if (last == '\"' || last == '\'')
+		{
+			while (buf[pos] && buf[pos] != last)
+				pos++;
+			pos++;
+		}
 		skip_spaces(buf, &pos);
 		if (i == 0 && !buf[pos] && last == ';')
 			return (ft_syntax_error(0, ";"));
 		if (!buf[pos] && ft_strchr("|<>", last))
+			return (ft_syntax_error(0, "newline"));
+		if (buf[pos] == '|' && buf[pos - 1] == '|')
 			return (ft_syntax_error(0, "newline"));
 		if (buf[pos] == ';' && buf[pos - 1] == ';')
 			return (ft_syntax_error(0, ";;"));
