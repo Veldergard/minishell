@@ -22,6 +22,25 @@ int		ft_syntax_error(int status, char *token)
 	return (status);
 }
 
+int		check_conditions(char *buf, int i, int pos, char last)
+{
+	if (i == 0 && !buf[pos] && last == ';')
+		return (ft_syntax_error(0, ";"));
+	if (!buf[pos] && ft_strchr("|<>", last))
+		return (ft_syntax_error(0, "newline"));
+	if (buf[pos] == '|' && buf[pos - 1] == '|')
+		return (ft_syntax_error(0, "||"));
+	if (buf[pos] == ';' && buf[pos - 1] == ';')
+		return (ft_syntax_error(0, ";;"));
+	if (buf[pos] == ';' && ft_strchr("|><;", last))
+		return (ft_syntax_error(0, ";"));
+	if (buf[pos] == '<' && last == '<')
+		return (ft_syntax_error(0, "<"));
+	if (buf[pos] == '|' && last == '|')
+		return (ft_syntax_error(0, "|"));
+	return (1);
+}
+
 int		lexer(char *buf, int i, int pos)
 {
 	char	last;
@@ -40,20 +59,8 @@ int		lexer(char *buf, int i, int pos)
 			pos++;
 		}
 		skip_spaces(buf, &pos);
-		if (i == 0 && !buf[pos] && last == ';')
-			return (ft_syntax_error(0, ";"));
-		if (!buf[pos] && ft_strchr("|<>", last))
-			return (ft_syntax_error(0, "newline"));
-		if (buf[pos] == '|' && buf[pos - 1] == '|')
-			return (ft_syntax_error(0, "newline"));
-		if (buf[pos] == ';' && buf[pos - 1] == ';')
-			return (ft_syntax_error(0, ";;"));
-		if (buf[pos] == ';' && ft_strchr("|><;", last))
-			return (ft_syntax_error(0, ";"));
-		if (buf[pos] == '<' && last == '<')
-			return (ft_syntax_error(0, "<"));
-		if (buf[pos] == '|' && last == '|')
-			return (ft_syntax_error(0, "|"));
+		if (!check_conditions(buf, i, pos, last))
+			return(0);
 		last = buf[pos];
 		i++;
 	}
