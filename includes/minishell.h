@@ -25,8 +25,6 @@
 # define FT_STAT_FT		0170000
 # define FT_STAT_FT_DIR	0040000
 
-int			handle_signals;
-
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
 void		print_prompt(void);
 void		ft_exec(t_all *all);

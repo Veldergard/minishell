@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ms_g.h"
 #include "parser.h"
 #include "ft_signal.h"
 #include "get_next_line.h"

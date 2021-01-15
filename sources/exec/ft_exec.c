@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 15:07:50 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/14 18:52:55 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "ft_signal.h"
 #include <sys/wait.h>
 #include <sys/stat.h>
+
+extern int	handle_signals;
 
 int		ft_isbuiltin_cmd(char *cmd)
 {

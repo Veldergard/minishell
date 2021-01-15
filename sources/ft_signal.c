@@ -6,13 +6,15 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:17:03 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 13:40:08 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/14 18:53:43 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "minishell.h"
 #include "ft_signal.h"
+
+extern int	handle_signals;
 
 void	do_common_signals(int num)
 {
