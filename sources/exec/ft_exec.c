@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/14 18:52:55 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/15 16:40:24 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,16 @@ void	ft_exec_cmd(t_all *all)
 
 void	ft_exec(t_all *all)
 {
+	int		success;
+
+	success = 1;
 	if (all->pipe == PIPE_YES)
 		ft_pipes(all);
 	if (all->pipe == PIPE_YES && all->pipe_pid != -1)
 		return ;
 	if (all->redirect)
-		ft_redirects(all);
-	if (all->args)
+		success = ft_redirects(all);
+	if (all->args && success)
 		ft_exec_cmd(all);
 	ft_restore_fd(all);
 }

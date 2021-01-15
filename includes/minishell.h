@@ -28,7 +28,7 @@
 void		debug_print_arg(int argc, char *argv[], char *envp[]);
 void		print_prompt(void);
 void		ft_exec(t_all *all);
-void		ft_redirects(t_all *all);
+int			ft_redirects(t_all *all);
 void		ft_restore_fd(t_all *all);
 
 int			minishell(t_all *all);

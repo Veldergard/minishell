@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 18:32:34 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/09 15:30:47 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/15 16:55:35 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	ft_restore_fd(t_all *all)
 	dup2(all->stdfd[1], 1);
 }
 
-void	ft_clear_redirects(t_all *all, int a, int b)
+int	ft_clear_redirects(t_all *all, int a, int b)
 {
 	if (a >= 0)
 		close(a);
 	if (b >= 0)
 		close(b);
 	ft_restore_fd(all);
+	return (0);
 }
 
 int		ft_input(t_all *all)
@@ -39,8 +40,11 @@ int		ft_input(t_all *all)
 		print_exec_error_errno(all->redirect->filename);
 		return (0);
 	}
-	if (!dup2(fd, 0))
-		ft_clear_redirects(all, 0, fd);
+	if (-1 == dup2(fd, 0))
+	{
+		print_exec_error_errno(all->redirect->filename);
+		return (ft_clear_redirects(all, 0, fd));
+	}
 	close(fd);
 	return (1);
 }
@@ -59,26 +63,34 @@ int		ft_output(t_all *all, int type)
 		print_exec_error_errno(all->redirect->filename);
 		return (0);
 	}
-	if (!dup2(fd, 1))
-		ft_clear_redirects(all, 1, fd);
+	if (-1 == dup2(fd, 1))
+	{
+		print_exec_error_errno(all->redirect->filename);
+		return (ft_clear_redirects(all, 1, fd));
+	}
 	close(fd);
 	return (1);
 }
 
-void	ft_redirects(t_all *all)
+int		ft_redirects(t_all *all)
 {
-	t_redirect *backup;
+	int			success;
+	t_redirect	*backup;
 
 	backup = all->redirect;
+	success = 1;
 	while (all->redirect)
 	{
 		if (all->redirect->type == REDIRECT_INPUT)
-			ft_input(all);
+			success = ft_input(all);
 		else if (all->redirect->type == REDIRECT_OUTPUT)
-			ft_output(all, 1);
+			success = ft_output(all, 1);
 		else if (all->redirect->type == REDIRECT_OUTPUT_APPEND)
-			ft_output(all, 0);
+			success = ft_output(all, 0);
 		all->redirect = all->redirect->next;
+		if (!success)
+			break ;
 	}
 	all->redirect = backup;
+	return (success);
 }
