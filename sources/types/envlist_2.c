@@ -25,3 +25,13 @@ t_envlist	*ft_clone_envlist(t_envlist *envlist)
 	clone->next = (t_envlist*)0;
 	return (clone);
 }
+
+int			ft_envlist_str_cmp(t_envlist *env, char *key)
+{
+	int		len;
+
+	len = ft_strlen(key);
+	if (env->key_len == len && !ft_strncmp(env->key, key, len))
+		return (1);
+	return (0);
+}

@@ -31,7 +31,7 @@ int				ft_unset(int argc, char *argv[], t_all *all)
 			i++;
 			continue ;
 		}
-		if (!ft_strncmp(all->env->key, argv[i], ft_strlen(argv[i])))
+		if (ft_envlist_str_cmp(all->env, argv[i]))
 		{
 			re_envp = 1;
 			deleted = all->env;

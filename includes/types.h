@@ -94,5 +94,6 @@ void						ft_envlist_addback(t_envlist **env, t_envlist *new);
 void						ft_envlist_delete(t_envlist *env);
 void						ft_envlist_clearall(t_envlist **env);
 t_envlist					*ft_sort_envlist(t_envlist *envlist);
+int							ft_envlist_str_cmp(t_envlist *env, char *key);
 
 #endif
