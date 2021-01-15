@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_redirect		*ft_create_redirect()
+t_redirect		*ft_create_redirect(void)
 {
 	t_redirect	*redirect;
 

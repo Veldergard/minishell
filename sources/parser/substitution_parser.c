@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 14:22:28 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 16:52:41 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	substitution_len(t_all *all, int *pos, int *len)
 		(*pos) += size;
 	}
 	else
-	{
-		(*pos)++;
 		(*len)++;
-	}
 }
 
 void	parse_substitution(t_all *all)
@@ -59,5 +56,5 @@ void	parse_substitution(t_all *all)
 		all->buf_pos += size;
 	}
 	else
-		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos++];
+		all->str_ptr[all->arg_pos++] = all->buf[all->buf_pos - 1];
 }

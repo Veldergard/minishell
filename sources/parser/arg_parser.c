@@ -6,7 +6,7 @@
 /*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 14:20:25 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/12 16:51:49 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		get_arg_len(t_all *all)
 
 	pos = all->buf_pos;
 	len = 0;
-	while (all->buf[pos])
+	while (all->buf[pos] && all->buf[pos] != ' ')
 	{
 		if (len > 0 && is_arg_ended(all->buf[pos - 1], all->buf[pos]))
 			return (len);
@@ -55,11 +55,9 @@ int		get_arg_len(t_all *all)
 void	parse_arg(t_all *all)
 {
 	all->arg_pos = 0;
-	while (1)
+	while (all->buf[all->buf_pos] && !ft_strchr(" \t<>;|", all->buf[all->buf_pos]))
 	{
-		if (ft_strchr(" \t<>;|", all->buf[all->buf_pos]))
-			break ;
-		else if (all->buf[all->buf_pos] == '\'')
+		if (all->buf[all->buf_pos] == '\'')
 			parse_quote(all);
 		else if (all->buf[all->buf_pos] == '\"')
 			parse_double_quote(all);
