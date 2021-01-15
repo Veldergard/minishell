@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/11 15:39:13 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/15 19:54:01 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct				s_all {
 	char					**path;
 	char					*pwd;
 	int						last_exit_status;
+	char					exit_status_str[4];
 	enum e_status			status;
 	char					exit_status;
 	char					*str_ptr;
