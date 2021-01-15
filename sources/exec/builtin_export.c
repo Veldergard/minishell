@@ -32,7 +32,7 @@ static int	print_export(t_all *all)
 				ft_putstr_fd(current->value, 1);
 				ft_putstr_fd("\"", 1);
 			}
-			ft_putendl_fd("", 2);
+			ft_putendl_fd("", 1);
 		}
 		current = current->next;
 	}
