@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:26:11 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 14:08:46 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/15 19:30:48 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int		print_error_builtin(char *command, char *arg, char *msg)
 	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("': ", 2);
+	ft_putendl_fd(msg, 2);
+	return (0);
+}
+
+int		print_error_builtin_alt(char *command, char *arg, char *msg)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(msg, 2);
 	return (0);
 }

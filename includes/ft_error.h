@@ -38,6 +38,7 @@
 void	print_exec_error_errno(char *cmd);
 int		print_exec_error(char *cmd, char *message);
 int		print_error_builtin(char *command, char *arg, char *msg);
+int		print_error_builtin_alt(char *command, char *arg, char *msg);
 int		print_error_usage(char *command, char *arg, char *msg, char *usage);
 
 #endif
