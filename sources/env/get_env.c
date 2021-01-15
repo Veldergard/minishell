@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:46:27 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/15 19:54:51 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/15 19:55:06 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,4 @@ char		*get_env(t_all *all, char *name, int size)
 		current = current->next;
 	}
 	return ("");
-}
-
-t_envlist	*get_envlist_pre(t_all *all, char *name)
-{
-	t_envlist	*prev;
-
-	prev = all->env;
-	while (prev->next && !ft_envlist_str_cmp(prev->next, name))
-		prev = prev->next;
-	if (prev->next)
-		return (prev);
-	else
-		return ((t_envlist*)0);
 }
