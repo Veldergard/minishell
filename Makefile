@@ -72,7 +72,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
-_OBJSUBDIR = builtin env error exec parser types
+_OBJSUBDIR = env error exec parser types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
 
 TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))

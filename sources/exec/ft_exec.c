@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 16:42:32 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 20:17:26 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,9 @@ void	ft_exec_parent(t_all *all, pid_t pid)
 		{
 			ft_putstr_fd("Quit: ", 2);
 			ft_putnbr_fd((int)SIGQUIT, 2);
-			ft_putendl_fd("", 2);
-			print_prompt();
 		}
-		if (all->last_exit_status == 128 + SIGINT)
-		{
-			ft_putendl_fd("", 2);
-			print_prompt();
-		}
+		ft_putendl_fd("", 2);
+		print_prompt();
 		all->status = MS_STATUS_SIGNALED;
 	}
 }
