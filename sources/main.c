@@ -77,7 +77,7 @@ int		main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
-	handle_signals = 1;
+	g_handle_signals = 1;
 	init_t_all(&all, envp);
 	apply_signals_common();
 	signal(SIGINT, do_parent_signals);

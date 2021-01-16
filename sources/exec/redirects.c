@@ -20,7 +20,7 @@ void	ft_restore_fd(t_all *all)
 	dup2(all->stdfd[1], 1);
 }
 
-int	ft_clear_redirects(t_all *all, int a, int b)
+int		ft_clear_redirects(t_all *all, int a, int b)
 {
 	if (a >= 0)
 		close(a);

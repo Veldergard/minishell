@@ -60,7 +60,7 @@ int		lexer(char *buf, int i, int pos)
 		}
 		skip_spaces(buf, &pos);
 		if (!check_conditions(buf, i, pos, last))
-			return(0);
+			return (0);
 		last = buf[pos];
 		i++;
 	}

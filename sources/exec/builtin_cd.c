@@ -16,7 +16,7 @@
 
 static int	cd_update_pwd_env(t_all *all)
 {
-	t_envlist	*env;
+	t_env	*env;
 
 	if ((env = get_envlist_pre(all, "PWD")))
 	{

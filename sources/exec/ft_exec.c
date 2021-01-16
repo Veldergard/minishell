@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/15 16:40:24 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 16:42:32 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-extern int	handle_signals;
-
-int		ft_isbuiltin_cmd(char *cmd)
-{
-	int			i;
-	static char *builtins[8] = \
-	{"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
-
-	i = 0;
-	while (builtins[i])
-	{
-		if (!ft_strncmp(builtins[i], cmd, 99))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		ft_builtin(t_all *all)
-{
-	if (!ft_strncmp(all->args[0], "echo", 4))
-		return (ft_echo(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "cd", 2))
-		return (ft_cd(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "pwd", 3))
-		return (ft_pwd(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "export", 6))
-		return (ft_export(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "unset", 5))
-		return (ft_unset(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "env", 3))
-		return (ft_env(all->arg_len, all->args, all));
-	if (!ft_strncmp(all->args[0], "exit", 4))
-		return (ft_exit(all->arg_len, all->args, all));
-	return (0);
-}
+extern int	g_handle_signals;
 
 char	*get_exec_cmd(t_all *all)
 {
@@ -66,7 +31,8 @@ char	*get_exec_cmd(t_all *all)
 	if (ft_strlen(all->args[0]))
 		while (all->path[i])
 		{
-			command = malloc(ft_strlen(all->path[i]) + ft_strlen(all->args[0]) + 2);
+			command = malloc(ft_strlen(all->path[i]) +
+					ft_strlen(all->args[0]) + 2);
 			ft_strlcpy(command, all->path[i], ft_strlen(all->path[i]) + 1);
 			command[ft_strlen(all->path[i])] = '/';
 			ft_strlcpy(command + ft_strlen(all->path[i]) + 1,
@@ -122,7 +88,7 @@ void	ft_exec_cmd(t_all *all)
 		all->last_exit_status = 127;
 		return ;
 	}
-	handle_signals = 0;
+	g_handle_signals = 0;
 	if (!(pid = fork()))
 	{
 		execve(command, all->args, all->envp);
@@ -131,7 +97,7 @@ void	ft_exec_cmd(t_all *all)
 	}
 	else
 		ft_exec_parent(all, pid);
-	handle_signals = 1;
+	g_handle_signals = 1;
 	free(command);
 }
 

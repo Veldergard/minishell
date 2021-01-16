@@ -6,15 +6,15 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:22:58 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/10 16:48:40 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 16:31:22 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_envlist						*ft_create_envlist(int keysize, int valuesize)
+t_env	*ft_create_envlist(int keysize, int valuesize)
 {
-	t_envlist	*env;
+	t_env	*env;
 
 	env = malloc(sizeof(*env));
 	if (env)
@@ -25,7 +25,7 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 			if (!(env->key = malloc(sizeof(char) * (keysize + 1))))
 			{
 				ft_envlist_delete(env);
-				return ((t_envlist*)0);
+				return ((t_env*)0);
 			}
 		}
 		if ((env->value_len = valuesize) >= 0)
@@ -33,14 +33,14 @@ t_envlist						*ft_create_envlist(int keysize, int valuesize)
 			if (!(env->value = malloc(sizeof(char) * (valuesize + 1))))
 			{
 				ft_envlist_delete(env);
-				return ((t_envlist*)0);
+				return ((t_env*)0);
 			}
 		}
 	}
 	return (env);
 }
 
-int								ft_envlist_len(t_envlist *envlist)
+int		ft_envlist_len(t_env *envlist)
 {
 	int		len;
 
@@ -53,9 +53,9 @@ int								ft_envlist_len(t_envlist *envlist)
 	return (len);
 }
 
-void							ft_envlist_addback(t_envlist **env, t_envlist *new)
+void	ft_envlist_addback(t_env **env, t_env *new)
 {
-	t_envlist	*current;
+	t_env	*current;
 
 	if (!*env)
 	{
@@ -68,16 +68,16 @@ void							ft_envlist_addback(t_envlist **env, t_envlist *new)
 	current->next = new;
 }
 
-void							ft_envlist_delete(t_envlist *env)
+void	ft_envlist_delete(t_env *env)
 {
 	free(env->key);
 	free(env->value);
 	free(env);
 }
 
-void							ft_envlist_clearall(t_envlist **env)
+void	ft_envlist_clearall(t_env **env)
 {
-	t_envlist	*next;
+	t_env	*next;
 
 	next = *env;
 	while (next)

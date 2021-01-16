@@ -13,9 +13,9 @@
 #ifndef FT_SIGNAL_H
 # define FT_SIGNAL_H
 
-#define FT_SIG_DFL         (void (*)(int))0
+# define FT_SIG_DFL         (void (*)(int))0
 
-#include <signal.h>
+# include <signal.h>
 
 void	do_common_signals(int num);
 void	do_parent_signals(int num);

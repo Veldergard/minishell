@@ -13,6 +13,6 @@
 #ifndef MS_G_H
 # define MS_G_H
 
-int			handle_signals;
+int			g_handle_signals;
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	compare_env_names(t_envlist *first, t_envlist *second)
+static int	compare_env_names(t_env *first, t_env *second)
 {
 	int		len;
 
@@ -20,10 +20,10 @@ static int	compare_env_names(t_envlist *first, t_envlist *second)
 	return (ft_strncmp(first->key, second->key, len + 1));
 }
 
-static void	sort_envlist_add(t_envlist **sorted, t_envlist *envlist)
+static void	sort_envlist_add(t_env **sorted, t_env *envlist)
 {
-	t_envlist	*current;
-	t_envlist	*insert;
+	t_env	*current;
+	t_env	*insert;
 
 	insert = ft_clone_envlist(envlist);
 	if (!*sorted || 0 < compare_env_names(*sorted, envlist))
@@ -41,11 +41,11 @@ static void	sort_envlist_add(t_envlist **sorted, t_envlist *envlist)
 	}
 }
 
-t_envlist	*ft_sort_envlist(t_envlist *envlist)
+t_env		*ft_sort_envlist(t_env *envlist)
 {
-	t_envlist	*sorted;
+	t_env	*sorted;
 
-	sorted = (t_envlist*)0;
+	sorted = (t_env*)0;
 	while (envlist)
 	{
 		sort_envlist_add(&sorted, envlist);

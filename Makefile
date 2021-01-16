@@ -42,6 +42,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 		builtin_export.c\
 		builtin_pwd.c\
 		builtin_unset.c\
+		exec_builtin.c\
 		ft_exec.c\
 		redirects.c\
 		pipes.c\

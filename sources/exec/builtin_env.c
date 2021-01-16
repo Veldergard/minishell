@@ -14,7 +14,7 @@
 
 int			ft_env(int argc, char *argv[], t_all *all)
 {
-	t_envlist	*current;
+	t_env	*current;
 
 	(void)argc;
 	(void)argv;

@@ -6,18 +6,18 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:30:53 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 16:36:53 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 17:18:13 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_envlist	*envp_to_envlist(char *envp[])
+t_env	*envp_to_envlist(char *envp[])
 {
-	int			i;
-	t_envlist	*envlist;
-	t_envlist	*current;
-	char		*eq_sign;
+	int		i;
+	t_env	*envlist;
+	t_env	*current;
+	char	*eq_sign;
 
 	i = 0;
 	envlist = NULL;
@@ -30,7 +30,7 @@ t_envlist	*envp_to_envlist(char *envp[])
 												ft_strlen(eq_sign + 1))))
 			{
 				ft_envlist_clearall(&envlist);
-				return ((t_envlist*)0);
+				return ((t_env*)0);
 			}
 			ft_strlcpy(current->key, envp[i], current->key_len + 1);
 			ft_strlcpy(current->value, eq_sign + 1, current->value_len + 1);
@@ -41,7 +41,7 @@ t_envlist	*envp_to_envlist(char *envp[])
 	return (envlist);
 }
 
-char		**envlist_to_envp(t_envlist *envlist)
+char	**envlist_to_envp(t_env *envlist)
 {
 	char	**envp;
 	int		i;
@@ -50,8 +50,7 @@ char		**envlist_to_envp(t_envlist *envlist)
 	i = 0;
 	while (envlist)
 	{
-		envp[i] = (char*)malloc(sizeof(char) *
-				(envlist->key_len + envlist->value_len + 2));
+		envp[i] = (char*)malloc(envlist->key_len + envlist->value_len + 2);
 		if (!envp[i])
 		{
 			free_envp(envp);
@@ -62,17 +61,16 @@ char		**envlist_to_envp(t_envlist *envlist)
 		{
 			envp[i][envlist->key_len] = '=';
 			ft_strlcpy(envp[i] + envlist->key_len + 1, envlist->value,
-					   envlist->value_len + 1);
+						envlist->value_len + 1);
 		}
-		envp[i][envlist->key_len + envlist->value_len + 1] = 0;
-		i++;
+		envp[i++][envlist->key_len + envlist->value_len + 1] = 0;
 		envlist = envlist->next;
 	}
 	envp[i] = (char*)0;
 	return (envp);
 }
 
-void		free_envp(char **envp)
+void	free_envp(char **envp)
 {
 	int		i;
 

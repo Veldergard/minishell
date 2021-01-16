@@ -12,21 +12,21 @@
 
 #include "minishell.h"
 
-t_envlist	*ft_clone_envlist(t_envlist *envlist)
+t_env	*ft_clone_envlist(t_env *envlist)
 {
-	t_envlist	*clone;
+	t_env	*clone;
 
-	clone = (t_envlist*)malloc(sizeof(t_envlist));
+	clone = (t_env*)malloc(sizeof(t_env));
 	clone->key_len = envlist->key_len;
 	clone->value_len = envlist->value_len;
 	clone->is_hidden = envlist->is_hidden;
 	clone->key = ft_strdup(envlist->key);
 	clone->value = envlist->value ? ft_strdup(envlist->value) : envlist->value;
-	clone->next = (t_envlist*)0;
+	clone->next = (t_env*)0;
 	return (clone);
 }
 
-int			ft_envlist_str_cmp(t_envlist *env, char *key)
+int		ft_envlist_str_cmp(t_env *env, char *key)
 {
 	int		len;
 
@@ -36,9 +36,9 @@ int			ft_envlist_str_cmp(t_envlist *env, char *key)
 	return (0);
 }
 
-t_envlist	*get_envlist_pre(t_all *all, char *name)
+t_env	*get_envlist_pre(t_all *all, char *name)
 {
-	t_envlist	*prev;
+	t_env	*prev;
 
 	prev = all->env;
 	while (prev->next && !ft_envlist_str_cmp(prev->next, name))
@@ -46,5 +46,5 @@ t_envlist	*get_envlist_pre(t_all *all, char *name)
 	if (prev->next)
 		return (prev);
 	else
-		return ((t_envlist*)0);
+		return ((t_env*)0);
 }

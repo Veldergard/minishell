@@ -49,7 +49,7 @@ typedef struct				s_envlist {
 	int						value_len;
 	enum e_env_visible		is_hidden;
 	struct s_envlist		*next;
-}							t_envlist;
+}							t_env;
 
 typedef struct				s_redirect {
 	enum e_redirect_type	type;
@@ -63,7 +63,7 @@ typedef struct				s_all {
 	t_redirect				*redirect;
 	int						has_output;
 	enum e_pipe				pipe;
-	t_envlist				*env;
+	t_env					*env;
 	char					**envp;
 	int						stdfd[2];
 	char					**path;
@@ -88,13 +88,13 @@ void						ft_redirect_addback(t_redirect **redirect,
 void						ft_redirect_delete(t_redirect *redirect);
 void						ft_redirect_clearall(t_redirect **redirect);
 
-t_envlist					*ft_create_envlist(int keysize, int valuesize);
-t_envlist					*ft_clone_envlist(t_envlist *envlist);
-int							ft_envlist_len(t_envlist *envlist);
-void						ft_envlist_addback(t_envlist **env, t_envlist *new);
-void						ft_envlist_delete(t_envlist *env);
-void						ft_envlist_clearall(t_envlist **env);
-t_envlist					*ft_sort_envlist(t_envlist *envlist);
-int							ft_envlist_str_cmp(t_envlist *env, char *key);
+t_env						*ft_create_envlist(int keysize, int valuesize);
+t_env						*ft_clone_envlist(t_env *envlist);
+int							ft_envlist_len(t_env *envlist);
+void						ft_envlist_addback(t_env **env, t_env *new);
+void						ft_envlist_delete(t_env *env);
+void						ft_envlist_clearall(t_env **env);
+t_env						*ft_sort_envlist(t_env *envlist);
+int							ft_envlist_str_cmp(t_env *env, char *key);
 
 #endif

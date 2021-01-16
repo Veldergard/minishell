@@ -6,18 +6,41 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:43:01 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 14:24:01 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 16:40:45 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static	void	do_unset(t_all *all, char *name, int *re_envp)
+{
+	t_env	*current;
+	t_env	*deleted;
+
+	if (ft_envlist_str_cmp(all->env, name))
+	{
+		*re_envp = 1;
+		deleted = all->env;
+		all->env = all->env->next;
+		ft_envlist_delete(deleted);
+	}
+	else
+	{
+		current = get_envlist_pre(all, name);
+		if (current)
+		{
+			*re_envp = 1;
+			deleted = current->next;
+			current->next = current->next->next;
+			ft_envlist_delete(deleted);
+		}
+	}
+}
+
 int				ft_unset(int argc, char *argv[], t_all *all)
 {
-	int			i;
-	t_envlist	*current;
-	t_envlist	*deleted;
-	int			re_envp;
+	int		i;
+	int		re_envp;
 
 	i = 1;
 	if (argc > i && argv[i][0] == '-')
@@ -31,24 +54,7 @@ int				ft_unset(int argc, char *argv[], t_all *all)
 			i++;
 			continue ;
 		}
-		if (ft_envlist_str_cmp(all->env, argv[i]))
-		{
-			re_envp = 1;
-			deleted = all->env;
-			all->env = all->env->next;
-			ft_envlist_delete(deleted);
-		}
-		else
-		{
-			current = get_envlist_pre(all, argv[i]);
-			if (current)
-			{
-				re_envp = 1;
-				deleted = current->next;
-				current->next = current->next->next;
-				ft_envlist_delete(deleted);
-			}
-		}
+		do_unset(all, argv[i], &re_envp);
 		i++;
 	}
 	if (re_envp)

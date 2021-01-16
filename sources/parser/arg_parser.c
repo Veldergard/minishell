@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 16:07:51 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:51:49 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/16 16:32:16 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int		get_arg_len(t_all *all)
 void	parse_arg(t_all *all)
 {
 	all->arg_pos = 0;
-	while (all->buf[all->buf_pos] && !ft_strchr(" \t<>;|", all->buf[all->buf_pos]))
+	while (all->buf[all->buf_pos] &&
+		!ft_strchr(" \t<>;|", all->buf[all->buf_pos]))
 	{
 		if (all->buf[all->buf_pos] == '\'')
 			parse_quote(all);

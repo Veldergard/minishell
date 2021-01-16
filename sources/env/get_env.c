@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:46:27 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/15 20:17:26 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 16:31:22 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static char	*get_special_env(t_all *all, char name)
 		all->exit_status_str[i] = 0;
 		return (all->exit_status_str);
 	}
-	return "";
+	return ("");
 }
 
 char		*get_env(t_all *all, char *name, int size)
 {
-	t_envlist	*current;
+	t_env	*current;
 
 	if (size == 1 && 2 == is_envp_symbol(name[0]))
 		return (get_special_env(all, name[0]));

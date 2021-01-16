@@ -6,17 +6,17 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 16:50:16 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 17:17:04 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-static int	print_export(t_all *all)
+static int		print_export(t_all *all)
 {
-	t_envlist	*sorted;
-	t_envlist	*current;
+	t_env	*sorted;
+	t_env	*current;
 
 	sorted = ft_sort_envlist(all->env);
 	current = sorted;
@@ -40,38 +40,58 @@ static int	print_export(t_all *all)
 	return (0);
 }
 
-static t_envlist	*export_get_envlist(t_all *all, char *name, char *eqsign, int *add_env)
+static t_env	*export_get_env(t_all *all, char *name, char *value, int *add)
 {
-	t_envlist	*env;
+	t_env	*env;
 
 	env = get_envlist_pre(all, name);
-	*add_env = 1;
+	*add = 1;
 	if (env)
 	{
-		*add_env = 0;
+		*add = 0;
 		env = env->next;
-		if (eqsign)
+		if (value)
 		{
-			if ((size_t)env->value_len == ft_strlen(eqsign) &&
-				!ft_strncmp(env->value, eqsign, env->value_len))
-				env = (t_envlist*)0;
+			if ((size_t)env->value_len == ft_strlen(value) &&
+				!ft_strncmp(env->value, value, env->value_len))
+				env = (t_env*)0;
 		}
-		else
-			if (env->value_len == 0 && !env->value)
-				env = (t_envlist*)0;
+		else if (env->value_len == 0 && !env->value)
+			env = (t_env*)0;
 	}
 	else
 		env = ft_create_envlist(ft_strlen(name), -1);
 	return (env);
 }
 
-int					ft_export(int argc, char *argv[], t_all *all)
+static void		export_argument(t_all *all, char *arg)
 {
-	int			i;
-	char		*equalsign;
-	t_envlist	*env;
-	char		*name;
-	int			add_env;
+	t_env	*env;
+	char	*value;
+	char	*name;
+	int		add_env;
+
+	if ((value = ft_strchr(arg, '=')))
+		value++;
+	if (value)
+		name = malloc(value - arg);
+	else
+		name = malloc(ft_strlen(arg));
+	ft_strlcpy(name, arg, value - arg);
+	if ((env = export_get_env(all, name, value, &add_env)))
+	{
+		free(env->value);
+		ft_strlcpy(env->key, name, env->key_len + 1);
+		env->value = value ? ft_strdup(value) : (char*)0;
+	}
+	if (add_env)
+		ft_envlist_addback(&all->env, env);
+	free(name);
+}
+
+int				ft_export(int argc, char *argv[], t_all *all)
+{
+	int		i;
 
 	if (argc == 1 || (argc == 2 && !ft_strncmp(argv[1], "-p", 2)))
 		return (print_export(all));
@@ -80,28 +100,10 @@ int					ft_export(int argc, char *argv[], t_all *all)
 		print_error_usage(argv[i], FT_EXPORT, E_BADOPT, FT_USG_EXPORT);
 	while (argv[i])
 	{
-		add_env = 0;
 		if (!is_valid_env_name(argv[i]))
 			return (print_error_builtin(FT_EXPORT, argv[i], E_BADENV));
 		else
-		{
-			if ((equalsign = ft_strchr(argv[i], '=')))
-				equalsign++;
-			if (equalsign)
-				name = malloc(equalsign - argv[i]);
-			else
-				name = malloc(ft_strlen(argv[i]));
-			ft_strlcpy(name, argv[i], equalsign - argv[i]);
-			if ((env = export_get_envlist(all, name, equalsign, &add_env)))
-			{
-				free(env->value);
-				ft_strlcpy(env->key, name, env->key_len + 1);
-				env->value = equalsign ? ft_strdup(equalsign) : (char*)0;
-			}
-			free(name);
-		}
-		if (add_env)
-			ft_envlist_addback(&all->env, env);
+			export_argument(all, argv[i]);
 		i++;
 	}
 	free_envp(all->envp);
