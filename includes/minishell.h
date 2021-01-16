@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 17:29:26 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/16 20:30:42 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,34 @@
 
 /*
 ** File types for stat struct
+**
+** FT - mask for all file types
+** FIFO - pipe
+** CHR - char special
+** DIr - directory
+** BLK - block special
+** REG - regular file
+** LNK - symbolic link
+** SOCK - socket
 */
 
 # define FT_STAT_FT		0170000
-# define FT_STAT_FT_DIR	0040000
+# define FT_S_FIFO		0010000
+# define FT_S_CHR		0020000
+# define FT_S_DIR		0040000
+# define FT_S_BLK		0060000
+# define FT_S_REG		0100000
+# define FT_S_LNK		0120000
+# define FT_S_SOCK		0140000
+
+/*
+** Mask for fd 0 file type
+** FT_INPUT_FILE - reading from file, leave shell in EOF
+** FT_INPUT_TTY - reading from tty, leave shell on EOF only if buf is empty
+*/
+
+# define FT_INPUT_FILE	(FT_S_FIFO | FT_S_DIR | FT_S_REG | FT_S_LNK)
+# define FT_INPUT_TTY	(FT_S_CHR | FT_S_BLK | FT_S_SOCK)
 
 void		print_prompt(void);
 void		ft_exec(t_all *all);

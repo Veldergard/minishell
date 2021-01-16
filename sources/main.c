@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 16:03:44 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/16 21:08:39 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "parser.h"
 #include "ft_signal.h"
 #include "get_next_line.h"
+
+int		is_input_mode(int mode, int needed_mode)
+{
+	if (needed_mode == FT_INPUT_TTY)
+		return (mode == FT_S_CHR || mode == FT_S_BLK || mode == FT_S_SOCK);
+	else if (needed_mode == FT_INPUT_FILE)
+	{
+		return (mode == FT_S_DIR || mode == FT_S_FIFO ||
+				mode == FT_S_LNK || mode == FT_S_REG);
+	}
+	return (0);
+}
 
 void	parse_and_exec(t_all *all, int eof)
 {
@@ -42,6 +54,16 @@ void	parse_and_exec(t_all *all, int eof)
 	}
 }
 
+void	check_input_ended(t_all *all, int ret)
+{
+	if (ret < 1 && is_input_mode(all->input_type, FT_INPUT_FILE) &&
+		all->status != MS_STATUS_STOP)
+	{
+		all->status = MS_STATUS_STOP;
+		all->exit_status = (char)all->last_exit_status;
+	}
+}
+
 int		minishell(t_all *all)
 {
 	char	*buf;
@@ -49,7 +71,7 @@ int		minishell(t_all *all)
 
 	if (all->status == MS_STATUS_SIGNALED)
 		all->status = MS_STATUS_RUN;
-	else
+	else if (is_input_mode(all->input_type, FT_INPUT_TTY))
 		print_prompt();
 	all->pipe = 0;
 	all->buf_pos = 0;
@@ -66,6 +88,7 @@ int		minishell(t_all *all)
 	free(buf);
 	if (all->pipe == PIPE_YES && all->pipe_pid == -1)
 		return (1);
+	check_input_ended(all, ret);
 	return (0);
 }
 

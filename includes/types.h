@@ -66,6 +66,7 @@ typedef struct				s_all {
 	t_env					*env;
 	char					**envp;
 	int						stdfd[2];
+	int						input_type;
 	char					**path;
 	char					*pwd;
 	int						last_exit_status;
