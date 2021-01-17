@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 21:08:39 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:31:42 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,10 @@ int		is_input_mode(int mode, int needed_mode)
 	return (0);
 }
 
-void	parse_and_exec(t_all *all, int eof)
+void	parse_and_exec(t_all *all)
 {
 	int		ret;
 
-	if (!all->buf[0] && eof == 0)
-	{
-		args_increase(all);
-		all->args[all->arg_len - 1] = ft_strdup("exit");
-	}
 	while (1)
 	{
 		clear_all(all);
@@ -54,16 +49,6 @@ void	parse_and_exec(t_all *all, int eof)
 	}
 }
 
-void	check_input_ended(t_all *all, int ret)
-{
-	if (ret < 1 && is_input_mode(all->input_type, FT_INPUT_FILE) &&
-		all->status != MS_STATUS_STOP)
-	{
-		all->status = MS_STATUS_STOP;
-		all->exit_status = (char)all->last_exit_status;
-	}
-}
-
 int		minishell(t_all *all)
 {
 	char	*buf;
@@ -75,7 +60,8 @@ int		minishell(t_all *all)
 		print_prompt();
 	all->pipe = 0;
 	all->buf_pos = 0;
-	ret = get_next_line(0, &buf);
+	buf = read_command(all);
+	ret = buf != NULL;
 	if (ret < 0)
 		return (1);
 	if (!lexer(buf, 0, 0))
@@ -84,11 +70,10 @@ int		minishell(t_all *all)
 		return (0);
 	}
 	all->buf = buf;
-	parse_and_exec(all, ret);
+	parse_and_exec(all);
 	free(buf);
 	if (all->pipe == PIPE_YES && all->pipe_pid == -1)
 		return (1);
-	check_input_ended(all, ret);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:30:53 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 17:18:13 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:51:36 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ t_env	*envp_to_envlist(char *envp[])
 		eq_sign = ft_strchr(envp[i], '=');
 		if (eq_sign)
 		{
-			if (!(current = ft_create_envlist((int)(eq_sign - envp[i]),
-												ft_strlen(eq_sign + 1))))
+			if (!(current = ft_create_env((int) (eq_sign - envp[i]),
+										  ft_strlen(eq_sign + 1))))
 			{
-				ft_envlist_clearall(&envlist);
+				ft_env_clearall(&envlist);
 				return ((t_env*)0);
 			}
 			ft_strlcpy(current->key, envp[i], current->key_len + 1);
 			ft_strlcpy(current->value, eq_sign + 1, current->value_len + 1);
-			ft_envlist_addback(&envlist, current);
+			ft_env_addback(&envlist, current);
 		}
 		i++;
 	}
@@ -46,7 +46,7 @@ char	**envlist_to_envp(t_env *envlist)
 	char	**envp;
 	int		i;
 
-	envp = (char**)malloc(sizeof(char*) * (ft_envlist_len(envlist) + 1));
+	envp = (char**)malloc(sizeof(char*) * (ft_env_len(envlist) + 1));
 	i = 0;
 	while (envlist)
 	{

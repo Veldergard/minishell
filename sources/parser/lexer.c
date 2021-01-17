@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:41 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:09:03 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/17 19:09:37 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		check_conditions(char *buf, int i, int pos, char last)
 {
 	if (i == 0 && !buf[pos] && last == ';')
 		return (ft_syntax_error(0, ";"));
-	if (!buf[pos] && ft_strchr("|<>", last))
+	if (!buf[pos] && ft_strchr("<>", last))
 		return (ft_syntax_error(0, "newline"));
 	if (buf[pos] == '|' && buf[pos - 1] == '|')
 		return (ft_syntax_error(0, "||"));
@@ -36,7 +36,7 @@ int		check_conditions(char *buf, int i, int pos, char last)
 		return (ft_syntax_error(0, ";"));
 	if (buf[pos] == '<' && last == '<')
 		return (ft_syntax_error(0, "<"));
-	if (buf[pos] == '|' && last == '|')
+	if (!buf[pos] && last == '|')
 		return (ft_syntax_error(0, "|"));
 	return (1);
 }

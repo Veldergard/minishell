@@ -6,13 +6,13 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:22:58 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 16:31:22 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:51:36 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_env	*ft_create_envlist(int keysize, int valuesize)
+t_env	*ft_create_env(int keysize, int valuesize)
 {
 	t_env	*env;
 
@@ -24,7 +24,7 @@ t_env	*ft_create_envlist(int keysize, int valuesize)
 		{
 			if (!(env->key = malloc(sizeof(char) * (keysize + 1))))
 			{
-				ft_envlist_delete(env);
+				ft_env_delete(env);
 				return ((t_env*)0);
 			}
 		}
@@ -32,7 +32,7 @@ t_env	*ft_create_envlist(int keysize, int valuesize)
 		{
 			if (!(env->value = malloc(sizeof(char) * (valuesize + 1))))
 			{
-				ft_envlist_delete(env);
+				ft_env_delete(env);
 				return ((t_env*)0);
 			}
 		}
@@ -40,7 +40,7 @@ t_env	*ft_create_envlist(int keysize, int valuesize)
 	return (env);
 }
 
-int		ft_envlist_len(t_env *envlist)
+int		ft_env_len(t_env *envlist)
 {
 	int		len;
 
@@ -53,7 +53,7 @@ int		ft_envlist_len(t_env *envlist)
 	return (len);
 }
 
-void	ft_envlist_addback(t_env **env, t_env *new)
+void	ft_env_addback(t_env **env, t_env *new)
 {
 	t_env	*current;
 
@@ -68,14 +68,14 @@ void	ft_envlist_addback(t_env **env, t_env *new)
 	current->next = new;
 }
 
-void	ft_envlist_delete(t_env *env)
+void	ft_env_delete(t_env *env)
 {
 	free(env->key);
 	free(env->value);
 	free(env);
 }
 
-void	ft_envlist_clearall(t_env **env)
+void	ft_env_clearall(t_env **env)
 {
 	t_env	*next;
 
@@ -83,7 +83,7 @@ void	ft_envlist_clearall(t_env **env)
 	while (next)
 	{
 		*env = next->next;
-		ft_envlist_delete(next);
+		ft_env_delete(next);
 		next = *env;
 	}
 }

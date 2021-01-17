@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/15 19:54:01 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:51:53 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ enum	e_env_visible
 	ENV_HIDDEN
 };
 
-typedef struct				s_envlist {
+typedef struct				s_env {
 	char					*key;
 	int						key_len;
 	char					*value;
 	int						value_len;
 	enum e_env_visible		is_hidden;
-	struct s_envlist		*next;
+	struct s_env		*next;
 }							t_env;
 
 typedef struct				s_redirect {
@@ -89,13 +89,14 @@ void						ft_redirect_addback(t_redirect **redirect,
 void						ft_redirect_delete(t_redirect *redirect);
 void						ft_redirect_clearall(t_redirect **redirect);
 
-t_env						*ft_create_envlist(int keysize, int valuesize);
-t_env						*ft_clone_envlist(t_env *envlist);
-int							ft_envlist_len(t_env *envlist);
-void						ft_envlist_addback(t_env **env, t_env *new);
-void						ft_envlist_delete(t_env *env);
-void						ft_envlist_clearall(t_env **env);
-t_env						*ft_sort_envlist(t_env *envlist);
-int							ft_envlist_str_cmp(t_env *env, char *key);
+t_env						*ft_create_env(int keysize, int valuesize);
+t_env						*ft_clone_env(t_env *envlist);
+int							ft_env_len(t_env *envlist);
+void						ft_env_addback(t_env **env, t_env *new);
+void						ft_env_delete(t_env *env);
+void						ft_env_clearall(t_env **env);
+t_env						*ft_sort_env(t_env *envlist);
+int							ft_env_str_cmp(t_env *env, char *key);
+int							ft_env_str_cmp_len(t_env *env, char *key, int len);
 
 #endif

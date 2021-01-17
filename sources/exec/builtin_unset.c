@@ -17,12 +17,12 @@ static	void	do_unset(t_all *all, char *name, int *re_envp)
 	t_env	*current;
 	t_env	*deleted;
 
-	if (ft_envlist_str_cmp(all->env, name))
+	if (ft_env_str_cmp(all->env, name))
 	{
 		*re_envp = 1;
 		deleted = all->env;
 		all->env = all->env->next;
-		ft_envlist_delete(deleted);
+		ft_env_delete(deleted);
 	}
 	else
 	{
@@ -32,7 +32,7 @@ static	void	do_unset(t_all *all, char *name, int *re_envp)
 			*re_envp = 1;
 			deleted = current->next;
 			current->next = current->next->next;
-			ft_envlist_delete(deleted);
+			ft_env_delete(deleted);
 		}
 	}
 }

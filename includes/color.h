@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_COLOR_H
-# define SHELL_COLOR_H
+#ifndef COLOR_H
+# define COLOR_H
 
 # define CLRBLACK	"\033[0;30m"
 # define CLRRED		"\033[0;31m"

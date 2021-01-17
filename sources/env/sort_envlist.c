@@ -25,7 +25,7 @@ static void	sort_envlist_add(t_env **sorted, t_env *envlist)
 	t_env	*current;
 	t_env	*insert;
 
-	insert = ft_clone_envlist(envlist);
+	insert = ft_clone_env(envlist);
 	if (!*sorted || 0 < compare_env_names(*sorted, envlist))
 	{
 		insert->next = *sorted;
@@ -41,7 +41,7 @@ static void	sort_envlist_add(t_env **sorted, t_env *envlist)
 	}
 }
 
-t_env		*ft_sort_envlist(t_env *envlist)
+t_env		*ft_sort_env(t_env *envlist)
 {
 	t_env	*sorted;
 

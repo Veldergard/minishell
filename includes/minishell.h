@@ -56,6 +56,7 @@ void		ft_restore_fd(t_all *all);
 
 int			minishell(t_all *all);
 void		ft_pipes(t_all *all);
+char		*read_command(t_all *all);
 
 /*
 **	ENV

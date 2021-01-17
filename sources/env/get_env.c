@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:46:27 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 16:31:22 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:49:28 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char		*get_env(t_all *all, char *name, int size)
 	current = all->env;
 	while (current)
 	{
-		if (ft_envlist_str_cmp(current, name))
+		if (ft_env_str_cmp_len(current, name, size))
 			return (current->value);
 		current = current->next;
 	}

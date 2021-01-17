@@ -69,6 +69,7 @@ SRC = $(addprefix $(SRCDIR)/, \
 	ft_signal.c\
 	main.c\
 	debug.c\
+	read_cmd.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))

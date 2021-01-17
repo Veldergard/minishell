@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 17:17:04 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:51:36 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		print_export(t_all *all)
 	t_env	*sorted;
 	t_env	*current;
 
-	sorted = ft_sort_envlist(all->env);
+	sorted = ft_sort_env(all->env);
 	current = sorted;
 	while (current)
 	{
@@ -36,7 +36,7 @@ static int		print_export(t_all *all)
 		}
 		current = current->next;
 	}
-	ft_envlist_clearall(&sorted);
+	ft_env_clearall(&sorted);
 	return (0);
 }
 
@@ -60,7 +60,7 @@ static t_env	*export_get_env(t_all *all, char *name, char *value, int *add)
 			env = (t_env*)0;
 	}
 	else
-		env = ft_create_envlist(ft_strlen(name), -1);
+		env = ft_create_env(ft_strlen(name), -1);
 	return (env);
 }
 
@@ -85,7 +85,7 @@ static void		export_argument(t_all *all, char *arg)
 		env->value = value ? ft_strdup(value) : (char*)0;
 	}
 	if (add_env)
-		ft_envlist_addback(&all->env, env);
+		ft_env_addback(&all->env, env);
 	free(name);
 }
 

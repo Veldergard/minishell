@@ -44,7 +44,7 @@ void	destroy_t_all(t_all *all)
 		free(all->path[i++]);
 	free(all->path);
 	free(all->pwd);
-	ft_envlist_clearall(&all->env);
+	ft_env_clearall(&all->env);
 	free_envp(all->envp);
 	ft_bzero(all, sizeof(*all));
 }
