@@ -16,7 +16,6 @@
 
 char	*read_command(t_all *all)
 {
-	char	*tmp;
 	char	*command;
 	char	*line;
 	int		status;
@@ -28,15 +27,7 @@ char	*read_command(t_all *all)
 		print_exec_error_errno("read_command");
 		exit(1);
 	}
-	if (!command)
-		command = line;
-	else
-	{
-		tmp = command;
-		command = ft_strjoin(command, line);
-		free(tmp);
-		free(line);
-	}
+	command = line;
 	if (status != 0)
 		;
 	else if (all->input_type == FT_INPUT_FILE)

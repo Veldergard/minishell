@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 04:30:53 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:51:36 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:51:41 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_env	*envp_to_envlist(char *envp[])
 		eq_sign = ft_strchr(envp[i], '=');
 		if (eq_sign)
 		{
-			if (!(current = ft_create_env((int) (eq_sign - envp[i]),
-										  ft_strlen(eq_sign + 1))))
+			if (!(current = ft_create_env((int)(eq_sign - envp[i]),
+											ft_strlen(eq_sign + 1))))
 			{
 				ft_env_clearall(&envlist);
 				return ((t_env*)0);

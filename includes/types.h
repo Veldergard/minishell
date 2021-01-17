@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:51:53 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/17 18:52:01 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct				s_env {
 	char					*value;
 	int						value_len;
 	enum e_env_visible		is_hidden;
-	struct s_env		*next;
+	struct s_env			*next;
 }							t_env;
 
 typedef struct				s_redirect {
