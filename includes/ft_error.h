@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:32:35 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/12 14:04:06 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 15:35:43 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define FT_UNSET		"unset"
 
 # define E_NOCMD		"command not found"
-# define E_NOFILE		"No such file or directory"
-
+# define E_NONUM		"numeric argument required"
+# define E_TOOMANYARG	"too many arguments"
 # define E_BADENV		"not a valid identifier"
 # define E_BADOPT		"invalid option"
 

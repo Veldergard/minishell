@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 20:30:42 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 16:43:08 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@
 
 # define FT_INPUT_FILE	(FT_S_FIFO | FT_S_DIR | FT_S_REG | FT_S_LNK)
 # define FT_INPUT_TTY	(FT_S_CHR | FT_S_BLK | FT_S_SOCK)
+
+/*
+** these defines are to check long overflow in exit_strtoll
+*/
+
+# define FT_LLIMIT		(0x7fffffffffffffff / 10)
+# define FT_LREM		(0x7fffffffffffffff % 10)
 
 void		print_prompt(void);
 void		ft_exec(t_all *all);
