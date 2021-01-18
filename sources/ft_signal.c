@@ -28,6 +28,7 @@ void	do_parent_signals(int num)
 {
 	if (g_handle_signals && num == SIGINT)
 	{
+		g_handle_signals = 2;
 		ft_putendl_fd("\b\b  \b\b", 2);
 		print_prompt();
 	}

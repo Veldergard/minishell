@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/18 17:40:17 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/18 20:12:48 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLIBFLAGS = -L$(LFTDIR) -lft
 I_DIR = includes
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -O2 -I$(LFTDIR) -I$(I_DIR)
+CFLAGS = -Wall -Wextra -Werror -O2 -g -fsanitize=address -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
