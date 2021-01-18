@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:46:27 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:49:28 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 20:17:37 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 static char	*get_special_env(t_all *all, char name)
 {
-	int				i;
-	unsigned char	status;
+	int		i;
+	short	status;
 
 	i = 0;
 	if (name == '?')
 	{
-		status = (char)(all->last_exit_status % 256);
+		status = (short)(all->last_exit_status % 1000);
 		if (status > 99)
 			all->exit_status_str[i++] = (char)('0' + status / 100);
 		if (status > 9)

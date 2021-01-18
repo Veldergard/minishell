@@ -73,6 +73,7 @@ int		minishell(t_all *all)
 	if (!lexer(buf, 0, 0))
 	{
 		free(buf);
+		all->last_exit_status = 258;
 		return (0);
 	}
 	all->buf = buf;

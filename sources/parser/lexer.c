@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:41 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/17 19:09:37 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 20:31:28 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,33 @@ int		ft_syntax_error(int status, char *token)
 	return (status);
 }
 
+int		check_early_conditions(char *buf, int pos)
+{
+	if (buf[pos] == ';')
+	{
+		if (buf[pos + 1] == ';')
+			return (ft_syntax_error(0, ";;"));
+		return (ft_syntax_error(0, ";"));
+	}
+	return (1);
+}
+
 int		check_conditions(char *buf, int i, int pos, char last)
 {
+	if (buf[pos] == ';' && (buf[pos - 1] == ';' || buf[pos + 1] == ';'))
+		return (ft_syntax_error(0, ";;"));
 	if (i == 0 && !buf[pos] && last == ';')
 		return (ft_syntax_error(0, ";"));
-	if (!buf[pos] && ft_strchr("<>", last))
-		return (ft_syntax_error(0, "newline"));
-	if (buf[pos] == '|' && buf[pos - 1] == '|')
-		return (ft_syntax_error(0, "||"));
-	if (buf[pos] == ';' && buf[pos - 1] == ';')
-		return (ft_syntax_error(0, ";;"));
 	if (buf[pos] == ';' && ft_strchr("|><;", last))
 		return (ft_syntax_error(0, ";"));
+	if (buf[pos] == '|' && buf[pos - 1] == '|')
+		return (ft_syntax_error(0, "||"));
 	if (buf[pos] == '<' && last == '<')
 		return (ft_syntax_error(0, "<"));
 	if (!buf[pos] && last == '|')
 		return (ft_syntax_error(0, "|"));
+	if (!buf[pos] && ft_strchr("<>", last))
+		return (ft_syntax_error(0, "newline"));
 	return (1);
 }
 
@@ -45,9 +56,9 @@ int		lexer(char *buf, int i, int pos)
 	char	last;
 
 	skip_spaces(buf, &pos);
+	if (!check_early_conditions(buf, pos))
+		return (0);
 	last = buf[pos];
-	if (last == ';')
-		return (ft_syntax_error(0, ";"));
 	while (buf[pos])
 	{
 		pos++;
