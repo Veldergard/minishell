@@ -6,7 +6,7 @@
 #    By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 15:59:04 by itressa           #+#    #+#              #
-#    Updated: 2021/01/11 15:21:56 by itressa          ###   ########.fr        #
+#    Updated: 2021/01/18 17:39:06 by itressa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLIBFLAGS = -L$(LFTDIR) -lft
 I_DIR = includes
 
 CC = clang
-CFLAGS = -Wall -Wextra -g -fsanitize=address -I$(LFTDIR) -I$(I_DIR)
+CFLAGS = -Wall -Wextra -O2 -I$(LFTDIR) -I$(I_DIR)
 
 SRCDIR = sources
 SRC = $(addprefix $(SRCDIR)/, \
@@ -65,23 +65,15 @@ SRC = $(addprefix $(SRCDIR)/, \
 		redirect_list.c\
 		init_t_all.c\
 	)\
-	print_prompt.c\
 	ft_signal.c\
 	main.c\
-	debug.c\
+	print_prompt.c\
 	read_cmd.c\
 )
 OBJDIR = objects
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 _OBJSUBDIR = env error exec parser types
 OBJSUBDIR = $(patsubst %, $(OBJDIR)/%, $(_OBJSUBDIR))
-
-TOBJ = $(filter-out $(OBJDIR)/main.o,$(OBJ))
-TESTS = $(patsubst %.c, $(OBJDIR)/%.o,\
-	debug_main.c\
-	test_get_env.c\
-	test_parser.c\
-)
 
 .PHONY: all clean fclean re libft libclean libfclean
 
@@ -130,13 +122,5 @@ fclean: libfclean clean
 	rm -f $(NAME)
 
 re: fclean all
-
-$(OBJDIR)/%.o: test/%.c $(LFT)
-	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $< -c -o $@ -MMD
-
-$(patsubst $(OBJDIR)/%.o, %, $(TESTS)): libft $(TOBJ) $(TESTS)
-	@echo -e "\r\033[1;32m> $@\033[0m"
-	$(CC) $(CFLAGS) $(CLIBFLAGS) $(TOBJ) $(OBJDIR)/$@.o -o $@
 
 -include $(OBJ:.o=.d)

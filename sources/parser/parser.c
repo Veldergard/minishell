@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "minishell.h"
 #include "parser.h"
 
 int			args_increase(t_all *all)
