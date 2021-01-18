@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:03:44 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:31:42 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 17:24:58 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ms_g.h"
 #include "parser.h"
 #include "ft_signal.h"
-#include "get_next_line.h"
 
 int		is_input_mode(int mode, int needed_mode)
 {
@@ -31,11 +30,20 @@ int		is_input_mode(int mode, int needed_mode)
 void	parse_and_exec(t_all *all)
 {
 	int		ret;
+	pid_t	last_pipe;
+	int		last_piped;
+	int		stat_loc;
 
 	while (1)
 	{
+		last_pipe = all->pipe_pid;
+		last_piped = all->pipe;
 		clear_all(all);
 		ret = parse(all);
+		if (all->pipe == PIPE_NO && last_piped == PIPE_YES && last_pipe > 0)
+		{
+			waitpid(last_pipe, &stat_loc, 0);
+		}
 		if (all->args)
 		{
 			ft_exec(all);

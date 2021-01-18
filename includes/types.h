@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:25:22 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:52:01 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/18 17:23:34 by olaurine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct				s_all {
 	char					*str_ptr;
 	int						buf_pos;
 	int						arg_pos;
-	int						pipe_pid;
+	pid_t					pipe_pid;
 	char					*buf;
 }							t_all;
 
