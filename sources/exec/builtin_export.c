@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:42:41 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/17 18:51:36 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/19 20:03:31 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_env	*export_get_env(t_all *all, char *name, char *value, int *add)
 				!ft_strncmp(env->value, value, env->value_len))
 				env = (t_env*)0;
 		}
-		else if (env->value_len == 0 && !env->value)
+		else
 			env = (t_env*)0;
 	}
 	else
@@ -86,6 +86,8 @@ static void		export_argument(t_all *all, char *arg)
 	}
 	if (add_env)
 		ft_env_addback(&all->env, env);
+	if (!ft_strncmp(name, "PATH", 5))
+		update_path(all);
 	free(name);
 }
 

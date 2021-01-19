@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:16:14 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 20:17:26 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/19 20:12:46 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*get_exec_cmd(t_all *all)
 	char		*command;
 	struct stat	buf;
 
-	if (ft_strchr(all->args[0], '/'))
+	if (ft_strchr(all->args[0], '/') || !all->path)
 		return (ft_strdup(all->args[0]));
 	i = 0;
-	if (ft_strlen(all->args[0]))
+	if (ft_strlen(all->args[0]) && all->path)
 		while (all->path[i])
 		{
 			command = malloc(ft_strlen(all->path[i]) +

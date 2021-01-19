@@ -6,12 +6,31 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 15:20:47 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 20:32:44 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/19 20:00:30 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
+
+void	update_path(t_all *all)
+{
+	int		i;
+	char	*env;
+
+	if (all->path)
+	{
+		i = 0;
+		while (all->path[i])
+			free(all->path[i++]);
+		free(all->path);
+	}
+	env = get_env(all, "PATH", 4);
+	if (env && ft_strlen(env) > 0)
+		all->path = ft_split(env, ':');
+	else
+		all->path = (char**)0;
+}
 
 void	init_t_all(t_all *all, char **envp)
 {
@@ -29,7 +48,7 @@ void	init_t_all(t_all *all, char **envp)
 	all->envp = envlist_to_envp(all->env);
 	all->stdfd[0] = dup(0);
 	all->stdfd[1] = dup(1);
-	all->path = ft_split(get_env(all, "PATH", 4), ':');
+	update_path(all);
 	all->pwd = getcwd(NULL, 0);
 }
 
@@ -39,10 +58,13 @@ void	destroy_t_all(t_all *all)
 
 	close(all->stdfd[0]);
 	close(all->stdfd[1]);
-	i = 0;
-	while (all->path[i])
-		free(all->path[i++]);
-	free(all->path);
+	if (all->path)
+	{
+		i = 0;
+		while (all->path[i])
+			free(all->path[i++]);
+		free(all->path);
+	}
 	free(all->pwd);
 	ft_env_clearall(&all->env);
 	free_envp(all->envp);

@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 18:43:01 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/16 16:40:45 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/19 20:08:48 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static	void	do_unset(t_all *all, char *name, int *re_envp)
 			ft_env_delete(deleted);
 		}
 	}
+	if (!ft_strncmp(name, "PATH", 5))
+		update_path(all);
 }
 
 int				ft_unset(int argc, char *argv[], t_all *all)

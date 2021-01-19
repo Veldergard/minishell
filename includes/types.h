@@ -80,6 +80,7 @@ typedef struct				s_all {
 	char					*buf;
 }							t_all;
 
+void						update_path(t_all *all);
 void						init_t_all(t_all *all, char **envp);
 void						destroy_t_all(t_all *all);
 
