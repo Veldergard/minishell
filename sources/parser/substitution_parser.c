@@ -28,11 +28,76 @@ void	substitution_len(t_all *all, int *pos, int *len)
 		size = 1;
 	if (size)
 	{
-		(*len) += get_env_len(all, all->buf + (*pos), size);
+		(*len) += get_env_len_until_space(all, all->buf + (*pos), size);
 		(*pos) += size;
 	}
 	else
 		(*len)++;
+}
+
+int		my_get_env_len(int env_pos, char *env, t_all *all)
+{
+	int len;
+	int temp;
+	int size;
+
+	len = 0;
+	while (env[env_pos + len] && env[env_pos + len] != ' ')
+	{
+		len++;
+	}
+	if (env[env_pos + len] != ' ')
+	{
+		size = 0;
+		ret = is_envp_symbol(all->buf[all->buf_pos + size]);
+		if (ret == 1)
+			while (is_envp_symbol(all->buf[all->buf_pos + size]) & 1)
+				size++;
+		else if (ret & 2)
+			size = 1;
+		temp = all->buf_pos;
+		all->buf_pos += size;
+		get_arg_len(all);
+		all->buf_pos = temp;
+	}
+	return (len);
+}
+
+void	parse_env(t_all *all, int size)
+{
+	int		env_pos;
+	char	*env;
+	int		len;
+
+	env = get_env(all, all->buf + all->buf_pos, size);
+	env_pos = 0;
+	while (env[env_ptr] && env[env_pos] != ' ')
+		env_pos++;
+	if (!env[env_pos])
+	{
+		env_pos = 0;
+		while (env[env_pos])
+			all->str_ptr[all->arg_pos++] = env[env_pos++];
+	}
+	else
+	{
+		env_pos = 0;
+		while (env[env_pos] == ' ')
+		{
+			while (env && env[env_pos] != ' ')
+				all->str_ptr[all->arg_pos++] = env[env_pos++];
+			if (env[env_pos] == ' ')
+			{
+				if (!args_increase(all))
+					return (1);
+				len = my_get_env_len(all, env, env_pos, size);
+				if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
+					return (1);
+				all->str_ptr = all->args[all->arg_len - 1];
+				all->arg_pos = 0;
+			}
+		}
+	}
 }
 
 void	parse_substitution(t_all *all)
@@ -50,8 +115,7 @@ void	parse_substitution(t_all *all)
 		size = 1;
 	if (size)
 	{
-		write_env(all, all->buf + all->buf_pos,
-			size, all->str_ptr + all->arg_pos);
+		parse_env(all, size);
 		all->arg_pos += get_env_len(all, all->buf + all->buf_pos, size);
 		all->buf_pos += size;
 	}
