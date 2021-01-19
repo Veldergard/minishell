@@ -84,6 +84,7 @@ void	parse_env(t_all *all, int size)
 		env_pos = 0;
 		while (env[env_pos] == ' ')
 		{
+			skip_spaces(env, &env_pos);
 			while (env && env[env_pos] != ' ')
 				all->str_ptr[all->arg_pos++] = env[env_pos++];
 			if (env[env_pos] == ' ')
