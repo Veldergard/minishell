@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:11:05 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/18 16:43:08 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/19 20:35:55 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			is_valid_env_name(const char *str);
 
 void		write_env(t_all *all, char *name, int size, char *buf);
 int			get_env_len(t_all *all, char *name, int size);
+int			get_env_len_until_space(t_all *all, char *name, int size);
 char		*get_env(t_all *all, char *name, int size);
 t_env		*get_envlist_pre(t_all *all, char *name);
 

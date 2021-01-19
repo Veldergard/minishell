@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution_parser.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:52:41 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/19 20:27:09 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		my_get_env_len(int env_pos, char *env, t_all *all)
 	int len;
 	int temp;
 	int size;
+	int ret;
 
 	len = 0;
 	while (env[env_pos + len] && env[env_pos + len] != ' ')
@@ -71,7 +72,7 @@ void	parse_env(t_all *all, int size)
 
 	env = get_env(all, all->buf + all->buf_pos, size);
 	env_pos = 0;
-	while (env[env_ptr] && env[env_pos] != ' ')
+	while (env[env_pos] && env[env_pos] != ' ')
 		env_pos++;
 	if (!env[env_pos])
 	{
@@ -85,15 +86,15 @@ void	parse_env(t_all *all, int size)
 		while (env[env_pos] == ' ')
 		{
 			skip_spaces(env, &env_pos);
-			while (env && env[env_pos] != ' ')
+			while (env[env_pos] && env[env_pos] != ' ')
 				all->str_ptr[all->arg_pos++] = env[env_pos++];
 			if (env[env_pos] == ' ')
 			{
-				len = my_get_env_len(all, env, env_pos, size);
+				len = my_get_env_len(env_pos, env, all);
 				if (!args_increase(all))
-					return (1);
+					return ;
 				if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
-					return (1);
+					return ;
 				all->str_ptr = all->args[all->arg_len - 1];
 				all->arg_pos = 0;
 			}
