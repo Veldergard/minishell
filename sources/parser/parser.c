@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include "parser.h"
+#include "minishell.h"
 
 int			args_increase(t_all *all)
 {
@@ -43,7 +44,21 @@ void		parse_new_cmd(t_all *all)
 
 static int	call_parser(t_all *all, int len)
 {
-	if (len == 0 && all->buf[all->buf_pos] == '$')
+    int i;
+    int size;
+    int ret;
+
+    size = 0;
+    if (len == 0 && all->buf[all->buf_pos] == '$')
+    {
+        ret = is_envp_symbol(all->buf[all->buf_pos + 1 + size]);
+        if (ret == 1)
+            while (is_envp_symbol(all->buf[all->buf_pos + 1 + size]) & 1)
+                size++;
+        else if (ret & 2)
+            size = 1;
+    }
+	if (len == 0 && all->buf[all->buf_pos] == '$' && !get_env(all, all->buf + all->buf_pos + 1, size)[0])
 	{
 		while (all->buf[all->buf_pos]
 			&& !ft_strchr(" <>;|", all->buf[all->buf_pos]))
@@ -56,7 +71,9 @@ static int	call_parser(t_all *all, int len)
 		if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
 			return (1);
 		all->str_ptr = all->args[all->arg_len - 1];
-		all->str_ptr[len] = 0;
+		i = 0;
+		while (i <= len)
+		    all->str_ptr[i++] = 0;
 		parse_arg(all);
 	}
 	return (0);
