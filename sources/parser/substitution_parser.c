@@ -117,7 +117,6 @@ void	parse_substitution(t_all *all)
 	if (size)
 	{
 		parse_env(all, size);
-		all->arg_pos += get_env_len(all, all->buf + all->buf_pos, size);
 		all->buf_pos += size;
 	}
 	else
