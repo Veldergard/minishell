@@ -88,9 +88,9 @@ void	parse_env(t_all *all, int size)
 				all->str_ptr[all->arg_pos++] = env[env_pos++];
 			if (env[env_pos] == ' ')
 			{
+				len = my_get_env_len(all, env, env_pos, size);
 				if (!args_increase(all))
 					return (1);
-				len = my_get_env_len(all, env, env_pos, size);
 				if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
 					return (1);
 				all->str_ptr = all->args[all->arg_len - 1];
