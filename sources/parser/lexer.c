@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:41 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/18 20:31:28 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/20 18:58:58 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int		lexer(char *buf, int i, int pos)
 		{
 			while (buf[pos] && buf[pos] != last)
 				pos++;
-			pos++;
+			if (buf[pos])
+				pos++;
 		}
 		skip_spaces(buf, &pos);
 		if (!check_conditions(buf, i, pos, last))
