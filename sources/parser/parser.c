@@ -60,7 +60,7 @@ static int	call_parser(t_all *all, int len)
 		all->str_ptr = all->args[all->arg_len - 1];
 		i = 0;
 		while (i <= len)
-		    all->str_ptr[i++] = 0;
+			all->str_ptr[i++] = 0;
 		parse_arg(all);
 	}
 	return (0);

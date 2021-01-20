@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/20 18:37:49 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/20 19:09:16 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,38 @@ int		my_get_env_len(int env_pos, char *env, t_all *all)
 	return (len);
 }
 
+int		parse_env_append(t_all *all, char *env)
+{
+	int env_pos;
+	int len;
+
+	env_pos = 0;
+	while (env[env_pos] && (env_pos == 0 || env[env_pos] == ' '))
+	{
+		if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
+		{
+			skip_spaces(env, &env_pos);
+			if (!env[env_pos])
+				return (1);
+			len = my_get_env_len(env_pos, env, all);
+			if (!args_increase(all))
+				return (1);
+			if (!(all->args[all->arg_len - 1] = ft_calloc(len + 1, 1)))
+				return (1);
+			all->str_ptr = all->args[all->arg_len - 1];
+			all->arg_pos = 0;
+		}
+		skip_spaces(env, &env_pos);
+		while (env[env_pos] && env[env_pos] != ' ')
+			all->str_ptr[all->arg_pos++] = env[env_pos++];
+	}
+	return (0);
+}
+
 void	parse_env(t_all *all, int size)
 {
 	int		env_pos;
 	char	*env;
-	int		len;
 
 	env = get_env(all, all->buf + all->buf_pos, size);
 	env_pos = 0;
@@ -81,26 +108,8 @@ void	parse_env(t_all *all, int size)
 	}
 	else
 	{
-		env_pos = 0;
-		while (env[env_pos] && (env_pos == 0 || env[env_pos] == ' '))
-		{
-			if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
-			{
-				skip_spaces(env, &env_pos);
-				if (!env[env_pos])
-					return ;
-				len = my_get_env_len(env_pos, env, all);
-				if (!args_increase(all))
-					return ;
-				if (!(all->args[all->arg_len - 1] = ft_calloc(len + 1, 1)))
-					return ;
-				all->str_ptr = all->args[all->arg_len - 1];
-				all->arg_pos = 0;
-			}
-			skip_spaces(env, &env_pos);
-			while (env[env_pos] && env[env_pos] != ' ')
-				all->str_ptr[all->arg_pos++] = env[env_pos++];
-		}
+		if (parse_env_append(all, env))
+			return ;
 	}
 }
 
