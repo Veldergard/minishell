@@ -6,7 +6,7 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/19 20:27:09 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/20 17:18:50 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	substitution_len(t_all *all, int *pos, int *len)
 {
 	int size;
 	int ret;
-	char *env;
-	int i;
 
 	size = 0;
 	(*pos)++;
@@ -31,13 +29,6 @@ void	substitution_len(t_all *all, int *pos, int *len)
 	if (size)
 	{
 		ret = get_env_len_until_space(all, all->buf + (*pos), size);
-		if (ret == 0 && (env = get_env(all, all->buf + (*pos), size))[0])
-		{
-			i = 0;
-			skip_spaces(env, &i);
-			while (env[i + ret] && env[i + ret] != ' ')
-				ret++;
-		}
 		(*len) += ret;
 		(*pos) += size;
 	}
@@ -94,7 +85,7 @@ void	parse_env(t_all *all, int size)
 	else
 	{
 		env_pos = 0;
-		while (env && (env_pos == 0 || env[env_pos] == ' '))
+		while (env[env_pos] && (env_pos == 0 || env[env_pos] == ' '))
 		{
 			if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
 			{

@@ -6,11 +6,12 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 15:56:28 by itressa           #+#    #+#             */
-/*   Updated: 2021/01/02 14:59:17 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/20 17:18:50 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 int		get_env_len(t_all *all, char *name, int size)
 {
@@ -24,6 +25,7 @@ int		get_env_len_until_space(t_all *all, char *name, int size)
 
 	env = get_env(all, name, size);
 	len = 0;
+	skip_spaces(env, &len);
 	while (env[len] && env[len] != ' ')
 		len++;
 	return (len);
