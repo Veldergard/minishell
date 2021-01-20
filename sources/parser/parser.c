@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:58:40 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:59:08 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,8 @@ void		parse_new_cmd(t_all *all)
 static int	call_parser(t_all *all, int len)
 {
 	int i;
-	int size;
-	int ret;
 
-	size = 0;
 	if (len == 0 && all->buf[all->buf_pos] == '$')
-	{
-		ret = is_envp_symbol(all->buf[all->buf_pos + 1 + size]);
-		if (ret == 1)
-			while (is_envp_symbol(all->buf[all->buf_pos + 1 + size]) & 1)
-				size++;
-		else if (ret & 2)
-			size = 1;
-	}
-	if (len == 0 && all->buf[all->buf_pos] == '$' && !get_env(all, all->buf + all->buf_pos + 1, size)[0])
 	{
 		while (all->buf[all->buf_pos]
 			&& !ft_strchr(" <>;|", all->buf[all->buf_pos]))
