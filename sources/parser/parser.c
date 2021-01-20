@@ -6,13 +6,12 @@
 /*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/20 17:59:08 by itressa          ###   ########.fr       */
+/*   Updated: 2021/01/20 18:00:23 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parser.h"
-#include "minishell.h"
 
 int			args_increase(t_all *all)
 {
