@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution_parser.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:57:55 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:52:41 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/20 18:37:49 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,80 @@ void	substitution_len(t_all *all, int *pos, int *len)
 		size = 1;
 	if (size)
 	{
-		(*len) += get_env_len(all, all->buf + (*pos), size);
+		ret = get_env_len_until_space(all, all->buf + (*pos), size);
+		(*len) += ret;
 		(*pos) += size;
 	}
 	else
 		(*len)++;
+}
+
+int		my_get_env_len(int env_pos, char *env, t_all *all)
+{
+	int len;
+	int temp;
+	int size;
+	int ret;
+
+	len = 0;
+	while (env[env_pos + len] && env[env_pos + len] != ' ')
+		len++;
+	if (env[env_pos + len] != ' ')
+	{
+		size = 0;
+		ret = is_envp_symbol(all->buf[all->buf_pos + size]);
+		if (ret == 1)
+			while (is_envp_symbol(all->buf[all->buf_pos + size]) & 1)
+				size++;
+		else if (ret & 2)
+			size = 1;
+		temp = all->buf_pos;
+		all->buf_pos += size;
+		len += get_arg_len(all);
+		all->buf_pos = temp;
+	}
+	return (len);
+}
+
+void	parse_env(t_all *all, int size)
+{
+	int		env_pos;
+	char	*env;
+	int		len;
+
+	env = get_env(all, all->buf + all->buf_pos, size);
+	env_pos = 0;
+	while (env[env_pos] && env[env_pos] != ' ')
+		env_pos++;
+	if (!env[env_pos])
+	{
+		env_pos = 0;
+		while (env[env_pos])
+			all->str_ptr[all->arg_pos++] = env[env_pos++];
+	}
+	else
+	{
+		env_pos = 0;
+		while (env[env_pos] && (env_pos == 0 || env[env_pos] == ' '))
+		{
+			if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
+			{
+				skip_spaces(env, &env_pos);
+				if (!env[env_pos])
+					return ;
+				len = my_get_env_len(env_pos, env, all);
+				if (!args_increase(all))
+					return ;
+				if (!(all->args[all->arg_len - 1] = ft_calloc(len + 1, 1)))
+					return ;
+				all->str_ptr = all->args[all->arg_len - 1];
+				all->arg_pos = 0;
+			}
+			skip_spaces(env, &env_pos);
+			while (env[env_pos] && env[env_pos] != ' ')
+				all->str_ptr[all->arg_pos++] = env[env_pos++];
+		}
+	}
 }
 
 void	parse_substitution(t_all *all)
@@ -50,9 +119,7 @@ void	parse_substitution(t_all *all)
 		size = 1;
 	if (size)
 	{
-		write_env(all, all->buf + all->buf_pos,
-			size, all->str_ptr + all->arg_pos);
-		all->arg_pos += get_env_len(all, all->buf + all->buf_pos, size);
+		parse_env(all, size);
 		all->buf_pos += size;
 	}
 	else

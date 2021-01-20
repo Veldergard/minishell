@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olaurine <olaurine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itressa <itressa@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:12:03 by olaurine          #+#    #+#             */
-/*   Updated: 2021/01/12 16:58:40 by olaurine         ###   ########.fr       */
+/*   Updated: 2021/01/20 18:00:23 by itressa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		parse_new_cmd(t_all *all)
 
 static int	call_parser(t_all *all, int len)
 {
+	int i;
+
 	if (len == 0 && all->buf[all->buf_pos] == '$')
 	{
 		while (all->buf[all->buf_pos]
@@ -56,7 +58,9 @@ static int	call_parser(t_all *all, int len)
 		if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
 			return (1);
 		all->str_ptr = all->args[all->arg_len - 1];
-		all->str_ptr[len] = 0;
+		i = 0;
+		while (i <= len)
+		    all->str_ptr[i++] = 0;
 		parse_arg(all);
 	}
 	return (0);
