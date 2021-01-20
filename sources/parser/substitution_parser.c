@@ -32,13 +32,13 @@ void	substitution_len(t_all *all, int *pos, int *len)
 	{
 		ret = get_env_len_until_space(all, all->buf + (*pos), size);
 		if (ret == 0 && (env = get_env(all, all->buf + (*pos), size))[0])
-        {
-            i = 0;
-            skip_spaces(env, &i);
-            while (env[i + ret] && env[i + ret] != ' ')
-                ret++;
-        }
-        (*len) += ret;
+		{
+			i = 0;
+			skip_spaces(env, &i);
+			while (env[i + ret] && env[i + ret] != ' ')
+				ret++;
+		}
+		(*len) += ret;
 		(*pos) += size;
 	}
 	else
@@ -79,6 +79,7 @@ void	parse_env(t_all *all, int size)
 	int		env_pos;
 	char	*env;
 	int		len;
+	int		i;
 
 	env = get_env(all, all->buf + all->buf_pos, size);
 	env_pos = 0;
@@ -95,22 +96,24 @@ void	parse_env(t_all *all, int size)
 		env_pos = 0;
 		while (env && (env_pos == 0 || env[env_pos] == ' '))
 		{
-		    if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
-            {
-                skip_spaces(env, &env_pos);
-                if (!env[env_pos])
-                    return ;
-                len = my_get_env_len(env_pos, env, all);
-                if (!args_increase(all))
-                    return ;
-                if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
-                    return ;
-                all->str_ptr = all->args[all->arg_len - 1];
-                all->arg_pos = 0;
-                all->str_ptr[len] = 0;
-            }
-            skip_spaces(env, &env_pos);
-            while (env[env_pos] && env[env_pos] != ' ')
+			if (env[env_pos] == ' ' && all->str_ptr[0] != 0)
+			{
+				skip_spaces(env, &env_pos);
+				if (!env[env_pos])
+					return ;
+				len = my_get_env_len(env_pos, env, all);
+				if (!args_increase(all))
+					return ;
+				if (!(all->args[all->arg_len - 1] = malloc(len + 1)))
+					return ;
+				all->str_ptr = all->args[all->arg_len - 1];
+				all->arg_pos = 0;
+				i = 0;
+				while (i <= len)
+					all->str_ptr[i++] = 0;
+			}
+			skip_spaces(env, &env_pos);
+			while (env[env_pos] && env[env_pos] != ' ')
 				all->str_ptr[all->arg_pos++] = env[env_pos++];
 		}
 	}

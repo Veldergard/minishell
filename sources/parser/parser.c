@@ -44,20 +44,20 @@ void		parse_new_cmd(t_all *all)
 
 static int	call_parser(t_all *all, int len)
 {
-    int i;
-    int size;
-    int ret;
+	int i;
+	int size;
+	int ret;
 
-    size = 0;
-    if (len == 0 && all->buf[all->buf_pos] == '$')
-    {
-        ret = is_envp_symbol(all->buf[all->buf_pos + 1 + size]);
-        if (ret == 1)
-            while (is_envp_symbol(all->buf[all->buf_pos + 1 + size]) & 1)
-                size++;
-        else if (ret & 2)
-            size = 1;
-    }
+	size = 0;
+	if (len == 0 && all->buf[all->buf_pos] == '$')
+	{
+		ret = is_envp_symbol(all->buf[all->buf_pos + 1 + size]);
+		if (ret == 1)
+			while (is_envp_symbol(all->buf[all->buf_pos + 1 + size]) & 1)
+				size++;
+		else if (ret & 2)
+			size = 1;
+	}
 	if (len == 0 && all->buf[all->buf_pos] == '$' && !get_env(all, all->buf + all->buf_pos + 1, size)[0])
 	{
 		while (all->buf[all->buf_pos]
